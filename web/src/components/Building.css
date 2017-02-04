@@ -1,0 +1,93 @@
+/* Color
+	dark green #003311
+	light green #99cc00
+*/
+
+
+.show_overview {
+	margin-top: 30px;
+	color: #031;
+	text-align: center;
+}
+
+.show_overview .overview .chart_overview img {
+	width: 400px;
+	height: auto;
+}
+
+.show_overview .overview {
+	margin-bottom: 50px;
+	width: 100%;
+	display: block;
+}
+
+.overview .chart_overview {
+	width: 50%;
+	float: left;
+	position: relative;
+	margin-right: 100px;
+}
+
+.overview .detail_overview {
+	float: left;
+	text-align: left;
+	margin-top: 100px;
+}
+
+.show_overview .consumption_data {
+	
+}
+
+.stat_demo > .recharts-wrapper {
+	width: 100%;
+}
+
+.p_button {
+	font-weight: bold;
+	font-size: 20px;
+	float: both;
+	margin-top: 0px;
+	margin-right: 10px;
+	display: inline-block;
+}
+
+.filter {
+	margin-top: 40px;
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+.filter .btn-toolbar .btn {
+	float: inherit;
+}
+
+.filter .form-group {
+	display: inline-block;
+}
+
+.filter .form-control {
+	width: auto;
+	color: #fff;
+    background-color: #337ab7;
+    border: 1px solid #2e6da4;
+    display: inline;
+    margin-right: 10px;
+}
+
+.total_chart {
+	position: absolute;
+	right: -10px;
+	top: 330px;
+}
+
+.stat_demo {
+	position: absolute;
+	right: 200px;
+}
+
+.conp_chart {
+	position: absolute;
+	right: 200px;
+	top: 1050px;
+	margin-bottom: 100px;
+}

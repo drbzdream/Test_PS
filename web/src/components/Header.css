@@ -1,0 +1,63 @@
+/* Color
+	dark green #003311
+	light green #99cc00
+*/
+
+.navbar_title.navbar {
+	margin-bottom: 0px;
+}
+
+.navbar_title.navbar-default {
+	border-color: transparent;	
+	background-color: #003311;
+	
+}
+
+.navbar_title.navbar-default .navbar-brand, .navbar_title.navbar-default .navbar-nav>li>a {
+	color: #fff;
+}
+
+.navbar_title.navbar-default .navbar-brand:hover, .navbar_title.navbar-default .navbar-nav>li>a:hover {
+	color: #99cc00;
+}
+ 
+.navbar_title.navbar {
+    border-radius: 0px;
+}
+
+.navbar_navi.nav-pills > li.active > a {
+	background-color: #99cc00;
+	border-bottom: solid #031;
+	border-radius: 0px;
+	margin: 0px;
+	color: #031;
+	font-weight: bold;
+}
+
+.navbar_navi.nav-pills > li > a {
+	background-color: #99cc00;
+	border-radius: 0px;
+	border-bottom: solid #9c0;
+	margin: 0px;
+	color: #fff;
+}
+
+.navbar_navi.nav-pills>li+li {
+    margin-left: 0px;
+}
+
+.navbar_navi.nav-pills > li.active > a:hover, .navbar_navi.nav-pills > li > a:hover {
+	background-color: #99cc00;
+	border-bottom: solid #031;
+	color: #031;
+	font-weight: bold;
+}
+
+
+
+
+@media (min-width: 768px) {
+	.navbar_title.navbar {
+    	border-radius: 0px;
+	}
+}
