@@ -25,7 +25,8 @@ client.on('message', (topic, payload) => {
 	let msg = payload.toString()
 	console.log(msg)
 
-	let x = firebase.database().ref('test')
+	///////////////// ใส่ข้อมูล
+	let x = firebase.database().ref('test/eiei')
 	x.push({
 			data: msg
 	})
@@ -41,9 +42,8 @@ client.on('message', (topic, payload) => {
 
 	/////////////// on ดึงตลอดเวลา		
 	// firebase.database().ref('test')
-	// 	.once('value')
-	// 	.then((snapshot) => {
-	// 		console.log(snapshot.val())
+	// .on('value', (snapshots) => {
+	// 		console.log(snapshots.val())
 	// 	})
 
 })

@@ -26,6 +26,8 @@ import {
 	Schedule
 }from 'containers/schedule'
 import Test from 'containers/test'
+import Test2 from 'containers/Test2'
+
 
 
 
@@ -33,6 +35,7 @@ import Test from 'containers/test'
 
 export default (store, history) => (
 	<Router history={syncHistoryWithStore(history, store)}>
+		<Route path='test2' component={Test2} />
 		<Route path='/' component={App}>
 			<IndexRoute component={Building} />
 			<Route path='test' component={Test} />
