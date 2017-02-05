@@ -67,15 +67,6 @@ class Room extends Component {
 				      </FormControl>
 				    </FormGroup>
 
-				      <FormGroup controlId="formControlsSelect">
-				      
-				      <FormControl componentClass="select" placeholder="select">
-				        <option value="select">Sort by</option>
-				        <option value="other">Descending Order</option>
-				        <option value="other">Ascending Order</option>
-				      </FormControl>
-				    </FormGroup>
-
 				    <Button bsStyle="danger">Submit</Button>
 				    </ButtonToolbar>
 
@@ -113,7 +104,7 @@ class Room extends Component {
 					<div className='detail_overview'>
 						<br />
 						<h4>DATE : <span>20 Jan 2017</span></h4>
-						<h4>ENERGY TOTAL : 2000 </h4>
+						<h4>PERFORMANCE : 2000 </h4>
 						<h4>BUILDING : <span>15</span> , FLOOR : <span>2</span> , ROOM : <span>201</span></h4> 
 						<h4>DESCRIPTION : ......</h4>
 						<Link to='infodevice/editdevice'>
@@ -141,7 +132,7 @@ class Room extends Component {
 					<div className='detail_overview'>
 						<br />
 						<h4>DATE : <span>20 Jan 2017</span></h4>
-						<h4>ENERGY TOTAL : 2000 </h4>
+						<h4>PERFORMANCE : 2000 </h4>
 						<h4>BUILDING : <span>15</span> , FLOOR : <span>2</span> , ROOM : <span>201</span></h4> 
 						<h4>DESCRIPTION : ......</h4>
 						<Link to='infodevice/editdevice'>
@@ -167,7 +158,7 @@ class Room extends Component {
 					<div className='detail_overview'>
 						<br />
 						<h4>DATE : <span>20 Jan 2017</span></h4>
-						<h4>ENERGY TOTAL : 2000 </h4>
+						<h4>PERFORMANCE : 2000 </h4>
 						<h4>BUILDING : <span>15</span> , FLOOR : <span>2</span> , ROOM : <span>201</span></h4> 
 						<h4>DESCRIPTION : ......</h4>
 						<Link to='infodevice/editdevice'>
@@ -196,7 +187,7 @@ class Room extends Component {
 					<div className='detail_overview'>
 						<br />
 						<h4>DATE : <span>20 Jan 2017</span></h4>
-						<h4>ENERGY TOTAL : 2000 </h4>
+						<h4>PERFORMANCE : 2000 </h4>
 						<h4>BUILDING : <span>15</span> , FLOOR : <span>2</span> , ROOM : <span>201</span></h4> 
 						<h4>DESCRIPTION : ......</h4>
 						<Link to='infodevice/editdevice'>
@@ -224,7 +215,7 @@ class Room extends Component {
 					<div className='detail_overview'>
 						<br />
 						<h4>DATE : <span>20 Jan 2017</span></h4>
-						<h4>ENERGY TOTAL : 2000 </h4>
+						<h4>PERFORMANCE : 2000 </h4>
 						<h4>BUILDING : <span>15</span> , FLOOR : <span>2</span> , ROOM : <span>201</span></h4> 
 						<h4>DESCRIPTION : ......</h4>
 						<Link to='infodevice/editdevice'>

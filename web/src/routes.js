@@ -38,10 +38,6 @@ export default (store, history) => (
 		<Route path='test2' component={Test2} />
 		<Route path='/' component={App}>
 			<IndexRoute component={Building} />
-			<Route path='test' component={Test} />
-			<Route path='eachbuilding' component={EachBuilding} />
-			<Route path='floor' component={Floor} />
-			<Route path='room' component={Room} />
 		</Route>
 		<Route path='/infodevice' component={App}>
 			<IndexRoute component={Room} />

@@ -95,21 +95,21 @@ class Test extends Component {
 			      <BigCalendar
 			        {...this.props}
 			        events={events}
-			        defaultDate={new Date(2015, 3, 1)}
+			        defaultDate={new Date(2017, 1, 6)}
 			      />
 			</div>
 		)
 	}
 }
 
-Test = reduxForm({
-	form: 'test'
-})(Test)
+// Test = reduxForm({
+// 	form: 'test'
+// })(Test)
 
 const selector = formValueSelector('test')
 
 const mapStateToProps = (state) => ({
-	aaa: selector(state, 'eiei')
+	// aaa: selector(state, 'eiei')
 })
 
 const mapDispatchToProps = (dispatch) => ({

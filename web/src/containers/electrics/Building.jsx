@@ -152,15 +152,6 @@ class Building extends Component {
 				      </FormControl>
 				    </FormGroup>
 
-				      <FormGroup controlId="formControlsSelect">
-				      
-				      <FormControl componentClass="select" placeholder="select">
-				        <option value="select">Sort by</option>
-				        <option value="other">Descending Order</option>
-				        <option value="other">Ascending Order</option>
-				      </FormControl>
-				    </FormGroup>
-
 				    <Button bsStyle="danger">Submit</Button>
 				    </ButtonToolbar>
 			    </div>

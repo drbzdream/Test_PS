@@ -17,17 +17,21 @@ const client = mqtt.connect(config.mqtt)
 
 client.on('connect', () => {
 	console.log('connected')
-	client.subscribe('/a')
+	client.subscribe('#')
 	configFirebase()
 })
  
 client.on('message', (topic, payload) => {
 	let msg = payload.toString()
+	// let top = topic.toString()
 	console.log(msg)
 
 	///////////////// ใส่ข้อมูล
-	let x = firebase.database().ref('test/eiei')
+	let x = firebase.database().ref('test')
+
 	x.push({
+			// top: top
+			topic : topic,
 			data: msg
 	})
 
