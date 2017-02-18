@@ -23,17 +23,19 @@ client.on('connect', () => {
  
 client.on('message', (topic, payload) => {
 	let msg = payload.toString()
-	// let top = topic.toString()
-	console.log(msg)
+	let top = topic.toString()
+
+	console.log("Topic: " + top)
+	console.log("Message: " + msg)
 
 	///////////////// ใส่ข้อมูล
-	let x = firebase.database().ref('test')
+	// let x = firebase.database().ref('test')
 
-	x.push({
-			// top: top
-			topic : topic,
-			data: msg
-	})
+	// x.push({
+	// 		// top: top
+	// 		topic : topic,
+	// 		data: msg
+	// })
 
 
 	///////////////// once ดึงครั้งเดียว

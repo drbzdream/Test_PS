@@ -43,23 +43,18 @@ const { getUsers } = actions
 
 
 const data = [
-      {name: 'Floor 1', Energy: 4000, pv: 2400, amt: 2400},
-      {name: 'Floor 2', Energy: 3000, pv: 1398, amt: 2210},
-      {name: 'Floor 3', Energy: 2000, pv: 9800, amt: 2290},
-      {name: 'Floor 4', Energy: 2780, pv: 3908, amt: 2000},
-      {name: 'Floor 5', Energy: 1890, pv: 4800, amt: 2181},
-      {name: 'Floor 6', Energy: 2390, pv: 3800, amt: 2500},
-      {name: 'Floor 7', Energy: 3490, pv: 4300, amt: 2100},
+      {name: 'Room 202', Energy: 7000, pv: 2400, amt: 2400},
+      {name: 'Room 203', Energy: 3000, pv: 1398, amt: 2210},
 ]
 
 const datatime = [
-      {name: '7.00 am', Floor1: 4000, Floor2: 2400, amt: 2400},
-      {name: '8.00 am', Floor1: 3000, Floor2: 1398, amt: 2210},
-      {name: '9.00 am', Floor1: 2000, Floor2: 9800, amt: 2290},
-      {name: '10.00 am', Floor1: 2780, Floor2: 3908, amt: 2000},
-      {name: '11.00 am', Floor1: 1890, Floor2: 4800, amt: 2181},
-      {name: '12.00 pm', Floor1: 2390, Floor2: 3800, amt: 2500},
-      {name: '01.00 pm', Floor1: 3490, Floor2: 4300, amt: 2100},
+      {name: '7.00 am', Floor1: 4000, Floor2: 2400, Floor3: 7000, amt: 2400},
+      {name: '8.00 am', Floor1: 3000, Floor2: 1398, Floor3: 6400, amt: 2210},
+      {name: '9.00 am', Floor1: 2000, Floor2: 9800, Floor3: 5300, amt: 2290},
+      {name: '10.00 am', Floor1: 2780, Floor2: 3908, Floor3: 4500, amt: 2000},
+      {name: '11.00 am', Floor1: 1890, Floor2: 4800, Floor3: 5700, amt: 2181},
+      {name: '12.00 pm', Floor1: 2390, Floor2: 3800, Floor3: 6100, amt: 2500},
+      {name: '01.00 pm', Floor1: 3490, Floor2: 4300, Floor3: 7000, amt: 2100},
 ]
 
 const datatime2 = [
@@ -72,20 +67,10 @@ const datatime2 = [
       {name: '01.00 pm', Energy: 3490, pv: 4300, amt: 2100},
 ]
 
-const data01 = [{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
-                  {name: 'Group C', value: 300}, {name: 'Group D', value: 200}]
+const data01 = [{name: 'Room 202', value: 400}, {name: 'Room 203', value: 300}]
 
-const data02 = [{name: 'A1', value: 100},
-                    {name: 'A2', value: 300},
-                   {name: 'B1', value: 100},
-                   {name: 'B2', value: 80},
-                   {name: 'B3', value: 40},
-                   {name: 'B4', value: 30},
-                   {name: 'B5', value: 50},
-                  {name: 'C1', value: 100},
-                  {name: 'C2', value: 200},
-                   {name: 'D1', value: 150},
-                   {name: 'D2', value: 50}]
+const data02 = [{name: 'Room 202', value: 400},
+                    {name: 'Room 203', value: 300}]
 
 
 class Building extends Component {
@@ -107,62 +92,15 @@ class Building extends Component {
 
 		return (
 			<div className='show_overview'>
-				<h3>OVERALL DATA</h3> 
-				
-
-				<div className="filter">
-				    <ButtonToolbar>
-				    <p className="p_button"> Filter By : </p>
-				      <FormGroup controlId="formControlsSelect">
-				      
-				      <FormControl componentClass="select" placeholder="select">
-				        <option value="select">Building</option>
-				        <option value="other">Building1</option>
-				        <option value="other">Building2</option>
-				        <option value="other">Building3</option>
-				      </FormControl>
-				    </FormGroup>
-
-				      <FormGroup controlId="formControlsSelect">
-				      
-				      <FormControl componentClass="select" placeholder="select">
-				        <option value="select">Floor</option>
-				        <option value="other">Floor1</option>
-				        <option value="other">Floor2</option>
-				        <option value="other">Floor3</option>
-				      </FormControl>
-				    </FormGroup>
-
-				      <FormGroup controlId="formControlsSelect">
-				      
-				      <FormControl componentClass="select" placeholder="select">
-				        <option value="select">Room</option>
-				        <option value="other">Room1</option>
-				        <option value="other">Room2</option>
-				        <option value="other">Room3</option>
-				      </FormControl>
-				    </FormGroup>
-
-				      <FormGroup controlId="formControlsSelect">
-				     
-				      <FormControl componentClass="select" placeholder="select">
-				        <option value="select">Stutas</option>
-				        <option value="other">Avaliable</option>
-				        <option value="other">Busy</option>
-				      </FormControl>
-				    </FormGroup>
-
-				    <Button bsStyle="danger">Submit</Button>
-				    </ButtonToolbar>
-			    </div>
-
-
-			    	<h3>TOTAL ENERGY</h3> 
 
 				
+
+			    	<h2>Overall Data</h2> 
+
+						<p className="title_echarge">Electricity Charge</p>
 					<PieChart width={400} height={400} >
-	        			<Pie data={data01} cx={200} cy={200} outerRadius={110} fill="#8884d8"/>
-	        			<Pie data={data02} cx={200} cy={200} innerRadius={120} outerRadius={140} fill="#82ca9d" label/>
+	        			<Pie data={data02} cx={200} cy={200} innerRadius={90} outerRadius={140} fill="#82ca9d" label/>
+	        			<Tooltip/>
 	       			</PieChart>
 
 	       		<div className="total_chart">
@@ -177,11 +115,90 @@ class Building extends Component {
 				     </BarChart>
 
        			</div>
-				
-				
+
+			
+			      
+			      <h3>Resource Consumption</h3>
+
+			      <div className="filter">
+				    <ButtonToolbar>
+				    <p className="p_button"> Filter By : </p>
+				      
+
+				      <FormGroup controlId="formControlsSelect">
+				      
+				      <FormControl componentClass="select" placeholder="select">
+				        <option value="select">Room</option>
+				        <option value="other">Room 202</option>
+				        <option value="other">Room 203</option>
+				      </FormControl>
+				    </FormGroup>
+
+				      <p className="p_button"> Mouth</p>
+				     <FormGroup controlId="formControlsSelect">
+				      
+				      <FormControl componentClass="select" placeholder="select">
+				        <option value="select">Mouth</option>
+				        <option value="other">January</option>
+				        <option value="other">Febuary</option>
+				      </FormControl>
+				    </FormGroup>
+				    <p className="p_button"> Day</p>
+				      <FormGroup controlId="formControlsSelect">
+				      
+				      <FormControl componentClass="select" placeholder="select">
+				        <option value="select">Day</option>
+				        <option value="other">1</option>
+				        <option value="other">2</option>
+				        <option value="other">3</option>
+				        <option value="other">4</option>
+				      </FormControl>
+				    </FormGroup>
+				    
+
+				    <Button bsStyle="danger">Submit</Button>
+				    </ButtonToolbar>
+			    </div>
+
+
+			      	<div className="conp_chart">
+			        <AreaChart width={600} height={200} data={datatime2} syncId="anyId"
+			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+			          <XAxis dataKey="name"/>
+			          <YAxis/>
+			          <CartesianGrid strokeDasharray="3 3"/>
+			          <Tooltip/>
+			          <Area type='monotone' dataKey='Energy' stroke='#8884d8' fill='#8884d8' />
+			        </AreaChart>
+			        <p className="name_chart">Energy</p>
+
+			        <LineChart width={600} height={200} data={datatime2} syncId="anyId"
+			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+			          <XAxis dataKey="name"/>
+			          <YAxis/>
+			          <CartesianGrid strokeDasharray="3 3"/>
+			          <Tooltip/>
+			          <Line type='monotone' dataKey='pv' stroke='#82ca9d' fill='#82ca9d' />
+			        </LineChart>
+			        <p className="name_chart">Light</p>
+
+			        <LineChart width={600} height={200} data={datatime2} syncId="anyId"
+			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+			          <XAxis dataKey="name"/>
+			          <YAxis/>
+			          <CartesianGrid strokeDasharray="3 3"/>
+			          <Tooltip/>
+			          <Line type='monotone' dataKey='pv' stroke='#031' fill='#031' />
+			        </LineChart>
+			        <p className="name_chart">Temperature</p>
+			      </div>
+
+
+			     
 				<div className='consumption_data'>
 					<br />
-					<h3>ENERGY USAGE</h3>
+					<h3>Realtime Energy Consumption</h3>
+					<br />
 				</div>
 
 				<div className="stat_demo">
@@ -192,30 +209,9 @@ class Building extends Component {
 					    <CartesianGrid strokeDasharray="3 3"/>
 					    <Tooltip/>
 					    <Legend />
-					    <Line type="monotone" dataKey="Floor1" stroke="#8884d8" activeDot={{r: 8}}/>
-					    <Line type="monotone" dataKey="Floor2" stroke="#82ca9d" />
+					    <Line type="monotone" dataKey="Floor2" stroke="#031" activeDot={{r: 8}}/>
 					</LineChart>
 				</div>
-
-			
-
-				<div className="conp_chart">
-				<h3>CONSUMPTION ENERGY</h3>
-				<AreaChart width={600} height={400} data={datatime2}
-			            margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-			        <XAxis dataKey="name"/>
-			        <YAxis/>
-			        <CartesianGrid strokeDasharray="3 3"/>
-			        <Tooltip/>
-			        <Area type='monotone' dataKey='Energy' stroke='#8884d8' fill='#8884d8' />
-			      </AreaChart>
-
-			      </div>
-
-
-
-			     
-					
 				
 
 

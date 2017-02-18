@@ -22,57 +22,11 @@ class Room extends Component {
 	render(){
 		return(
 			<div className='show_room'>
-				<br />
+			<br />
+				
 				<div className='each_room-detail'>
 
-				<div className="filter">
-				    <ButtonToolbar>
-				    <p className="p_button"> Filter By : </p>
-				      <FormGroup controlId="formControlsSelect">
-				      
-				      <FormControl componentClass="select" placeholder="select">
-				        <option value="select">Building</option>
-				        <option value="other">Building1</option>
-				        <option value="other">Building2</option>
-				        <option value="other">Building3</option>
-				      </FormControl>
-				    </FormGroup>
-
-				      <FormGroup controlId="formControlsSelect">
-				      
-				      <FormControl componentClass="select" placeholder="select">
-				        <option value="select">Floor</option>
-				        <option value="other">Floor1</option>
-				        <option value="other">Floor2</option>
-				        <option value="other">Floor3</option>
-				      </FormControl>
-				    </FormGroup>
-
-				      <FormGroup controlId="formControlsSelect">
-				      
-				      <FormControl componentClass="select" placeholder="select">
-				        <option value="select">Room</option>
-				        <option value="other">Room1</option>
-				        <option value="other">Room2</option>
-				        <option value="other">Room3</option>
-				      </FormControl>
-				    </FormGroup>
-
-				      <FormGroup controlId="formControlsSelect">
-				     
-				      <FormControl componentClass="select" placeholder="select">
-				        <option value="select">Stutas</option>
-				        <option value="other">Avaliable</option>
-				        <option value="other">Busy</option>
-				      </FormControl>
-				    </FormGroup>
-
-				    <Button bsStyle="danger">Submit</Button>
-				    </ButtonToolbar>
-
-				    
-
-			    </div>
+				
 				<br />
 				<br />
 				</div>
@@ -82,86 +36,32 @@ class Room extends Component {
 						<h3>OVERALL DEVICE</h3>
 					</div>
 					<div>
-						<h3>AMOUNT : <span>20 Device</span></h3>
+						<h3>AMOUNT : <span>1 Device</span></h3>
 					</div>
 					
 				</div>
 
 				<div className='device_status'>
 					<div>
-						<h3>AIR CONDITION</h3>
+						<h3>My Computer</h3>
 					</div>
 					<div>
-						<h3>STATUS <Glyphicon glyph="eye-open" /></h3>
+						<h3>Status : Normal</h3>
 					</div>
 					
 				</div>
 				<div className='detail_floor'>
-					<p>NAME AIR201</p>
+					<p>NAME Titivorada's macbook</p>
 					<div className='chart_overview'>
 						<Image src={testpic} />
 					</div>
 					<div className='detail_overview'>
 						<br />
-						<h4>DATE : <span>20 Jan 2017</span></h4>
-						<h4>PERFORMANCE : 2000 </h4>
-						<h4>BUILDING : <span>15</span> , FLOOR : <span>2</span> , ROOM : <span>201</span></h4> 
-						<h4>DESCRIPTION : ......</h4>
-						<Link to='infodevice/editdevice'>
-							<Button bsStyle="danger">Edit</Button>
-						</Link>
-					</div>
-				
-					
-				</div>
-
-				<div className='device_status'>
-					<div>
-						<h3>AIR CONDITION</h3>
-					</div>
-					<div>
-						<h3>STATUS <Glyphicon glyph="eye-open" /></h3>
-					</div>
-					
-				</div>
-				<div className='detail_floor'>
-					<p>NAME AIR201</p>
-					<div className='chart_overview'>
-						<Image src={testpic} />
-					</div>
-					<div className='detail_overview'>
-						<br />
-						<h4>DATE : <span>20 Jan 2017</span></h4>
-						<h4>PERFORMANCE : 2000 </h4>
-						<h4>BUILDING : <span>15</span> , FLOOR : <span>2</span> , ROOM : <span>201</span></h4> 
-						<h4>DESCRIPTION : ......</h4>
-						<Link to='infodevice/editdevice'>
-							<Button bsStyle="danger">Edit</Button>
-						</Link>
-					</div>	
-				</div>
-
-				<div className='device_status'>
-					<div>
-						<h3>AIR CONDITION</h3>
-					</div>
-					<div>
-						<h3>STATUS <Glyphicon glyph="eye-open" /></h3>
-					</div>
-					
-				</div>
-				<div className='detail_floor'>
-					<p>NAME AIR201</p>
-					<div className='chart_overview'>
-						<Image src={testpic} />
-					</div>
-					<div className='detail_overview'>
-						<br />
-						<h4>DATE : <span>20 Jan 2017</span></h4>
-						<h4>PERFORMANCE : 2000 </h4>
-						<h4>BUILDING : <span>15</span> , FLOOR : <span>2</span> , ROOM : <span>201</span></h4> 
-						<h4>DESCRIPTION : ......</h4>
-						<Link to='infodevice/editdevice'>
+						<h4>DATE : <span>10 Feb 2017</span></h4>
+						<h4>PERFORMANCE : 99% </h4>
+						<h4>BUILDING : <span>15</span> , FLOOR : <span>7</span> , ROOM : <span>710</span></h4> 
+						<h4>DESCRIPTION : -</h4>
+						<Link to=''>
 							<Button bsStyle="danger">Edit</Button>
 						</Link>
 					</div>
@@ -170,62 +70,7 @@ class Room extends Component {
 				</div>
 
 
-				<div className='device_status'>
-					<div>
-						<h3>AIR CONDITION</h3>
-					</div>
-					<div>
-						<h3>STATUS <Glyphicon glyph="eye-open" /></h3>
-					</div>
-					
-				</div>
-				<div className='detail_floor'>
-					<p>NAME AIR201</p>
-					<div className='chart_overview'>
-						<Image src={testpic} />
-					</div>
-					<div className='detail_overview'>
-						<br />
-						<h4>DATE : <span>20 Jan 2017</span></h4>
-						<h4>PERFORMANCE : 2000 </h4>
-						<h4>BUILDING : <span>15</span> , FLOOR : <span>2</span> , ROOM : <span>201</span></h4> 
-						<h4>DESCRIPTION : ......</h4>
-						<Link to='infodevice/editdevice'>
-							<Button bsStyle="danger">Edit</Button>
-						</Link>
-					</div>
 				
-					
-				</div>
-
-				<div className='device_status'>
-					<div>
-						<h3>AIR CONDITION</h3>
-					</div>
-					<div>
-						<h3>STATUS <Glyphicon glyph="eye-open" /></h3>
-					</div>
-					
-				</div>
-				<div className='detail_floor'>
-					<p>NAME AIR201</p>
-					<div className='chart_overview'>
-						<Image src={testpic} />
-					</div>
-					<div className='detail_overview'>
-						<br />
-						<h4>DATE : <span>20 Jan 2017</span></h4>
-						<h4>PERFORMANCE : 2000 </h4>
-						<h4>BUILDING : <span>15</span> , FLOOR : <span>2</span> , ROOM : <span>201</span></h4> 
-						<h4>DESCRIPTION : ......</h4>
-						<Link to='infodevice/editdevice'>
-							<Button bsStyle="danger">Edit</Button>
-						</Link>
-					</div>
-				
-					
-				</div>
-
 			</div>
 			)
 	}

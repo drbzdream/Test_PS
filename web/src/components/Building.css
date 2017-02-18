@@ -2,7 +2,16 @@
 	dark green #003311
 	light green #99cc00
 */
-
+.title_echarge {
+	font-weight: bold;
+	position: absolute;
+	top: 240px;
+    left: 165px;
+    font-size: 20px;
+    width: 100px;
+    text-align: center;
+    color: #031;
+}
 
 .show_overview {
 	margin-top: 30px;
@@ -55,6 +64,7 @@
 	margin-top: 40px;
 	text-align: center;
 	margin-bottom: 40px;
+	/*display: none;*/
 }
 
 .filter .btn-toolbar .btn {
@@ -77,17 +87,76 @@
 .total_chart {
 	position: absolute;
 	right: -10px;
-	top: 330px;
+	top: 160px;
 }
 
 .stat_demo {
 	position: absolute;
 	right: 200px;
+	margin-bottom: 100px;
 }
 
 .conp_chart {
-	position: absolute;
-	right: 200px;
-	top: 1050px;
-	margin-bottom: 100px;
+	position: relative;
+	left: 160px;
+	/*top: 1050px;*/
+	margin-bottom: 80px;
 }
+
+.name_chart {
+	position: relative;
+	right: 160px;
+}
+
+
+
+
+/*
+<div className="filter">
+				    <ButtonToolbar>
+				    <p className="p_button"> Filter By : </p>
+				      <FormGroup controlId="formControlsSelect">
+				      
+				      <FormControl componentClass="select" placeholder="select">
+				        <option value="select">Building</option>
+				        <option value="other">Building1</option>
+				        <option value="other">Building2</option>
+				        <option value="other">Building3</option>
+				      </FormControl>
+				    </FormGroup>
+
+				      <FormGroup controlId="formControlsSelect">
+				      
+				      <FormControl componentClass="select" placeholder="select">
+				        <option value="select">Floor</option>
+				        <option value="other">Floor1</option>
+				        <option value="other">Floor2</option>
+				        <option value="other">Floor3</option>
+				      </FormControl>
+				    </FormGroup>
+
+				      <FormGroup controlId="formControlsSelect">
+				      
+				      <FormControl componentClass="select" placeholder="select">
+				        <option value="select">Room</option>
+				        <option value="other">Room1</option>
+				        <option value="other">Room2</option>
+				        <option value="other">Room3</option>
+				      </FormControl>
+				    </FormGroup>
+
+				      <FormGroup controlId="formControlsSelect">
+				     
+				      <FormControl componentClass="select" placeholder="select">
+				        <option value="select">Stutas</option>
+				        <option value="other">Avaliable</option>
+				        <option value="other">Busy</option>
+				      </FormControl>
+				    </FormGroup>
+
+				    <Button bsStyle="danger">Submit</Button>
+				    </ButtonToolbar>
+
+				    
+
+			    </div>*/
