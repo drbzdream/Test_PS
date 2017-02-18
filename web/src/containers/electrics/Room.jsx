@@ -62,7 +62,7 @@ class Room extends Component {
 						<h4>BUILDING : <span>15</span> , FLOOR : <span>7</span> , ROOM : <span>710</span></h4> 
 						<h4>DESCRIPTION : -</h4>
 						<Link to=''>
-							<Button bsStyle="danger">Edit</Button>
+							<Button bsStyle="info">Edit</Button>
 						</Link>
 					</div>
 				

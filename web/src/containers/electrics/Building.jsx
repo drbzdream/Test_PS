@@ -97,9 +97,9 @@ class Building extends Component {
 
 			    	<h2>Overall Data</h2> 
 
-						<p className="title_echarge">Electricity Charge</p>
+						<p className="title_echarge">Electricity Charge (Baht)</p>
 					<PieChart width={400} height={400} >
-	        			<Pie data={data02} cx={200} cy={200} innerRadius={90} outerRadius={140} fill="#82ca9d" label/>
+	        			<Pie data={data02} cx={200} cy={200} innerRadius={90} outerRadius={140} fill="#d9534f" label/>
 	        			<Tooltip/>
 	       			</PieChart>
 
@@ -111,7 +111,7 @@ class Building extends Component {
 				       <CartesianGrid strokeDasharray="3 3"/>
 				       <Tooltip/>
 				       <Legend />
-				       <Bar dataKey="Energy" fill="#8884d8" />
+				       <Bar dataKey="Energy" fill="#5bc0de" />
 				     </BarChart>
 
        			</div>
@@ -168,7 +168,7 @@ class Building extends Component {
 			          <YAxis/>
 			          <CartesianGrid strokeDasharray="3 3"/>
 			          <Tooltip/>
-			          <Area type='monotone' dataKey='Energy' stroke='#8884d8' fill='#8884d8' />
+			          <Area type='monotone' dataKey='Energy' stroke='#eea236' fill='#f0ad4e' activeDot={{r: 6}}/>
 			        </AreaChart>
 			        <p className="name_chart">Energy</p>
 
@@ -178,7 +178,7 @@ class Building extends Component {
 			          <YAxis/>
 			          <CartesianGrid strokeDasharray="3 3"/>
 			          <Tooltip/>
-			          <Line type='monotone' dataKey='pv' stroke='#82ca9d' fill='#82ca9d' />
+			          <Line type='monotone' dataKey='pv' stroke='#d9534f' activeDot={{r: 6}}/>
 			        </LineChart>
 			        <p className="name_chart">Light</p>
 
@@ -188,7 +188,7 @@ class Building extends Component {
 			          <YAxis/>
 			          <CartesianGrid strokeDasharray="3 3"/>
 			          <Tooltip/>
-			          <Line type='monotone' dataKey='pv' stroke='#031' fill='#031' />
+			          <Line type='monotone' dataKey='pv' stroke='#5bc0de' activeDot={{r: 6}}/>
 			        </LineChart>
 			        <p className="name_chart">Temperature</p>
 			      </div>
@@ -209,7 +209,7 @@ class Building extends Component {
 					    <CartesianGrid strokeDasharray="3 3"/>
 					    <Tooltip/>
 					    <Legend />
-					    <Line type="monotone" dataKey="Floor2" stroke="#031" activeDot={{r: 8}}/>
+					    <Line type="monotone" dataKey="Floor2" stroke="#9c0" activeDot={{r: 6}}/>
 					</LineChart>
 				</div>
 				
