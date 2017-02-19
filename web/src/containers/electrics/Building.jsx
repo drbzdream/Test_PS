@@ -36,6 +36,7 @@ import 'components/Building.css'
 import {
 	testpic
 } from 'assets/images'
+import moment from 'moment'
 
 
 
@@ -150,9 +151,10 @@ class Building extends Component {
 			}
 		})
 
+
 		dreal = this.state.energy_realtime.map((data) => {
 			return ({
-				name: data.timestemp,
+				name: moment(data.timestemp).format("hh:mm:ss"),
 				energy: data.energy_value
 			})
 		})
@@ -171,6 +173,7 @@ class Building extends Component {
 	       			</PieChart>
 
 	       		<div className="total_chart">
+	       		<p><b>Total Energy(kWh)</b></p>
 	       			<BarChart width={550} height={250} data={data}
 				            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 				       <XAxis dataKey="name"/>
@@ -265,7 +268,7 @@ class Building extends Component {
 			          <Tooltip/>
 			          <Area isAnimationActive={false} type='monotone' dataKey='Energy' stroke='#eea236' fill='#f0ad4e' activeDot={{r: 6}}/>
 			        </AreaChart>
-			        <p className="name_chart">Energy</p>
+			        <p className="name_chart">Energy(kWh)</p>
 
 			        <LineChart width={600} height={200} data={dlight} syncId="anyId"
 			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
@@ -275,7 +278,7 @@ class Building extends Component {
 			          <Tooltip/>
 			          <Line isAnimationActive={false} type='monotone' dataKey='Light' stroke='#d9534f' activeDot={{r: 6}}/>
 			        </LineChart>
-			        <p className="name_chart">Light</p>
+			        <p className="name_chart">Light(Lux)</p>
 
 			        <LineChart width={600} height={200} data={dtem} syncId="anyId"
 			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
@@ -285,7 +288,7 @@ class Building extends Component {
 			          <Tooltip/>
 			          <Line isAnimationActive={false} type='monotone' dataKey='Temperature' stroke='#5bc0de' activeDot={{r: 6}}/>
 			        </LineChart>
-			        <p className="name_chart">Temperature</p>
+			        <p className="name_chart">Temperature(C)</p>
 			      </div>
 
 
@@ -297,7 +300,7 @@ class Building extends Component {
 				</div>
 
 				<div className="stat_demo">
-					<LineChart width={600} height={300} data={dreal}
+					<LineChart width={800} height={300} data={dreal}
 	            	margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 					    <XAxis dataKey="name"/>
 						<YAxis/>
