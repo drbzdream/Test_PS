@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router' 
+import _ from 'lodash'
 import {
 	LineChart, 
 	Line, 
@@ -16,6 +17,7 @@ import {
 	BarChart, 
 	Bar
 } from 'recharts'
+import socket from 'socket.io-client'
 import actions from 'actions'
 import {
 	Nav,
@@ -37,9 +39,9 @@ import {
 
 
 
-const { getUsers } = actions
+const { dataAction } = actions
 
-
+let tmp_dreal = []
 
 
 const data = [
@@ -72,23 +74,97 @@ const data01 = [{name: 'Room 202', value: 400}, {name: 'Room 203', value: 300}]
 const data02 = [{name: 'Room 202', value: 400},
                     {name: 'Room 203', value: 300}]
 
-
 class Building extends Component {
 
 	state = {
+		power_realtime: []
 	}
 
 	componentWillMount(){
-		this.props.getUsers()
+		this.props.dataAction()
+        const io = socket('http://localhost:9090')
+		io.on('power_realtime', (response) => {
+			this.setState({ power_realtime: response})
+			// dispatch(requestSuccess(response))
+		})
 	}
 
 	eiei(){
 		this.setState({x: this.state.x +1})
 	}
 
+	eiei2(e){
+		let { mouth, day, room } = this.refs.form_filter
+		e.preventDefault()
+		console.log(this.refs.form_filter.mouth.value)
+		let x = `2015-${mouth.value}-${day.value}`
+		this.props.dataAction(room.value, x)
+	}
 
+	shouldComponentUpdate(nextProps, nextState){
+		return nextState.power_realtime != this.state.power_realtime
+	}
 
 	render(){
+		let droom = [], dlight = [], dtem = [], dreal = []
+
+		let { room, light, temperature } = this.props.power_resources.data
+
+		delete room.id
+		delete room.room
+		delete room.day
+		delete room.created_at
+		delete room.updated_at
+
+		delete light.id
+		delete light.room
+		delete light.day
+		delete light.created_at
+		delete light.updated_at
+
+		delete temperature.id
+		delete temperature.room
+		delete temperature.day
+		delete temperature.created_at
+		delete temperature.updated_at
+
+
+		droom = _.map(room, (data, key) => {
+			return ({
+				name: key,
+				Energy: data
+			})
+		})
+
+		dlight = _.map(light, (data, key) => {
+			return {
+				name: key,
+				Light: data
+			}
+		})
+
+		dtem = _.map(temperature, (data, key) => {
+			return {
+				name: key,
+				Temperature: data
+			}
+		})
+
+		dreal = this.state.power_realtime.map((data) => {
+			return ({
+				name: data.timestemp,
+				Power: data.power_value
+			})
+		})
+		// const datatime2 = [
+		//       {name: '7.00 am', Energy: 4000, pv: 2400, amt: 2400},
+		//       {name: '8.00 am', Energy: 3000, pv: 1398, amt: 2210},
+		//       {name: '9.00 am', Energy: 2000, pv: 9800, amt: 2290},
+		//       {name: '10.00 am', Energy: 2780, pv: 3908, amt: 2000},
+		//       {name: '11.00 am', Energy: 1890, pv: 4800, amt: 2181},
+		//       {name: '12.00 pm', Energy: 2390, pv: 3800, amt: 2500},
+		//       {name: '01.00 pm', Energy: 3490, pv: 4300, amt: 2100},
+		// ]
 
 		return (
 			<div className='show_overview'>
@@ -120,49 +196,50 @@ class Building extends Component {
 			      
 			      <h3>Resource Consumption</h3>
 
-			      <div className="filter">
+			      <form onSubmit={this.eiei2.bind(this)} className="filter" ref='form_filter'>
 				    <ButtonToolbar>
 				    <p className="p_button"> Filter By : </p>
 				      
 
 				      <FormGroup controlId="formControlsSelect">
 				      
-				      <FormControl componentClass="select" placeholder="select">
+				      <FormControl name='room' componentClass="select" placeholder="select" ref='room'>
 				        <option value="select">Room</option>
-				        <option value="other">Room 202</option>
-				        <option value="other">Room 203</option>
+				        <option value="202">Room 202</option>
+				        <option value="203">Room 203</option>
 				      </FormControl>
 				    </FormGroup>
 
 				      <p className="p_button"> Mouth</p>
-				     <FormGroup controlId="formControlsSelect">
+				     <FormGroup name='mouth' controlId="formControlsSelect">
 				      
-				      <FormControl componentClass="select" placeholder="select">
+				      <FormControl name='mouth' componentClass="select" placeholder="select" ref='mouth'>
 				        <option value="select">Mouth</option>
-				        <option value="other">January</option>
-				        <option value="other">Febuary</option>
+				        <option value="01">January</option>
+				        <option value="02">Febuary</option>
 				      </FormControl>
 				    </FormGroup>
 				    <p className="p_button"> Day</p>
 				      <FormGroup controlId="formControlsSelect">
 				      
-				      <FormControl componentClass="select" placeholder="select">
+				      <FormControl name='day' componentClass="select" placeholder="select" ref='day'>
 				        <option value="select">Day</option>
-				        <option value="other">1</option>
-				        <option value="other">2</option>
-				        <option value="other">3</option>
-				        <option value="other">4</option>
+				        <option value="01">1</option>
+				        <option value="02">2</option>
+				        <option value="03">3</option>
+				        <option value="04">4</option>
+				        <option value="05">5</option>
 				      </FormControl>
 				    </FormGroup>
 				    
 
-				    <Button bsStyle="danger">Submit</Button>
+				    <Button bsStyle="danger" type='submit'>Submit</Button>
 				    </ButtonToolbar>
-			    </div>
+			    </form>
 
 
 			      	<div className="conp_chart">
-			        <AreaChart width={600} height={200} data={datatime2} syncId="anyId"
+			        <AreaChart width={600} height={200} data={droom} syncId="anyId"
 			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 			          <XAxis dataKey="name"/>
 			          <YAxis/>
@@ -172,23 +249,23 @@ class Building extends Component {
 			        </AreaChart>
 			        <p className="name_chart">Energy</p>
 
-			        <LineChart width={600} height={200} data={datatime2} syncId="anyId"
+			        <LineChart width={600} height={200} data={dlight} syncId="anyId"
 			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 			          <XAxis dataKey="name"/>
 			          <YAxis/>
 			          <CartesianGrid strokeDasharray="3 3"/>
 			          <Tooltip/>
-			          <Line type='monotone' dataKey='pv' stroke='#d9534f' activeDot={{r: 6}}/>
+			          <Line type='monotone' dataKey='Light' stroke='#d9534f' activeDot={{r: 6}}/>
 			        </LineChart>
 			        <p className="name_chart">Light</p>
 
-			        <LineChart width={600} height={200} data={datatime2} syncId="anyId"
+			        <LineChart width={600} height={200} data={dtem} syncId="anyId"
 			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 			          <XAxis dataKey="name"/>
 			          <YAxis/>
 			          <CartesianGrid strokeDasharray="3 3"/>
 			          <Tooltip/>
-			          <Line type='monotone' dataKey='pv' stroke='#5bc0de' activeDot={{r: 6}}/>
+			          <Line type='monotone' dataKey='Temperature' stroke='#5bc0de' activeDot={{r: 6}}/>
 			        </LineChart>
 			        <p className="name_chart">Temperature</p>
 			      </div>
@@ -202,33 +279,33 @@ class Building extends Component {
 				</div>
 
 				<div className="stat_demo">
-					<LineChart width={600} height={300} data={datatime}
+					<LineChart width={600} height={300} data={dreal}
 	            	margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 					    <XAxis dataKey="name"/>
 						<YAxis/>
 					    <CartesianGrid strokeDasharray="3 3"/>
 					    <Tooltip/>
 					    <Legend />
-					    <Line type="monotone" dataKey="Floor2" stroke="#9c0" activeDot={{r: 6}}/>
+					    <Line type="monotone" dataKey="Power" stroke="#9c0" activeDot={{r: 6}}/>
 					</LineChart>
 				</div>
 				
 
 
-			      
-
+			   
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = (state) => ({ //เอา state จาก store มาใส่ product
-	users: state.users.get.data
+	power_resources: state.power_resources
 })
 
 const mapDispatchToProps = (dispatch) => ({ // เพื่อให้ส่งค่าให้ reducer แล้วจะได้เก็บค่าลงใน store 
-	getUsers() { 
-	    dispatch(getUsers())
+	dataAction(room, day){
+		console.log(room, day)
+		dispatch(dataAction(room, day))
 	}
 })
 
