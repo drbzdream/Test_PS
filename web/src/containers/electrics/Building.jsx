@@ -77,14 +77,14 @@ const data02 = [{name: 'Room 202', value: 400},
 class Building extends Component {
 
 	state = {
-		power_realtime: []
+		energy_realtime: []
 	}
 
 	componentWillMount(){
 		this.props.dataAction()
         const io = socket('http://localhost:9090')
-		io.on('power_realtime', (response) => {
-			this.setState({ power_realtime: response})
+		io.on('energy_realtime', (response) => {
+			this.setState({ energy_realtime: response})
 			// dispatch(requestSuccess(response))
 		})
 	}
@@ -102,7 +102,7 @@ class Building extends Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState){
-		return nextState.power_realtime != this.state.power_realtime
+		return nextState.enegy_realtime != this.state.energy_realtime
 	}
 
 	render(){
@@ -150,21 +150,12 @@ class Building extends Component {
 			}
 		})
 
-		dreal = this.state.power_realtime.map((data) => {
+		dreal = this.state.energy_realtime.map((data) => {
 			return ({
 				name: data.timestemp,
-				Power: data.power_value
+				energy: data.energy_value
 			})
 		})
-		// const datatime2 = [
-		//       {name: '7.00 am', Energy: 4000, pv: 2400, amt: 2400},
-		//       {name: '8.00 am', Energy: 3000, pv: 1398, amt: 2210},
-		//       {name: '9.00 am', Energy: 2000, pv: 9800, amt: 2290},
-		//       {name: '10.00 am', Energy: 2780, pv: 3908, amt: 2000},
-		//       {name: '11.00 am', Energy: 1890, pv: 4800, amt: 2181},
-		//       {name: '12.00 pm', Energy: 2390, pv: 3800, amt: 2500},
-		//       {name: '01.00 pm', Energy: 3490, pv: 4300, amt: 2100},
-		// ]
 
 		return (
 			<div className='show_overview'>
@@ -229,6 +220,33 @@ class Building extends Component {
 				        <option value="03">3</option>
 				        <option value="04">4</option>
 				        <option value="05">5</option>
+				        <option value="06">6</option>
+				        <option value="07">7</option>
+				        <option value="08">8</option>
+				        <option value="09">9</option>
+				        <option value="10">10</option>
+				        <option value="11">11</option>
+				        <option value="12">12</option>
+				        <option value="13">13</option>
+				        <option value="14">14</option>
+				        <option value="15">15</option>
+				        <option value="16">16</option>
+				        <option value="17">17</option>
+				        <option value="18">18</option>
+				        <option value="19">17</option>
+				        <option value="20">20</option>
+				        <option value="21">21</option>
+				        <option value="22">22</option>
+				        <option value="23">23</option>
+				        <option value="24">24</option>
+				        <option value="25">25</option>
+				        <option value="26">26</option>
+				        <option value="27">27</option>
+				        <option value="28">28</option>
+				        <option value="29">29</option>
+				        <option value="30">30</option>
+				        <option value="31">31</option>
+
 				      </FormControl>
 				    </FormGroup>
 				    
@@ -245,7 +263,7 @@ class Building extends Component {
 			          <YAxis/>
 			          <CartesianGrid strokeDasharray="3 3"/>
 			          <Tooltip/>
-			          <Area type='monotone' dataKey='Energy' stroke='#eea236' fill='#f0ad4e' activeDot={{r: 6}}/>
+			          <Area isAnimationActive={false} type='monotone' dataKey='Energy' stroke='#eea236' fill='#f0ad4e' activeDot={{r: 6}}/>
 			        </AreaChart>
 			        <p className="name_chart">Energy</p>
 
@@ -255,7 +273,7 @@ class Building extends Component {
 			          <YAxis/>
 			          <CartesianGrid strokeDasharray="3 3"/>
 			          <Tooltip/>
-			          <Line type='monotone' dataKey='Light' stroke='#d9534f' activeDot={{r: 6}}/>
+			          <Line isAnimationActive={false} type='monotone' dataKey='Light' stroke='#d9534f' activeDot={{r: 6}}/>
 			        </LineChart>
 			        <p className="name_chart">Light</p>
 
@@ -265,7 +283,7 @@ class Building extends Component {
 			          <YAxis/>
 			          <CartesianGrid strokeDasharray="3 3"/>
 			          <Tooltip/>
-			          <Line type='monotone' dataKey='Temperature' stroke='#5bc0de' activeDot={{r: 6}}/>
+			          <Line isAnimationActive={false} type='monotone' dataKey='Temperature' stroke='#5bc0de' activeDot={{r: 6}}/>
 			        </LineChart>
 			        <p className="name_chart">Temperature</p>
 			      </div>
@@ -286,7 +304,7 @@ class Building extends Component {
 					    <CartesianGrid strokeDasharray="3 3"/>
 					    <Tooltip/>
 					    <Legend />
-					    <Line type="monotone" dataKey="Power" stroke="#9c0" activeDot={{r: 6}}/>
+					    <Line type="monotone" dataKey="energy" stroke="#9c0" activeDot={{r: 6}}/>
 					</LineChart>
 				</div>
 				
