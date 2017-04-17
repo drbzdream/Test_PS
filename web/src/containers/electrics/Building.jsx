@@ -39,15 +39,14 @@ import {
 import moment from 'moment'
 
 
-
 const { dataAction } = actions
 
 let tmp_dreal = []
 
 
 const data = [
-      {name: 'Room 202', Energy: 7000, pv: 2400, amt: 2400},
-      {name: 'Room 203', Energy: 3000, pv: 1398, amt: 2210},
+      {name: 'Room 202', Energy: 4644.77, pv: 2400, amt: 2400},
+      {name: 'Room 203', Energy: 4667.89, pv: 1398, amt: 2210},
 ]
 
 const datatime = [
@@ -70,15 +69,20 @@ const datatime2 = [
       {name: '01.00 pm', Energy: 3490, pv: 4300, amt: 2100},
 ]
 
-const data01 = [{name: 'Room 202', value: 400}, {name: 'Room 203', value: 300}]
+const data01 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
 
-const data02 = [{name: 'Room 202', value: 400},
-                    {name: 'Room 203', value: 300}]
+const data02 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
+
+var timefromserver
+
 
 class Building extends Component {
 
 	state = {
-		energy_realtime: []
+		energy_realtime: [],
+		power_realtime: [],
+		time_server: 0,
+		count: 0
 	}
 
 	componentWillMount(){
@@ -86,6 +90,26 @@ class Building extends Component {
         const io = socket('http://localhost:9090')
 		io.on('energy_realtime', (response) => {
 			this.setState({ energy_realtime: response})
+			// dispatch(requestSuccess(response))
+		})
+
+		io.on('power_realtime', (response) => {
+			this.setState({ power_realtime: response})
+			// dispatch(requestSuccess(response))
+		})
+
+		io.on('time_server', (response) => {
+			this.setState({ time_server: response})
+			timefromserver = moment(response)
+			// console.log('time_server(no moment): ' + response)
+			console.log("time_server: " + timefromserver)
+			// dispatch(requestSuccess(response))
+		})
+
+		io.on('count', (response) => {
+			this.setState({ count: response})
+			// console.log('time_server(no moment): ' + response)
+			console.log("count: " + response)
 			// dispatch(requestSuccess(response))
 		})
 	}
@@ -107,7 +131,17 @@ class Building extends Component {
 	}
 
 	render(){
-		let droom = [], dlight = [], dtem = [], dreal = []
+		//time
+		// var web_time = moment()
+		// var web_time_tmp = new Date()
+		// console.log("time_web: " + web_time)
+		// // console.log('time_server(no moment): ' + web_time_tmp)
+
+		// let timeDiff_web_server = moment.duration(web_time - timefromserver, 'milliseconds')
+		// console.log('Different: ' + timeDiff_web_server)
+
+
+		let droom = [], dlight = [], dtem = [], dreal = [], drealpower = [] 
 
 		let { room, light, temperature } = this.props.power_resources.data
 
@@ -155,7 +189,14 @@ class Building extends Component {
 		dreal = this.state.energy_realtime.map((data) => {
 			return ({
 				name: moment(data.timestemp).format("hh:mm:ss"),
-				energy: data.energy_value
+				power: data.energy_value
+			})
+		})
+
+		drealpower = this.state.power_realtime.map((data) => {
+			return ({
+				name: data.timestemp,
+				current: data.power_value
 			})
 		})
 
@@ -165,7 +206,7 @@ class Building extends Component {
 				
 
 			    	<h2>Overall Data</h2> 
-
+			    	<h4>Latest Mouth</h4> 
 						<p className="title_echarge">Electricity Charge (Baht)</p>
 					<PieChart width={400} height={400} >
 	        			<Pie data={data02} cx={200} cy={200} innerRadius={90} outerRadius={140} fill="#d9534f" label/>
@@ -188,109 +229,7 @@ class Building extends Component {
 
 			
 			      
-			      <h3>Resource Consumption</h3>
-
-			      <form onSubmit={this.eiei2.bind(this)} className="filter" ref='form_filter'>
-				    <ButtonToolbar>
-				    <p className="p_button"> Filter By : </p>
-				      
-
-				      <FormGroup controlId="formControlsSelect">
-				      
-				      <FormControl name='room' componentClass="select" placeholder="select" ref='room'>
-				        <option value="select">Room</option>
-				        <option value="202">Room 202</option>
-				        <option value="203">Room 203</option>
-				      </FormControl>
-				    </FormGroup>
-
-				      <p className="p_button"> Mouth</p>
-				     <FormGroup name='mouth' controlId="formControlsSelect">
-				      
-				      <FormControl name='mouth' componentClass="select" placeholder="select" ref='mouth'>
-				        <option value="select">Mouth</option>
-				        <option value="01">January</option>
-				        <option value="02">Febuary</option>
-				      </FormControl>
-				    </FormGroup>
-				    <p className="p_button"> Day</p>
-				      <FormGroup controlId="formControlsSelect">
-				      
-				      <FormControl name='day' componentClass="select" placeholder="select" ref='day'>
-				        <option value="select">Day</option>
-				        <option value="01">1</option>
-				        <option value="02">2</option>
-				        <option value="03">3</option>
-				        <option value="04">4</option>
-				        <option value="05">5</option>
-				        <option value="06">6</option>
-				        <option value="07">7</option>
-				        <option value="08">8</option>
-				        <option value="09">9</option>
-				        <option value="10">10</option>
-				        <option value="11">11</option>
-				        <option value="12">12</option>
-				        <option value="13">13</option>
-				        <option value="14">14</option>
-				        <option value="15">15</option>
-				        <option value="16">16</option>
-				        <option value="17">17</option>
-				        <option value="18">18</option>
-				        <option value="19">17</option>
-				        <option value="20">20</option>
-				        <option value="21">21</option>
-				        <option value="22">22</option>
-				        <option value="23">23</option>
-				        <option value="24">24</option>
-				        <option value="25">25</option>
-				        <option value="26">26</option>
-				        <option value="27">27</option>
-				        <option value="28">28</option>
-				        <option value="29">29</option>
-				        <option value="30">30</option>
-				        <option value="31">31</option>
-
-				      </FormControl>
-				    </FormGroup>
-				    
-
-				    <Button bsStyle="danger" type='submit'>Submit</Button>
-				    </ButtonToolbar>
-			    </form>
-
-
-			      	<div className="conp_chart">
-			        <AreaChart width={600} height={200} data={droom} syncId="anyId"
-			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-			          <XAxis dataKey="name"/>
-			          <YAxis/>
-			          <CartesianGrid strokeDasharray="3 3"/>
-			          <Tooltip/>
-			          <Area isAnimationActive={false} type='monotone' dataKey='Energy' stroke='#eea236' fill='#f0ad4e' activeDot={{r: 6}}/>
-			        </AreaChart>
-			        <p className="name_chart">Energy(kWh)</p>
-
-			        <LineChart width={600} height={200} data={dlight} syncId="anyId"
-			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-			          <XAxis dataKey="name"/>
-			          <YAxis/>
-			          <CartesianGrid strokeDasharray="3 3"/>
-			          <Tooltip/>
-			          <Line isAnimationActive={false} type='monotone' dataKey='Light' stroke='#d9534f' activeDot={{r: 6}}/>
-			        </LineChart>
-			        <p className="name_chart">Light(Lux)</p>
-
-			        <LineChart width={600} height={200} data={dtem} syncId="anyId"
-			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-			          <XAxis dataKey="name"/>
-			          <YAxis/>
-			          <CartesianGrid strokeDasharray="3 3"/>
-			          <Tooltip/>
-			          <Line isAnimationActive={false} type='monotone' dataKey='Temperature' stroke='#5bc0de' activeDot={{r: 6}}/>
-			        </LineChart>
-			        <p className="name_chart">Temperature(C)</p>
-			      </div>
-
+			 
 
 			     
 				<div className='consumption_data'>
@@ -307,7 +246,7 @@ class Building extends Component {
 					    <CartesianGrid strokeDasharray="3 3"/>
 					    <Tooltip/>
 					    <Legend />
-					    <Line type="monotone" dataKey="energy" stroke="#9c0" activeDot={{r: 6}}/>
+					    <Line isAnimationActive={false} type="monotone" dataKey="power" stroke="#9c0" activeDot={{r: 6}}/>
 					</LineChart>
 				</div>
 				

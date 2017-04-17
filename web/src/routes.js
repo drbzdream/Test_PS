@@ -45,6 +45,8 @@ export default (store, history) => (
 		</Route>
 		<Route path='/schedule' component={App}>
 			<IndexRoute component={Test} />
+			<Route path='addinfo' component={AddUser} />
+			<Route path='editinfo' component={EditUser} />
 		</Route>
 	</Router>
 )

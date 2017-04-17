@@ -44,7 +44,7 @@ class Header extends Component {
 		          <NavItem eventKey={1}>Electric Energy</NavItem>
 		        </LinkContainer>
 				<LinkContainer to='/infodevice'>
-		          <NavItem eventKey={2}>Electric Device</NavItem>
+		          <NavItem eventKey={2}>Resource Consumption</NavItem>
 		        </LinkContainer>
 				<LinkContainer to='/schedule'>
 		          <NavItem eventKey={3}>Schedule</NavItem>
