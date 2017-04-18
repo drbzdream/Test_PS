@@ -18,15 +18,14 @@ import {
 
 
 
-export default class EditSchedule extends Component {
+export default class EditEnergy extends Component {
 	state = {
+		result: { },
 		result: { },
 		room: '',
 		description: '',
-		starttime: '',
-		endtime: '',
-		day: '',
-		dataschedule: []
+		maxenergy: '',
+		dataenergy: []
 	}
 
 	handleForm(e){
@@ -34,24 +33,20 @@ export default class EditSchedule extends Component {
 		// console.log(this.refs.eiei1.value)
 		this.setState({ room: e.target.room.value })
 		this.setState({ description: e.target.description.value })
-		this.setState({ starttime: e.target.starttime.value })
-		this.setState({ endtime: e.target.endtime.value })
-		this.setState({ day: e.target.day.value })
+		this.setState({ maxenergy: e.target.maxenergy.value })
+		
 
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);
-		console.log("start time: "+e.target.starttime.value);
-		console.log("end time: "+e.target.endtime.value);
-		console.log("day: "+ e.target.day.value);
+		console.log("max energy: "+e.target.maxenergy.value);
+		
 		// console.log(e.target.input1.value)
 
 		console.log("patchID: " + this.props.params.id)
-		axios.patch(`http://localhost:9090/schedule/${this.props.params.id}`, {
+		axios.patch(`http://localhost:9090/energyrule/${this.props.params.id}`, {
 			room: this.state.room,
 			description: this.state.description,
-			day: this.state.day,
-			starttime: this.state.starttime,
-			endtime: this.state.endtime
+			maxenergy: this.state.maxenergy
 		  })
 		  .then((res) => {
 		    console.log(response);
@@ -74,9 +69,9 @@ export default class EditSchedule extends Component {
 		// 	})
 		// 	}
 		// })
-		axios.get(`http://localhost:9090/schedule/${this.props.params.id}`).then((response) => {
+		axios.get(`http://localhost:9090/energyrule/${this.props.params.id}`).then((response) => {
 		      console.log(response);
-		      this.setState({ dataschedule: response.data})
+		      this.setState({ dataenergy: response.data})
 		      //console.log(test);
 		    })
 		    .catch(function (error) {
@@ -91,25 +86,19 @@ export default class EditSchedule extends Component {
 	render(){
 		return(
 			<div style={{ "margin": "20px 100px"}}>
-				<h2>Edit Schedule</h2>
+				<h2>Edit Energy Rule</h2>
 				<div className='scheduleForm'>
 				{
-					(Object.keys(this.state.dataschedule).length != 0 ) && 
+					(Object.keys(this.state.dataenergy).length != 0 ) && 
 			 		<Form onSubmit={this.handleForm.bind(this)}>
 					 		<ControlLabel>Room </ControlLabel> 
-					 		<FormControl name='room' ref='refroom' defaultValue={this.state.dataschedule.room}/>
+					 		<FormControl name='room' ref='refroom' defaultValue={this.state.dataenergy.room}/>
 					 		<br />
 					 		<ControlLabel>Description </ControlLabel> 
-					 		<FormControl name='description' ref='refdescription' defaultValue={this.state.dataschedule.description}/>
+					 		<FormControl name='description' ref='refdescription' defaultValue={this.state.dataenergy.description}/>
 					 		<br />
-					 		<ControlLabel>Day </ControlLabel> 
-					 		<FormControl name='day' ref='refday' defaultValue={this.state.dataschedule.day}/>
-					 		<br />
-					 		<ControlLabel>Start Time </ControlLabel> 
-					 		<FormControl name='starttime' ref='refstarttime' defaultValue={this.state.dataschedule.starttime}/>
-					 		<br />
-					 		<ControlLabel>End Time </ControlLabel> 
-					 		<FormControl name='endtime' ref='refendtime' defaultValue={this.state.dataschedule.endtime}/>
+					 		<ControlLabel>Maximum Energy</ControlLabel> 
+					 		<FormControl name='maxenergy' ref='refmaxenergy' defaultValue={this.state.dataenergy.maxenergy}/>
 					 		<br />
 					 		<Button bsStyle="primary" type='submit'>Submit</Button> <Button bsStyle="danger" type='reset'>Reset</Button>
 				 		</Form>

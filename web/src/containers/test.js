@@ -200,8 +200,8 @@ class Test extends Component {
                   <td>{starttime.toFixed(2)} น.</td>
                   <td>{endtime.toFixed(2)} น.</td>
                   <td>
-                    <Link to={`user/${id}/edit`}><Button bsStyle="info">Edit</Button></Link>
-                    {' '}
+                    <Link to={`schedule/editschedule/${id}`}><Button bsStyle="info">Edit</Button></Link>
+                    {' '} 
                     <Button bsStyle="danger" onClick={() => this.deleteUserSchedule(id)}>Delete</Button>
                   </td>
                 </tr>
@@ -236,7 +236,7 @@ class Test extends Component {
                   <td>{description}</td>
                   <td>{maxenergy.toFixed(2)} Wh</td>
                   <td>
-                    <Link to={`user/${id}/edit`}><Button bsStyle="info">Edit</Button></Link>
+                    <Link to={`schedule/editenergy/${id}`}><Button bsStyle="info">Edit</Button></Link>
                     {' '}
                     <Button bsStyle="danger" onClick={() => this.deleteUserEnergy(id)}>Delete</Button>
                   </td>

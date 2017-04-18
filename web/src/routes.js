@@ -24,7 +24,9 @@ import {
 import {
 	Schedule,
 	AddUser,
-	AddEnergy
+	AddEnergy,
+	EditSchedule,
+	EditEnergy
 }from 'containers/schedule'
 import Test from 'containers/test'
 import Test2 from 'containers/Test2'
@@ -50,8 +52,8 @@ export default (store, history) => (
 			<IndexRoute component={Test} />
 			<Route path='addschedule' component={AddUser} />
 			<Route path='addenergy-rule' component={AddEnergy} />
-			<Route path='schedule/:id/editschedule' component={Eiei} />
-			<Route path='schedule/:id/editenergy' component={Eiei} />
+			<Route path='editschedule/:id' component={EditSchedule} />
+			<Route path='editenergy/:id' component={EditEnergy} />
 			<Route path='editinfo' component={EditUser} />
 		</Route>
 	</Router>
