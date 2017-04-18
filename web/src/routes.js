@@ -9,7 +9,6 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import App from 'containers/App'
 import {
 	ListUser,
-	AddUser,
 	EditUser
 } from 'containers/users'
 import {
@@ -23,11 +22,13 @@ import {
 	EditDevice
 }from 'containers/devices'
 import {
-	Schedule
+	Schedule,
+	AddUser,
+	AddEnergy
 }from 'containers/schedule'
 import Test from 'containers/test'
 import Test2 from 'containers/Test2'
-
+import Eiei from 'containers/Eiei'
 
 
 
@@ -35,6 +36,8 @@ import Test2 from 'containers/Test2'
 
 export default (store, history) => (
 	<Router history={syncHistoryWithStore(history, store)}>
+		<Route path='user/:id/edit' component={Eiei} />
+		<Route path='adduser' component={AddUser} />
 		<Route path='test2' component={Test2} />
 		<Route path='/' component={App}>
 			<IndexRoute component={Building} />
@@ -45,7 +48,10 @@ export default (store, history) => (
 		</Route>
 		<Route path='/schedule' component={App}>
 			<IndexRoute component={Test} />
-			<Route path='addinfo' component={AddUser} />
+			<Route path='addschedule' component={AddUser} />
+			<Route path='addenergy-rule' component={AddEnergy} />
+			<Route path='schedule/:id/editschedule' component={Eiei} />
+			<Route path='schedule/:id/editenergy' component={Eiei} />
 			<Route path='editinfo' component={EditUser} />
 		</Route>
 	</Router>

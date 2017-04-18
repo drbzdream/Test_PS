@@ -81,8 +81,8 @@ class Building extends Component {
 	state = {
 		energy_realtime: [],
 		power_realtime: [],
-		time_server: 0,
-		count: 0
+		// time_server: 0,
+		// count: 0
 	}
 
 	componentWillMount(){
@@ -98,20 +98,20 @@ class Building extends Component {
 			// dispatch(requestSuccess(response))
 		})
 
-		io.on('time_server', (response) => {
-			this.setState({ time_server: response})
-			timefromserver = moment(response)
-			// console.log('time_server(no moment): ' + response)
-			console.log("time_server: " + timefromserver)
-			// dispatch(requestSuccess(response))
-		})
+		// io.on('time_server', (response) => {
+		// 	this.setState({ time_server: response})
+		// 	timefromserver = moment(response)
+		// 	// console.log('time_server(no moment): ' + response)
+		// 	console.log("time_server: " + timefromserver)
+		// 	// dispatch(requestSuccess(response))
+		// })
 
-		io.on('count', (response) => {
-			this.setState({ count: response})
-			// console.log('time_server(no moment): ' + response)
-			console.log("count: " + response)
-			// dispatch(requestSuccess(response))
-		})
+		// io.on('count', (response) => {
+		// 	this.setState({ count: response})
+		// 	// console.log('time_server(no moment): ' + response)
+		// 	console.log("count: " + response)
+		// 	// dispatch(requestSuccess(response))
+		// })
 	}
 
 	eiei(){
@@ -141,49 +141,7 @@ class Building extends Component {
 		// console.log('Different: ' + timeDiff_web_server)
 
 
-		let droom = [], dlight = [], dtem = [], dreal = [], drealpower = [] 
-
-		let { room, light, temperature } = this.props.power_resources.data
-
-		delete room.id
-		delete room.room
-		delete room.day
-		delete room.created_at
-		delete room.updated_at
-
-		delete light.id
-		delete light.room
-		delete light.day
-		delete light.created_at
-		delete light.updated_at
-
-		delete temperature.id
-		delete temperature.room
-		delete temperature.day
-		delete temperature.created_at
-		delete temperature.updated_at
-
-
-		droom = _.map(room, (data, key) => {
-			return ({
-				name: key,
-				Energy: data
-			})
-		})
-
-		dlight = _.map(light, (data, key) => {
-			return {
-				name: key,
-				Light: data
-			}
-		})
-
-		dtem = _.map(temperature, (data, key) => {
-			return {
-				name: key,
-				Temperature: data
-			}
-		})
+		let dreal = [], drealpower = [] 
 
 
 		dreal = this.state.energy_realtime.map((data) => {

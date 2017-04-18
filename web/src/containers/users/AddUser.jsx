@@ -25,15 +25,28 @@ class AddUser extends Component {
 }
 
 const validate = values => {
-	const { name, description } = values
+	const { room, description, start, end, day } = values
 	const errors = {}
-	if (!name || name.trim() == '') {
+	if (!room || room.trim() == '') {
     	errors.name = 'Required'
 	}
 
 	if (!description || description.trim() == '') {
     	errors.description = 'Required'
 	}
+
+	// if (!start || start.trim() == '') {
+ //    	errors.start = 'Required'
+	// }
+
+	// if (!end || end.trim() == '') {
+ //    	errors.end = 'Required'
+	// }
+
+	// if (!day || day.trim() == '') {
+ //    	errors.day = 'Required'
+	// }
+
 
 	return errors
 }

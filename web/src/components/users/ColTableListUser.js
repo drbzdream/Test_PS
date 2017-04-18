@@ -9,8 +9,8 @@ const ColTableListUser = ({ id, name, description, deleteUser }) => {
 	return (
 		<tr>
 			<td>{id}</td>
-			<td>{name}</td>
-			<td>{description}</td>
+			<td>{room}</td>
+			<td>{timestemp}</td>
 			<td>
 				<Link to={`user/${id}/edit`}><Button bsStyle="success">Edit</Button></Link>
 				{' '}

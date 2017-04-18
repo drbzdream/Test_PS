@@ -9,28 +9,24 @@ import {
   Button,
   Glyphicon,
   Image,
+  Table, 
 } from 'react-bootstrap'
 import Notification  from '../../node_modules/react-web-notification/lib/components/Notification'
 import axios from 'axios'
-
+import actions from 'actions'
+import { ColTableListUser } from 'components/users'
 
 window.React = React;
 
 class Test extends Component {
 
-	// constructor(props, context) {
- //      super(props, context);
- //        this.state = {
- //        ignore: true,
- //        title: ''
- //      };
- //    }
-
-
   state = {
     test: [],
+    test2: [],
     ignore: true,
-    title: ''
+    title: '',
+    scheduleID: '',
+    energyID: ''
   }
   // constructor(props) {
   //   super(props);
@@ -114,10 +110,22 @@ class Test extends Component {
 
 
   componentDidMount(){
-  axios.get('http://localhost:9090/test')
-    .then(function (response) {
+  axios.get('http://localhost:9090/schedule')
+    .then((response) => {
       console.log(response);
       this.setState({ test: response.data})
+      //console.log(test);
+    })
+    .catch(function (error) {
+      console.log('error');
+      console.log(error);
+    });
+
+
+    axios.get('http://localhost:9090/energyrule')
+    .then((response) => {
+      console.log(response);
+      this.setState({ test2: response.data})
       //console.log(test);
     })
     .catch(function (error) {
@@ -127,64 +135,118 @@ class Test extends Component {
   }
 
 
+  deleteUserSchedule(id) {
+    // console.log('http://localhost:9090/schedule/${id}')
+    this.setState({ scheduleID: id})
+
+    axios.delete(`http://localhost:9090/schedule/${this.state.scheduleID}`, {
+      id: this.state.scheduleID 
+    })
+    .then((response) => {
+      //console.log(test);
+      console.log('delete')
+    })
+    .catch(function (error) {
+      console.log('error');
+      console.log(error);
+    });
+  }
+
+  deleteUserEnergy(id) {
+    // console.log('http://localhost:9090/energyrule/${id}')
+    this.setState({ energyID: id})
+
+    axios.delete(`http://localhost:9090/energyrule/${this.state.energyID}`, {
+      id: this.state.energyID
+    })
+    .then((response) => {
+      //console.log(test);
+      console.log('delete')
+    })
+    .catch(function (error) {
+      console.log('error');
+      console.log(error);
+    });
+  }
+
   
 
 	render(){
-
-    let datatest = []
-
-    datatest = this.state.test.map((data) => {
-      return ({
-        room: power_value,
-        date: timestemp
-      })
-    })
-
-
 		return (
 			<div>
-				<h2>Schedule <Link to='schedule/addinfo'><Button bsStyle="success">Add </Button> </Link></h2> 
-        <br />
-        <table className="table is-striped">
-            <thead>
-              <tr>
-                <th>Room</th>
-                <th>Description</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Day</th>
-                <th>Maximun Energy</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-            
-              <tr >
-                <td>301</td>
-                <td>Closed</td>
-                <td>9.00 A.M.</td>
-                <td>12.00 A.M.</td>
-                <td>Tuesday</td>
-                <td> - Wh</td>
-                <td><Button bsStyle="info">Edit</Button> <Button bsStyle="danger">Delete</Button></td>
-              </tr>
+        <div className="schedule">
+  				<h2>Schedule <Link to='schedule/addschedule'><Button bsStyle="success">Add </Button> </Link></h2> 
+          <br />
+          <Table striped condensed hover>
+        <thead>
+          <tr>
+            <th>Room</th>
+            <th>Description</th>
+            <th>Day</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            this.state.test.map((user, index) => {
+              let { id, room, description, day, starttime, endtime, deleteUser } = user
+              return (
+                <tr>
+                  <td>{room}</td>
+                  <td>{description}</td>
+                  <td>{day}</td>
+                  <td>{starttime.toFixed(2)} น.</td>
+                  <td>{endtime.toFixed(2)} น.</td>
+                  <td>
+                    <Link to={`user/${id}/edit`}><Button bsStyle="info">Edit</Button></Link>
+                    {' '}
+                    <Button bsStyle="danger" onClick={() => this.deleteUserSchedule(id)}>Delete</Button>
+                  </td>
+                </tr>
+              )
+            })
+          }
+        </tbody>
+      </Table>
+      </div>
 
-              <tr >
-                <td>302</td>
-                <td>Closed</td>
-                <td>13.00 P.M.</td>
-                <td>14.30 P.M.</td>
-                <td>Monday, Wednesday</td>
-                <td> - Wh</td>
-                <td><Button bsStyle="info">Edit</Button> <Button bsStyle="danger">Delete</Button></td>
-              </tr>
-
-              <tr >
-                
-              </tr>
-
-            </tbody>
-          </table>
+      <div className="energy">
+      <br />
+      <br />
+        <h2>Energy Rule <Link to='schedule/addenergy-rule'><Button bsStyle="success">Add </Button> </Link></h2> 
+          <br />
+          <Table striped condensed hover>
+        <thead>
+          <tr>
+            <th>Room</th>
+            <th>Description</th>
+            <th>Maximun Energy</th>
+            <th>Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            this.state.test2.map((user2, index) => {
+              let { id, room, description, maxenergy, deleteUser } = user2
+              return (
+                <tr>
+                  <td>{room}</td>
+                  <td>{description}</td>
+                  <td>{maxenergy.toFixed(2)} Wh</td>
+                  <td>
+                    <Link to={`user/${id}/edit`}><Button bsStyle="info">Edit</Button></Link>
+                    {' '}
+                    <Button bsStyle="danger" onClick={() => this.deleteUserEnergy(id)}>Delete</Button>
+                  </td>
+                </tr>
+              )
+            })
+          }
+        </tbody>
+      </Table>
+      </div>
 
 
           <div>
