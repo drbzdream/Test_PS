@@ -4,11 +4,24 @@ import {
 	Row,
 	Col
 } from 'react-bootstrap'
+import socket from 'socket.io-client'
+import {NotificationContainer, NotificationManager} from 'react-notifications'
+import 'react-notifications/lib/notifications.css'
+
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 
 
 export default class App extends Component {
+	componentWillMount(){
+        const io = socket('http://localhost:9090')
+		io.on('noti', (response) => {
+			console.log(response)
+			// NotificationManager.error(response.description, `Room: ${response.room}`)
+			NotificationManager.info('หวัดดี', `โจ๋ซ่า 555+`)
+		})
+	}
+
 	render(){
 		return (
 			<div>
@@ -20,7 +33,7 @@ export default class App extends Component {
 					<Col md={1} />
 				</Row>
 				</Grid>
-
+				<NotificationContainer/>
 			</div>
 		)
 	}

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router' 
+import { push } from 'react-router-redux'
+import { connect } from 'react-redux'
 import {
 	Nav,
 	Button,
@@ -18,7 +20,7 @@ import {
 
 
 
-export default class AddUser extends Component {
+class AddUser extends Component {
 	state = {
 		result: { },
 		room: '',
@@ -31,11 +33,11 @@ export default class AddUser extends Component {
 	handleForm(e){
 		e.preventDefault()
 		// console.log(this.refs.eiei1.value)
-		this.setState({ room: e.target.room.value })
-		this.setState({ description: e.target.description.value })
-		this.setState({ starttime: e.target.starttime.value })
-		this.setState({ endtime: e.target.endtime.value })
-		this.setState({ day: e.target.day.value })
+		// this.setState({ room: e.target.room.value })
+		// this.setState({ description: e.target.description.value })
+		// this.setState({ starttime: e.target.starttime.value })
+		// this.setState({ endtime: e.target.endtime.value })
+		// this.setState({ day: e.target.day.value })
 
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);
@@ -46,14 +48,15 @@ export default class AddUser extends Component {
 
 
 		axios.post('http://localhost:9090/schedule', {
-			room: this.state.room,
-			description: this.state.description,
-			day: this.state.day,
-			starttime: this.state.starttime,
-			endtime: this.state.endtime
+			room: e.target.room.value,
+			description: e.target.description.value,
+			day: e.target.day.value,
+			starttime: e.target.starttime.value,
+			endtime: e.target.endtime.value
 		  })
 		  .then((res) => {
-		    console.log(response);
+		    console.log(res)
+		    this.props.dispatch(push(`/schedule`))
 		  })
 		  .catch((error) => {
 		    console.log(error);
@@ -110,3 +113,5 @@ export default class AddUser extends Component {
 		)
 	}
 }
+
+export default connect(null, null)(AddUser)

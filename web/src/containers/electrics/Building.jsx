@@ -73,7 +73,7 @@ const data01 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', valu
 
 const data02 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
 
-var timefromserver
+// var timefromserver
 
 
 class Building extends Component {

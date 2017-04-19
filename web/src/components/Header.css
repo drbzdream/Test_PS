@@ -18,7 +18,7 @@
 }
 
 .navbar_title.navbar-default .navbar-brand:hover, .navbar_title.navbar-default .navbar-nav>li>a:hover {
-	color: #99cc00;
+	color: #4eb14e;
 }
  
 .navbar_title.navbar {
@@ -26,7 +26,7 @@
 }
 
 .navbar_navi.nav-pills > li.active > a {
-	background-color: #99cc00;
+	background-color: #5cb85c;
 	border-bottom: solid #031;
 	border-radius: 0px;
 	margin: 0px;
@@ -35,9 +35,9 @@
 }
 
 .navbar_navi.nav-pills > li > a {
-	background-color: #99cc00;
+	background-color: #5cb85c;
 	border-radius: 0px;
-	border-bottom: solid #9c0;
+	border-bottom: solid #5cb85c;
 	margin: 0px;
 	color: #fff;
 }
@@ -47,7 +47,7 @@
 }
 
 .navbar_navi.nav-pills > li.active > a:hover, .navbar_navi.nav-pills > li > a:hover {
-	background-color: #99cc00;
+	background-color: #5cb85c;
 	border-bottom: solid #031;
 	color: #031;
 	font-weight: bold;

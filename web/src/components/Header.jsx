@@ -41,7 +41,7 @@ class Header extends Component {
 
 				<Nav className='navbar_navi' bsStyle="pills" justified activeKey={this.state.a} onSelect={this.eiei.bind(this)}>
 				<LinkContainer to='/'>
-		          <NavItem eventKey={1}>Electric Energy</NavItem>
+		          <NavItem eventKey={1}>Dashboard</NavItem>
 		        </LinkContainer>
 				<LinkContainer to='/infodevice'>
 		          <NavItem eventKey={2}>Resource Consumption</NavItem>

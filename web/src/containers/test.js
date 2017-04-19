@@ -135,13 +135,11 @@ class Test extends Component {
   }
 
 
-  deleteUserSchedule(id) {
-    // console.log('http://localhost:9090/schedule/${id}')
-    this.setState({ scheduleID: id})
-
-    axios.delete(`http://localhost:9090/schedule/${this.state.scheduleID}`, {
-      id: this.state.scheduleID 
-    })
+  deleteUserSchedule(id, index) {
+    let x = [...this.state.test]
+    x.splice(index, 1)
+    this.setState({ test: x })
+    axios.delete(`http://localhost:9090/schedule/${id}`)
     .then((response) => {
       //console.log(test);
       console.log('delete')
@@ -175,7 +173,7 @@ class Test extends Component {
 		return (
 			<div>
         <div className="schedule">
-  				<h2>Schedule <Link to='schedule/addschedule'><Button bsStyle="success">Add </Button> </Link></h2> 
+  				<h2>Schedule <Link to='schedule/addschedule'><Button bsStyle="primary">Add </Button> </Link></h2> 
           <br />
           <Table striped condensed hover>
         <thead>
@@ -202,7 +200,7 @@ class Test extends Component {
                   <td>
                     <Link to={`schedule/editschedule/${id}`}><Button bsStyle="info">Edit</Button></Link>
                     {' '} 
-                    <Button bsStyle="danger" onClick={() => this.deleteUserSchedule(id)}>Delete</Button>
+                    <Button bsStyle="danger" onClick={() => this.deleteUserSchedule(id, index)}>Delete</Button>
                   </td>
                 </tr>
               )
@@ -215,7 +213,7 @@ class Test extends Component {
       <div className="energy">
       <br />
       <br />
-        <h2>Energy Rule <Link to='schedule/addenergy-rule'><Button bsStyle="success">Add </Button> </Link></h2> 
+        <h2>Energy Rule <Link to='schedule/addenergy-rule'><Button bsStyle="primary">Add </Button> </Link></h2> 
           <br />
           <Table striped condensed hover>
         <thead>
