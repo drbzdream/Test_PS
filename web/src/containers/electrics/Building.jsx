@@ -217,7 +217,7 @@ class Building extends Component {
 }
 
 const mapStateToProps = (state) => ({ //เอา state จาก store มาใส่ product
-	power_resources: state.power_resources
+	power_resources: state.power_resources,
 })
 
 const mapDispatchToProps = (dispatch) => ({ // เพื่อให้ส่งค่าให้ reducer แล้วจะได้เก็บค่าลงใน store 
