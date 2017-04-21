@@ -16,9 +16,13 @@ export default class App extends Component {
 	componentWillMount(){
         const io = socket('http://localhost:9090')
 		io.on('noti', (response) => {
-			console.log(response)
+			// console.log('response S:' + response)
 			NotificationManager.error(response.description, `Room: ${response.room}`)
-			// NotificationManager.info('หวัดดี', `โจ๋ซ่า 555+`)
+		})
+
+		io.on('noti2', (response) => {
+			// console.log('response E:' + response)
+			NotificationManager.warning(response.description, `Room: ${response.room}`)
 		})
 	}
 

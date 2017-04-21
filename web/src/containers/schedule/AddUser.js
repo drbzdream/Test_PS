@@ -32,13 +32,6 @@ class AddUser extends Component {
 
 	handleForm(e){
 		e.preventDefault()
-		// console.log(this.refs.eiei1.value)
-		// this.setState({ room: e.target.room.value })
-		// this.setState({ description: e.target.description.value })
-		// this.setState({ starttime: e.target.starttime.value })
-		// this.setState({ endtime: e.target.endtime.value })
-		// this.setState({ day: e.target.day.value })
-
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);
 		console.log("start time: "+e.target.starttime.value);
@@ -66,19 +59,6 @@ class AddUser extends Component {
 	}
 
 	componentDidMount(){
-		// console.log(this.props.params.id)
-		// axios.get('http://localhost:9090/test').then((res) => {
-		// 	console.log(res.data)
-		// 	this.setState({ result: res.data })
-			// console.log('test' + this.state.result)
-			// this.state.result.map((data, index) => {
-			// 	return ({
-			// 	roomtest: data.timestemp,
-			// 	destest: data.power_value
-			// })
-			// }
-		// })
-		
 	}
 
 	// (Object.keys(this.state.result).length != 0 ) && 

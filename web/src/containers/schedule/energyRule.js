@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router' 
+import { Link } from 'react-router'
+import { push } from 'react-router-redux'
+import { connect } from 'react-redux'
 import {
 	Nav,
 	Button,
@@ -18,7 +20,7 @@ import {
 
 
 
-export default class AddEnergy extends Component {
+class AddEnergy extends Component {
 	state = {
 		result: { },
 		room: '',
@@ -29,10 +31,6 @@ export default class AddEnergy extends Component {
 	handleForm(e){
 		e.preventDefault()
 		// console.log(this.refs.eiei1.value)
-		this.setState({ room: e.target.room.value })
-		this.setState({ description: e.target.description.value })
-		this.setState({ maxenergy: e.target.maxenergy.value })
-		
 
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);
@@ -42,12 +40,13 @@ export default class AddEnergy extends Component {
 
 
 		axios.post('http://localhost:9090/energyrule', {
-			room: this.state.room,
-			description: this.state.description,
-			maxenergy: this.state.maxenergy
+			room: e.target.room.value,
+			description: e.target.description.value,
+			maxenergy: e.target.maxenergy.value
 		  })
 		  .then((res) => {
-		    console.log(response);
+		    console.log(res);
+		    this.props.dispatch(push(`/schedule`))
 		  })
 		  .catch((error) => {
 		    console.log(error);
@@ -57,19 +56,6 @@ export default class AddEnergy extends Component {
 	}
 
 	componentDidMount(){
-		// console.log(this.props.params.id)
-		// axios.get('http://localhost:9090/test').then((res) => {
-		// 	console.log(res.data)
-		// 	this.setState({ result: res.data })
-			// console.log('test' + this.state.result)
-			// this.state.result.map((data, index) => {
-			// 	return ({
-			// 	roomtest: data.timestemp,
-			// 	destest: data.power_value
-			// })
-			// }
-		// })
-		
 	}
 
 	// (Object.keys(this.state.result).length != 0 ) && 
@@ -98,3 +84,5 @@ export default class AddEnergy extends Component {
 		)
 	}
 }
+
+export default connect(null, null)(AddEnergy)

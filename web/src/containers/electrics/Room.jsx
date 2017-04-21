@@ -168,29 +168,32 @@ class Room extends Component {
 		this.props.dataAction()
         const io = socket('http://localhost:9090')
 		io.on('energy_realtime', (response) => {
+			// console.log('aaaaaaaaaaaa', response)
 			this.setState({ energy_realtime: response})
 			// dispatch(requestSuccess(response))
 		})
 
 		io.on('power_realtime', (response) => {
+			// console.log('bbbbbbbbbb', response)
+
 			this.setState({ power_realtime: response})
 			// dispatch(requestSuccess(response))
 		})
 
-		io.on('time_server', (response) => {
-			this.setState({ time_server: response})
-			timefromserver = moment(response)
-			// console.log('time_server(no moment): ' + response)
-			console.log("time_server: " + timefromserver)
-			// dispatch(requestSuccess(response))
-		})
+		// io.on('time_server', (response) => {
+		// 	this.setState({ time_server: response})
+		// 	timefromserver = moment(response)
+		// 	// console.log('time_server(no moment): ' + response)
+		// 	console.log("time_server: " + timefromserver)
+		// 	// dispatch(requestSuccess(response))
+		// })
 
-		io.on('count', (response) => {
-			this.setState({ count: response})
-			// console.log('time_server(no moment): ' + response)
-			console.log("count: " + response)
-			// dispatch(requestSuccess(response))
-		})
+		// io.on('count', (response) => {
+		// 	this.setState({ count: response})
+		// 	// console.log('time_server(no moment): ' + response)
+		// 	console.log("count: " + response)
+		// 	// dispatch(requestSuccess(response))
+		// })
 	}
 
 	eiei(){
@@ -205,19 +208,19 @@ class Room extends Component {
 		this.props.dataAction(room.value, x)
 	}
 
-	shouldComponentUpdate(nextProps, nextState){
-		return nextState.enegy_realtime != this.state.energy_realtime
-	}
+	// shouldComponentUpdate(nextProps, nextState){
+	// 	return nextState.enegy_realtime != this.state.energy_realtime
+	// }
 
 	render(){
 		//time
-		var web_time = moment()
-		var web_time_tmp = new Date()
-		console.log("time_web: " + web_time)
+		// var web_time = moment()
+		// var web_time_tmp = new Date()
+		// console.log("time_web: " + web_time)
 		// console.log('time_server(no moment): ' + web_time_tmp)
 
-		let timeDiff_web_server = moment.duration(web_time - timefromserver, 'milliseconds')
-		console.log('Different: ' + timeDiff_web_server)
+		// let timeDiff_web_server = moment.duration(web_time - timefromserver, 'milliseconds')
+		// console.log('Different: ' + timeDiff_web_server)
 
 
 		let droom = [], dlight = [], dtem = [], dreal = [], drealpower = [] 
@@ -406,7 +409,7 @@ const mapStateToProps = (state) => ({ //เอา state จาก store มา�
 
 const mapDispatchToProps = (dispatch) => ({ // เพื่อให้ส่งค่าให้ reducer แล้วจะได้เก็บค่าลงใน store 
 	dataAction(room, day){
-		console.log(room, day)
+		// console.log(room, day)
 		dispatch(dataAction(room, day))
 	}
 })

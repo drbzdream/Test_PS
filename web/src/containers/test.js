@@ -23,8 +23,6 @@ class Test extends Component {
   state = {
     test: [],
     test2: [],
-    ignore: true,
-    title: '',
     scheduleID: '',
     energyID: ''
   }
@@ -33,80 +31,11 @@ class Test extends Component {
     
   // }
 
-  handlePermissionGranted(){
-    console.log('Permission Granted');
-    this.setState({
-      ignore: false
-    });
-  }
-  handlePermissionDenied(){
-    console.log('Permission Denied');
-    this.setState({
-      ignore: true
-    });
-  }
-  handleNotSupported(){
-    console.log('Web Notification not Supported');
-    this.setState({
-      ignore: true
-    });
-  }
-
-  handleNotificationOnClick(e, tag){
-    console.log(e, 'Notification clicked tag:' + tag);
-  }
-
-  handleNotificationOnError(e, tag){
-    console.log(e, 'Notification error tag:' + tag);
-  }
-
-  handleNotificationOnClose(e, tag){
-    console.log(e, 'Notification closed tag:' + tag);
-  }
-
-  handleNotificationOnShow(e, tag){
-    //this.playSound();
-    console.log(e, 'Notification shown tag:' + tag);
-  }
+  
 
   // playSound(filename){
   //   document.getElementById('sound').play();
   // }
-
-  handleButtonClick() {
-
-    if(this.state.ignore) {
-      return;
-    }
-
-   // const now = 
-    const now = moment();
-
-    const title = 'TEST NOTIFICATION (' + now.format("MMM Do YY") + ')';
-    const body = '\nInfo.. \n\n' + now.startOf('hour').fromNow();;
-    const tag = '';
-    const icon = 'http://georgeosddev.github.io/react-web-notification/example/Notifications_button_24.png';
-    // const icon = 'http://localhost:3000/Notifications_button_24.png';
-
-
-
-
-
-    // Available options
-    // See https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification
-    const options = {
-      tag: tag,
-      body: body,
-      icon: icon,
-      lang: 'en',
-      dir: 'ltr',
-      //sound: './sound.mp3'  // no browsers supported https://developer.mozilla.org/en/docs/Web/API/notification/sound#Browser_compatibility
-    }
-    this.setState({
-      title: title,
-      options: options
-    });
-  }
 
 
   componentDidMount(){
@@ -150,13 +79,13 @@ class Test extends Component {
     });
   }
 
-  deleteUserEnergy(id) {
+  deleteUserEnergy(id, index) {
     // console.log('http://localhost:9090/energyrule/${id}')
-    this.setState({ energyID: id})
-
-    axios.delete(`http://localhost:9090/energyrule/${this.state.energyID}`, {
-      id: this.state.energyID
-    })
+    // this.setState({ energyID: id})
+    let y = [...this.state.test2]
+    y.splice(index, 1)
+    this.setState({ test2: y })
+    axios.delete(`http://localhost:9090/energyrule/${id}`)
     .then((response) => {
       //console.log(test);
       console.log('delete')
@@ -191,12 +120,12 @@ class Test extends Component {
             this.state.test.map((user, index) => {
               let { id, room, description, day, starttime, endtime, deleteUser } = user
               return (
-                <tr>
+                <tr key={index}>
                   <td>{room}</td>
                   <td>{description}</td>
                   <td>{day}</td>
-                  <td>{starttime.toFixed(2)} น.</td>
-                  <td>{endtime.toFixed(2)} น.</td>
+                  <td>{starttime} น.</td>
+                  <td>{endtime} น.</td>
                   <td>
                     <Link to={`schedule/editschedule/${id}`}><Button bsStyle="info">Edit</Button></Link>
                     {' '} 
@@ -229,14 +158,14 @@ class Test extends Component {
             this.state.test2.map((user2, index) => {
               let { id, room, description, maxenergy, deleteUser } = user2
               return (
-                <tr>
+                <tr key={index}>
                   <td>{room}</td>
                   <td>{description}</td>
                   <td>{maxenergy.toFixed(2)} Wh</td>
                   <td>
                     <Link to={`schedule/editenergy/${id}`}><Button bsStyle="info">Edit</Button></Link>
                     {' '}
-                    <Button bsStyle="danger" onClick={() => this.deleteUserEnergy(id)}>Delete</Button>
+                    <Button bsStyle="danger" onClick={() => this.deleteUserEnergy(id, index)}>Delete</Button>
                   </td>
                 </tr>
               )
@@ -244,25 +173,6 @@ class Test extends Component {
           }
         </tbody>
       </Table>
-      </div>
-
-
-          <div>
-        <Button onClick={this.handleButtonClick.bind(this)}>Notif!</Button>
-        <Notification 
-          ignore={this.state.ignore && this.state.title !== ''}
-          notSupported={this.handleNotSupported.bind(this)}
-          onPermissionGranted={this.handlePermissionGranted.bind(this)}
-          onPermissionDenied={this.handlePermissionDenied.bind(this)}
-          // onShow={this.handleNotificationOnShow.bind(this)}
-          // onClick={this.handleNotificationOnClick.bind(this)}
-          // onClose={this.handleNotificationOnClose.bind(this)}
-          // onError={this.handleNotificationOnError.bind(this)}
-          timeout={5000}
-          title={this.state.title}
-          options={this.state.options}
-        />
-       
       </div>
 				
 			  
