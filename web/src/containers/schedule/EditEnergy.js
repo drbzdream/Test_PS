@@ -31,12 +31,7 @@ class EditEnergy extends Component {
 	}
 
 	handleForm(e){
-		e.preventDefault()
-		// console.log(this.refs.eiei1.value)
-		// this.setState({ room: e.target.room.value })
-		// this.setState({ description: e.target.description.value })
-		// this.setState({ maxenergy: e.target.maxenergy.value })
-		
+		e.preventDefault()		
 
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);

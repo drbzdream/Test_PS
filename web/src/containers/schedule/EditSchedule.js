@@ -33,12 +33,6 @@ class EditSchedule extends Component {
 
 	handleForm(e){
 		e.preventDefault()
-		// console.log(this.refs.eiei1.value)
-		// this.setState({ room: e.target.room.value })
-		// this.setState({ description: e.target.description.value })
-		// this.setState({ starttime: e.target.starttime.value })
-		// this.setState({ endtime: e.target.endtime.value })
-		// this.setState({ day: e.target.day.value })
 
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);
