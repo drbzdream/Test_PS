@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router' 
+import { Link } from 'react-router'
+import { push } from 'react-router-redux'
+import { connect } from 'react-redux'
 import {
 	Nav,
 	Button,
@@ -18,7 +20,7 @@ import {
 
 
 
-export default class EditSchedule extends Component {
+class EditSchedule extends Component {
 	state = {
 		result: { },
 		room: '',
@@ -32,11 +34,11 @@ export default class EditSchedule extends Component {
 	handleForm(e){
 		e.preventDefault()
 		// console.log(this.refs.eiei1.value)
-		this.setState({ room: e.target.room.value })
-		this.setState({ description: e.target.description.value })
-		this.setState({ starttime: e.target.starttime.value })
-		this.setState({ endtime: e.target.endtime.value })
-		this.setState({ day: e.target.day.value })
+		// this.setState({ room: e.target.room.value })
+		// this.setState({ description: e.target.description.value })
+		// this.setState({ starttime: e.target.starttime.value })
+		// this.setState({ endtime: e.target.endtime.value })
+		// this.setState({ day: e.target.day.value })
 
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);
@@ -47,14 +49,15 @@ export default class EditSchedule extends Component {
 
 		console.log("patchID: " + this.props.params.id)
 		axios.patch(`http://localhost:9090/schedule/${this.props.params.id}`, {
-			room: this.state.room,
-			description: this.state.description,
-			day: this.state.day,
-			starttime: this.state.starttime,
-			endtime: this.state.endtime
+			room: e.target.room.value ,
+			description: e.target.description.value,
+			day: e.target.day.value,
+			starttime: e.target.starttime.value,
+			endtime: e.target.endtime.value
 		  })
 		  .then((res) => {
-		    console.log(response);
+		    console.log(res);
+		    this.props.dispatch(push(`/schedule`))
 		  })
 		  .catch((error) => {
 		    console.log(error);
@@ -62,18 +65,7 @@ export default class EditSchedule extends Component {
 	}
 
 	componentDidMount(){
-		// console.log(this.props.params.id)
-		// axios.get(`http://localhost:9090/schedule/${this.props.params.id}`).then((res) => {
-		// 	console.log(res.data)
-		// 	this.setState({ result: res.data })
-		// 	console.log('test' + this.state.result)
-		// 	this.state.result.map((data, index) => {
-		// 		return ({
-		// 		roomtest: data.timestemp,
-		// 		destest: data.power_value
-		// 	})
-		// 	}
-		// })
+
 		axios.get(`http://localhost:9090/schedule/${this.props.params.id}`).then((response) => {
 		      console.log(response);
 		      this.setState({ dataschedule: response.data})
@@ -119,3 +111,5 @@ export default class EditSchedule extends Component {
 		)
 	}
 }
+
+export default connect(null, null)(EditSchedule)

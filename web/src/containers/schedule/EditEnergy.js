@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router' 
+import { push } from 'react-router-redux'
+import { connect } from 'react-redux'
 import {
 	Nav,
 	Button,
@@ -18,7 +20,7 @@ import {
 
 
 
-export default class EditEnergy extends Component {
+class EditEnergy extends Component {
 	state = {
 		result: { },
 		result: { },
@@ -31,9 +33,9 @@ export default class EditEnergy extends Component {
 	handleForm(e){
 		e.preventDefault()
 		// console.log(this.refs.eiei1.value)
-		this.setState({ room: e.target.room.value })
-		this.setState({ description: e.target.description.value })
-		this.setState({ maxenergy: e.target.maxenergy.value })
+		// this.setState({ room: e.target.room.value })
+		// this.setState({ description: e.target.description.value })
+		// this.setState({ maxenergy: e.target.maxenergy.value })
 		
 
 		console.log("room: "+e.target.room.value);
@@ -44,12 +46,13 @@ export default class EditEnergy extends Component {
 
 		console.log("patchID: " + this.props.params.id)
 		axios.patch(`http://localhost:9090/energyrule/${this.props.params.id}`, {
-			room: this.state.room,
-			description: this.state.description,
-			maxenergy: this.state.maxenergy
+			// room: e.target.room.value,
+			description: e.target.description.value,
+			maxenergy: e.target.maxenergy.value 
 		  })
 		  .then((res) => {
-		    console.log(response);
+		  	this.props.dispatch(push(`/schedule`))
+		    console.log(res);
 		  })
 		  .catch((error) => {
 		    console.log(error);
@@ -72,7 +75,7 @@ export default class EditEnergy extends Component {
 		axios.get(`http://localhost:9090/energyrule/${this.props.params.id}`).then((response) => {
 		      console.log(response);
 		      this.setState({ dataenergy: response.data})
-		      //console.log(test);
+		      console.log(test);
 		    })
 		    .catch(function (error) {
 		      console.log('error');
@@ -92,7 +95,7 @@ export default class EditEnergy extends Component {
 					(Object.keys(this.state.dataenergy).length != 0 ) && 
 			 		<Form onSubmit={this.handleForm.bind(this)}>
 					 		<ControlLabel>Room </ControlLabel> 
-					 		<FormControl name='room' ref='refroom' defaultValue={this.state.dataenergy.room}/>
+					 		<FormControl readOnly name='room' ref='refroom' defaultValue={this.state.dataenergy.room}/>
 					 		<br />
 					 		<ControlLabel>Description </ControlLabel> 
 					 		<FormControl name='description' ref='refdescription' defaultValue={this.state.dataenergy.description}/>
@@ -108,3 +111,5 @@ export default class EditEnergy extends Component {
 		)
 	}
 }
+
+export default connect(null, null)(EditEnergy)
