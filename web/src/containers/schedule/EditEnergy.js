@@ -35,8 +35,8 @@ class EditEnergy extends Component {
 
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);
-		console.log("max energy: "+e.target.maxenergy.value);
-		
+		console.log("max energy: "+ e.target.maxenergy.value);
+		// 3.9639 อัตราค่าไฟเฉลี่ย
 		// console.log(e.target.input1.value)
 
 		console.log("patchID: " + this.props.params.id)

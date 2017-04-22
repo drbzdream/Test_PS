@@ -79,10 +79,10 @@ class AddUser extends Component {
 					 		<ControlLabel>Day </ControlLabel> 
 					 		<FormControl name='day' ref='refday' placeholder="ex. Mon"/>
 					 		<br />
-					 		<ControlLabel>Start Time </ControlLabel> 
+					 		<ControlLabel>Start Time (24-hours)</ControlLabel> 
 					 		<FormControl name='starttime' ref='refstarttime' placeholder="ex. 13.00"/>
 					 		<br />
-					 		<ControlLabel>End Time </ControlLabel> 
+					 		<ControlLabel>End Time (24-hours)</ControlLabel> 
 					 		<FormControl name='endtime' ref='refendtime' placeholder="ex. 16.00"/>
 					 		<br />
 					 		<Button bsStyle="primary" type='submit'>Submit</Button> <Button bsStyle="danger" type='reset'>Reset</Button>

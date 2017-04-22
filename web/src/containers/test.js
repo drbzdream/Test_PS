@@ -25,17 +25,6 @@ class Test extends Component {
     scheduleID: '',
     energyID: ''
   }
-  // constructor(props) {
-  //   super(props);
-    
-  // }
-
-  
-
-  // playSound(filename){
-  //   document.getElementById('sound').play();
-  // }
-
 
   componentDidMount(){
   axios.get('http://localhost:9090/schedule')
@@ -100,8 +89,9 @@ class Test extends Component {
 	render(){
 		return (
 			<div>
-        <div className="schedule">
-  				<h2>Schedule <Link to='schedule/addschedule'><Button bsStyle="primary">Add </Button> </Link></h2> 
+        <h1 style={{ "text-align": "center"}}>Notification Rule</h1>
+          <div className="schedule">
+  				<h2>Schedule Rule <Link to='schedule/addschedule'><Button bsStyle="primary">Add </Button> </Link></h2> 
           <br />
           <Table striped condensed hover>
         <thead>
@@ -142,36 +132,38 @@ class Test extends Component {
       <br />
       <br />
         <h2>Energy Rule <Link to='schedule/addenergy-rule'><Button bsStyle="primary">Add </Button> </Link></h2> 
-          <br />
-          <Table striped condensed hover>
-        <thead>
-          <tr>
-            <th>Room</th>
-            <th>Description</th>
-            <th>Maximun Energy</th>
-            <th>Option</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            this.state.test2.map((user2, index) => {
-              let { id, room, description, maxenergy, deleteUser } = user2
-              return (
-                <tr key={index}>
-                  <td>{room}</td>
-                  <td>{description}</td>
-                  <td>{maxenergy.toFixed(2)} Wh</td>
-                  <td>
-                    <Link to={`schedule/editenergy/${id}`}><Button bsStyle="info">Edit</Button></Link>
-                    {' '}
-                    <Button bsStyle="danger" onClick={() => this.deleteUserEnergy(id, index)}>Delete</Button>
-                  </td>
-                </tr>
-              )
-            })
-          }
-        </tbody>
-      </Table>
+        <br />
+        <Table striped condensed hover>
+          <thead>
+            <tr>
+              <th>Room</th>
+              <th>Description</th>
+              <th>Maximun Energy</th>
+              <th>Electric Cost</th>
+              <th>Option</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              this.state.test2.map((user2, index) => {
+                let { id, room, description, maxenergy, deleteUser } = user2
+                return (
+                  <tr key={index}>
+                    <td>{room}</td>
+                    <td>{description}</td>
+                    <td>{maxenergy.toFixed(2)} Wh</td>
+                    <td>{maxenergy.toFixed(2)*3.9639} Baht</td>
+                    <td>
+                      <Link to={`schedule/editenergy/${id}`}><Button bsStyle="info">Edit</Button></Link>
+                      {' '}
+                      <Button bsStyle="danger" onClick={() => this.deleteUserEnergy(id, index)}>Delete</Button>
+                    </td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>
+        </Table>
       </div>
 				
 			  

@@ -1,7 +1,63 @@
 /* Color
 	dark green #003311
-	light green #99cc00
+	light green1 #5cb85c
+	light green2 #99cc00
+
 */
+
+
+.energyconsump-barchart .recharts-wrapper {
+	display: inline-block;
+}
+
+.energyconsump-piechart .recharts-wrapper {
+	display: inline;
+	margin-right: 0px;
+	float: left;
+}
+
+.realtimeconsumpt {
+	/*position: relative;
+	top: 300px;*/
+	display: inline-block;
+	margin-bottom: 60px;
+}
+
+.detail {
+	display: inline-block;
+	margin-top: 60px;
+}
+
+.detail th {
+	color: #5cb85c;
+	text-align: center;
+}
+
+.noti-histories {
+	text-align: center;
+}
+
+.noti-histories th {
+	text-align: center;
+	color: #5cb85c;
+	font-size: 17px;
+}
+
+.show_overview {
+	margin-top: 30px;
+	color: #031;
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
 .title_echarge {
 	font-weight: bold;
 	position: absolute;
@@ -13,11 +69,7 @@
     color: #031;
 }
 
-.show_overview {
-	margin-top: 30px;
-	color: #031;
-	text-align: center;
-}
+
 
 .show_overview .overview .chart_overview img {
 	width: 400px;
@@ -97,15 +149,16 @@
 }
 
 .conp_chart {
-	position: relative;
-	left: 160px;
+	/*position: relative;*/
+	/*left: 160px;*/
 	/*top: 1050px;*/
 	margin-bottom: 80px;
+	display: inline-block;
 }
 
 .name_chart {
-	position: relative;
-	right: 160px;
+	/*position: relative;
+	right: 160px;*/
 	font-weight: bold;
 	font-size: 15px;
 }

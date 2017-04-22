@@ -17,7 +17,11 @@ import {
 	BarChart, 
 	Bar,
 	Brush,
-	Sector
+	Sector,
+	ResponsiveContainer,
+	Cell,
+	linearGradient,
+	defs
 } from 'recharts'
 import socket from 'socket.io-client'
 import actions from 'actions'
@@ -32,23 +36,26 @@ import {
 	FormGroup,
 	ControlLabel,
 	FormControl,
-	option
+	option,
+	Table
 } from 'react-bootstrap'
 import 'components/Building.css'
 import {
 	testpic
 } from 'assets/images'
 import moment from 'moment'
+import axios from 'axios'
+
 
 
 const { dataAction } = actions
 
 let tmp_dreal = []
 
+const COLORS = ['#EF597B', '#FFCB18'];
 
 const data = [
-		{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
-    	{name: 'Group C', value: 300}, {name: 'Group D', value: 200}
+		{name: 'Room202', value: 12503.04}, {name: 'Room203', value: 8503.04}
     	]
 
 const datatime = [
@@ -62,20 +69,20 @@ const datatime = [
 ]
 
 const datatime2 = [
-      {name: '7.00 am', uv: 4000, pv: 2400, amt: 2400},
-      {name: '8.00 am', uv: 3000, pv: 1398, amt: 2210},
-      {name: '9.00 am', uv: 2000, pv: 9800, amt: 2290},
-      {name: '10.00 am', uv: 2780, pv: 3908, amt: 2000},
-      {name: '11.00 am', uv: 1890, pv: 4800, amt: 2181},
-      {name: '12.00 pm', uv: 2390, pv: 3800, amt: 2500},
-      {name: '01.00 pm', uv: 3490, pv: 4300, amt: 2100},
-      {name: '7.00 am', uv: 4000, pv: 2400, amt: 2400},
-      {name: '8.00 am', uv: 3000, pv: 1398, amt: 2210},
-      {name: '9.00 am', uv: 2000, pv: 9800, amt: 2290},
-      {name: '10.00 am', uv: 2780, pv: 3908, amt: 2000},
-      {name: '11.00 am', uv: 1890, pv: 4800, amt: 2181},
-      {name: '12.00 pm', uv: 2390, pv: 3800, amt: 2500},
-      {name: '01.00 pm', uv: 3490, pv: 4300, amt: 2100}
+      {name: '07.00', Room202: 4000, Room203: 2400, amt: 2400},
+      {name: '08.00', Room202: 3000, Room203: 1398, amt: 2210},
+      {name: '09.00', Room202: 2000, Room203: 9800, amt: 2290},
+      {name: '10.00', Room202: 2780, Room203: 3908, amt: 2000},
+      {name: '11.00', Room202: 1890, Room203: 4800, amt: 2181},
+      {name: '12.00', Room202: 2390, Room203: 3800, amt: 2500},
+      {name: '13.00', Room202: 3490, Room203: 4300, amt: 2100},
+      {name: '14.00', Room202: 4000, Room203: 2400, amt: 2400},
+      {name: '15.00', Room202: 3000, Room203: 1398, amt: 2210},
+      {name: '16.00', Room202: 2000, Room203: 9800, amt: 2290},
+      {name: '17.00', Room202: 2780, Room203: 3908, amt: 2000},
+      {name: '18.00', Room202: 1890, Room203: 4800, amt: 2181},
+      {name: '19.00', Room202: 2390, Room203: 3800, amt: 2500},
+      {name: '20.00', Room202: 3490, Room203: 4300, amt: 2100},
 ]
 
 const data01 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
@@ -121,7 +128,7 @@ const renderActiveShape = (props) => {
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none"/>
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`PV ${value}`}</text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${value} Baht`}</text>
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
         {`(Rate ${(percent * 100).toFixed(2)}%)`}
       </text>
@@ -129,12 +136,14 @@ const renderActiveShape = (props) => {
   )
 }
 
+
 class Building extends Component {
 
 	state = {
 		energy_realtime: [],
 		power_realtime: [],
 		activeIndex: 0,
+		test2: []
 		// time_server: 0,
 		// count: 0
 	}
@@ -153,6 +162,19 @@ class Building extends Component {
 		})
 
 	}
+
+	componentDidMount(){
+	    axios.get('http://localhost:9090/energyrule')
+	    .then((response) => {
+	      console.log(response);
+	      this.setState({ test2: response.data})
+	      //console.log(test);
+	    })
+	    .catch(function (error) {
+	      console.log('error');
+	      console.log(error);
+	    });
+  }
 
 	eiei(){
 		this.setState({x: this.state.x +1})
@@ -203,45 +225,158 @@ class Building extends Component {
 
 		return (
 			<div className='show_overview'>
-				<h2>Energy Consumption</h2> 
+				<h1>Overall Data</h1>
+				<h2>Energy Consumption</h2>
+				<br /> 
 
-				<div className='energyconsump'>
+				<div className='energyconsumpt'>
 
 					<div className='energyconsump-barchart'>
 
-						<BarChart width={600} height={300} data={datatime2}
-						margin={{top: 20, right: 30, left: 20, bottom: 5}}>
-						   <XAxis dataKey="name"/>
-						   <YAxis/>
-						   <CartesianGrid strokeDasharray="1 1"/>
-						   <Tooltip/>
-						   <Legend />
-						   <Bar dataKey="pv" stackId="a" fill="#EF597B" />
-						   <Bar dataKey="uv" stackId="a" fill="#FFCB18" />
-						   <Brush />
-						</BarChart>
-
-
-					  	<div  className='detail'>
-					  	</div>
-
+							<BarChart width={950} height={300} data={datatime2}
+						  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+							   <XAxis dataKey="name"/>
+							   <YAxis />
+							   <CartesianGrid strokeDasharray="2 2"/>
+							   <Tooltip />
+							   <Legend />
+							   <Bar dataKey="Room202" stackId="a" fill="#EF597B" />
+							   <Bar dataKey="Room203" stackId="a" fill="#FFCB18" />
+							   <Brush dataKey='name' height={30} stroke="#003311"/>
+							</BarChart>
 					</div>
 
 					<div className='energyconsump-piechart'>
 
-						<PieChart width={800} height={400} onMouseEnter={this.onPieEnter}>
+						<PieChart width={400} height={400} onMouseEnter={this.onPieEnter.bind(this)}
+						margin={{top: 0, right: 30, left: 0, bottom: 0}}>
 				        <Pie 
 				        	activeIndex={this.state.activeIndex}
 				         	activeShape={renderActiveShape} 
 				          	data={data} 
-				          	cx={300} 
-				          	cy={200} 
+				          	cx={200} 
+				          	cy={210} 
 				          	innerRadius={60}
-				          	outerRadius={80} 
-				          	fill="#8884d8"/>
+				          	outerRadius={100} 
+				          	fill="#EF597B">
+				          	{
+          						data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+          					}</Pie>
 				       </PieChart>
 
+
+				       	<div  className='detail'>
+				       		<h3>Summary</h3>
+				       		<Table striped condensed hover>
+			          <thead>
+			            <tr>
+			              <th>Room</th>
+			              <th>Description</th>
+			              <th>Average</th>
+			              <th>Total</th>
+			            </tr>
+			          </thead>
+			          <tbody>
+			            {
+			              this.state.test2.map((user2, index) => {
+			                let { id, room, description, maxenergy, deleteUser } = user2
+			                return (
+			                  <tr key={index}>
+			                    <td>{room}</td>
+			                    <td>{description}</td>
+			                    <td>{maxenergy.toFixed(2)} Wh</td>
+			                    <td>{maxenergy.toFixed(2)*3.9639} Wh</td>
+			                  </tr>
+			                )
+			              })
+			            }
+			          </tbody>
+			        </Table>
+					  	</div>
+
 					</div>
+
+
+				</div>
+
+				<div className='realtimeconsumpt'>
+					<h2>Realtime Energy Consumption</h2>
+					<br />
+						<AreaChart width={730} height={250} data={datatime2}
+						  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+						  <defs>
+						    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+						      <stop offset="5%" stopColor="#EF597B" stopOpacity={0.8}/>
+						      <stop offset="95%" stopColor="#EF597B" stopOpacity={0}/>
+						    </linearGradient>
+						    <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+						      <stop offset="5%" stopColor="#FFCB18" stopOpacity={0.8}/>
+						      <stop offset="95%" stopColor="#FFCB18" stopOpacity={0}/>
+						    </linearGradient>
+						  </defs>
+						  <XAxis dataKey="name" />
+						  <YAxis />
+						  <CartesianGrid strokeDasharray="2 2" />
+						  <Tooltip />
+						  <Area type="monotone" dataKey="Room202" stroke="#EF597B" fillOpacity={1} fill="url(#colorUv)" />
+						  <Area type="monotone" dataKey="Room203" stroke="#FFCB18" fillOpacity={1} fill="url(#colorPv)" />
+						</AreaChart>
+
+						<LineChart width={730} height={250} data={datatime2}
+						  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+						  <XAxis dataKey="name" />
+						  <YAxis />
+						  <CartesianGrid strokeDasharray="2 2" />
+						  <Tooltip />
+						  <Line type="monotone" dataKey="Room202" stroke="#EF597B" />
+						  <Line type="monotone" dataKey="Room203" stroke="#FFCB18" />
+						</LineChart>
+
+				</div>
+
+				<div className='noti-histories'>
+					<h2>Notification History</h2>
+					<br />
+					<Table striped condensed hover>
+			          <thead>
+			            <tr>
+			              <th>Room</th>
+			              <th>Description</th>
+			              <th>Type</th>
+			              <th>Notifacation at</th>
+			            </tr>
+			          </thead>
+			          <tbody>
+			            {
+			              this.state.test2.map((user2, index) => {
+			                let { id, room, description, maxenergy, deleteUser } = user2
+			                return (
+			                  <tr key={index}>
+			                    <td>{room}</td>
+			                    <td>{description}</td>
+			                    <td>{maxenergy.toFixed(2)} Wh</td>
+			                    <td>{maxenergy.toFixed(2)*3.9639} Baht</td>
+			                  </tr>
+			                )
+			              })
+			            }
+			            {
+			              this.state.test2.map((user2, index) => {
+			                let { id, room, description, maxenergy, deleteUser } = user2
+			                return (
+			                  <tr key={index}>
+			                    <td>{room}</td>
+			                    <td>{description}</td>
+			                    <td>{maxenergy.toFixed(2)} Wh</td>
+			                    <td>{maxenergy.toFixed(2)*3.9639} Baht</td>
+			                  </tr>
+			                )
+			              })
+			            }
+			          </tbody>
+			        </Table>
+
+
 				</div>
 				
 
@@ -269,48 +404,3 @@ Building = connect(
 )(Building)
 
 export default Building
-
-
-
-
-
-// <h2>Overall Data</h2> 
-// 			    	<h4>Latest Mouth</h4> 
-// 						<p className="title_echarge">Electricity Charge (Baht)</p>
-// 					<PieChart width={400} height={400} >
-// 	        			<Pie data={data02} cx={200} cy={200} innerRadius={90} outerRadius={140} fill="#d9534f" label/>
-// 	        			<Tooltip/>
-// 	       			</PieChart>
-
-// 	       		<div className="total_chart">
-// 	       		<p><b>Total Energy(kWh)</b></p>
-// 	       			<BarChart width={550} height={250} data={data}
-// 				            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-// 				       <XAxis dataKey="name"/>
-// 				       <YAxis/>
-// 				       <CartesianGrid strokeDasharray="3 3"/>
-// 				       <Tooltip/>
-// 				       <Legend />
-// 				       <Bar dataKey="Energy" fill="#5bc0de" />
-// 				     </BarChart>
-
-//        			</div>
-
-			     
-// 				<div className='consumption_data'>
-// 					<br />
-// 					<h3>Realtime Energy Consumption</h3>
-// 					<br />
-// 				</div>
-
-// 				<div className="stat_demo">
-// 					<LineChart width={800} height={300} data={dreal}
-// 	            	margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-// 					    <XAxis dataKey="name"/>
-// 						<YAxis/>
-// 					    <CartesianGrid strokeDasharray="3 3"/>
-// 					    <Tooltip/>
-// 					    <Legend />
-// 					    <Line isAnimationActive={false} type="monotone" dataKey="power" stroke="#9c0" activeDot={{r: 6}}/>
-// 					</LineChart>
-// 				</div>

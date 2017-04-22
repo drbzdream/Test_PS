@@ -36,7 +36,7 @@ class Header extends Component {
 					</Navbar.Header>
 				    <Navbar.Collapse>
 				      <Nav pullRight>
-						
+						<NavItem eventKey={3}><b><Glyphicon glyph="cog" /></b></NavItem>
 				      </Nav>
 				    </Navbar.Collapse>
 				</Navbar>
@@ -49,7 +49,7 @@ class Header extends Component {
 		          <NavItem eventKey={2}>Resource Consumption</NavItem>
 		        </LinkContainer>
 				<LinkContainer to='/schedule'>
-		          <NavItem eventKey={3}>Schedule</NavItem>
+		          <NavItem eventKey={3}>Notification</NavItem>
 		        </LinkContainer>
 		        </Nav>
 			</div>

@@ -10,6 +10,7 @@ import 'react-notifications/lib/notifications.css'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
+import 'components/Building.css'
 
 
 export default class App extends Component {
@@ -28,7 +29,7 @@ export default class App extends Component {
 
 	render(){
 		return (
-			<div>
+			<div className='app'>
 				<Header />
 				<Grid>
 				<Row className="show-grid">
