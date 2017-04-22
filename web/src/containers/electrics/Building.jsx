@@ -15,7 +15,9 @@ import {
 	AreaChart, 
 	Area,
 	BarChart, 
-	Bar
+	Bar,
+	Brush,
+	Sector
 } from 'recharts'
 import socket from 'socket.io-client'
 import actions from 'actions'
@@ -45,9 +47,9 @@ let tmp_dreal = []
 
 
 const data = [
-      {name: 'Room 202', Energy: 4644.77, pv: 2400, amt: 2400},
-      {name: 'Room 203', Energy: 4667.89, pv: 1398, amt: 2210},
-]
+		{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
+    	{name: 'Group C', value: 300}, {name: 'Group D', value: 200}
+    	]
 
 const datatime = [
       {name: '7.00 am', Floor1: 4000, Floor2: 2400, Floor3: 7000, amt: 2400},
@@ -60,13 +62,20 @@ const datatime = [
 ]
 
 const datatime2 = [
-      {name: '7.00 am', Energy: 4000, pv: 2400, amt: 2400},
-      {name: '8.00 am', Energy: 3000, pv: 1398, amt: 2210},
-      {name: '9.00 am', Energy: 2000, pv: 9800, amt: 2290},
-      {name: '10.00 am', Energy: 2780, pv: 3908, amt: 2000},
-      {name: '11.00 am', Energy: 1890, pv: 4800, amt: 2181},
-      {name: '12.00 pm', Energy: 2390, pv: 3800, amt: 2500},
-      {name: '01.00 pm', Energy: 3490, pv: 4300, amt: 2100},
+      {name: '7.00 am', uv: 4000, pv: 2400, amt: 2400},
+      {name: '8.00 am', uv: 3000, pv: 1398, amt: 2210},
+      {name: '9.00 am', uv: 2000, pv: 9800, amt: 2290},
+      {name: '10.00 am', uv: 2780, pv: 3908, amt: 2000},
+      {name: '11.00 am', uv: 1890, pv: 4800, amt: 2181},
+      {name: '12.00 pm', uv: 2390, pv: 3800, amt: 2500},
+      {name: '01.00 pm', uv: 3490, pv: 4300, amt: 2100},
+      {name: '7.00 am', uv: 4000, pv: 2400, amt: 2400},
+      {name: '8.00 am', uv: 3000, pv: 1398, amt: 2210},
+      {name: '9.00 am', uv: 2000, pv: 9800, amt: 2290},
+      {name: '10.00 am', uv: 2780, pv: 3908, amt: 2000},
+      {name: '11.00 am', uv: 1890, pv: 4800, amt: 2181},
+      {name: '12.00 pm', uv: 2390, pv: 3800, amt: 2500},
+      {name: '01.00 pm', uv: 3490, pv: 4300, amt: 2100}
 ]
 
 const data01 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
@@ -76,11 +85,56 @@ const data02 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', valu
 // var timefromserver
 
 
+const renderActiveShape = (props) => {
+  const RADIAN = Math.PI / 180;
+  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
+    fill, payload, percent, value } = props;
+  const sin = Math.sin(-RADIAN * midAngle);
+  const cos = Math.cos(-RADIAN * midAngle);
+  const sx = cx + (outerRadius + 10) * cos;
+  const sy = cy + (outerRadius + 10) * sin;
+  const mx = cx + (outerRadius + 30) * cos;
+  const my = cy + (outerRadius + 30) * sin;
+  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+  const ey = my;
+  const textAnchor = cos >= 0 ? 'start' : 'end';
+  return (
+    <g>
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload.name}</text>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+      <Sector
+        cx={cx}
+        cy={cy}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        innerRadius={outerRadius + 6}
+        outerRadius={outerRadius + 10}
+        fill={fill}
+      />
+      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none"/>
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`PV ${value}`}</text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
+        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+      </text>
+    </g>
+  )
+}
+
 class Building extends Component {
 
 	state = {
 		energy_realtime: [],
 		power_realtime: [],
+		activeIndex: 0,
 		// time_server: 0,
 		// count: 0
 	}
@@ -98,20 +152,6 @@ class Building extends Component {
 			// dispatch(requestSuccess(response))
 		})
 
-		// io.on('time_server', (response) => {
-		// 	this.setState({ time_server: response})
-		// 	timefromserver = moment(response)
-		// 	// console.log('time_server(no moment): ' + response)
-		// 	console.log("time_server: " + timefromserver)
-		// 	// dispatch(requestSuccess(response))
-		// })
-
-		// io.on('count', (response) => {
-		// 	this.setState({ count: response})
-		// 	// console.log('time_server(no moment): ' + response)
-		// 	console.log("count: " + response)
-		// 	// dispatch(requestSuccess(response))
-		// })
 	}
 
 	eiei(){
@@ -128,17 +168,20 @@ class Building extends Component {
 
 	shouldComponentUpdate(nextProps, nextState){
 		return nextState.enegy_realtime != this.state.energy_realtime
+
 	}
 
-	render(){
-		//time
-		// var web_time = moment()
-		// var web_time_tmp = new Date()
-		// console.log("time_web: " + web_time)
-		// // console.log('time_server(no moment): ' + web_time_tmp)
 
-		// let timeDiff_web_server = moment.duration(web_time - timefromserver, 'milliseconds')
-		// console.log('Different: ' + timeDiff_web_server)
+	// Pie 
+	getInitialState() {
+    	return {activeIndex: 0}
+  	}
+
+  	onPieEnter(data, index) {
+    	this.setState({activeIndex: index});
+    }
+
+	render(){
 
 
 		let dreal = [], drealpower = [] 
@@ -160,52 +203,45 @@ class Building extends Component {
 
 		return (
 			<div className='show_overview'>
+				<h2>Energy Consumption</h2> 
 
-				
+				<div className='energyconsump'>
 
-			    	<h2>Overall Data</h2> 
-			    	<h4>Latest Mouth</h4> 
-						<p className="title_echarge">Electricity Charge (Baht)</p>
-					<PieChart width={400} height={400} >
-	        			<Pie data={data02} cx={200} cy={200} innerRadius={90} outerRadius={140} fill="#d9534f" label/>
-	        			<Tooltip/>
-	       			</PieChart>
+					<div className='energyconsump-barchart'>
 
-	       		<div className="total_chart">
-	       		<p><b>Total Energy(kWh)</b></p>
-	       			<BarChart width={550} height={250} data={data}
-				            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-				       <XAxis dataKey="name"/>
-				       <YAxis/>
-				       <CartesianGrid strokeDasharray="3 3"/>
-				       <Tooltip/>
-				       <Legend />
-				       <Bar dataKey="Energy" fill="#5bc0de" />
-				     </BarChart>
+						<BarChart width={600} height={300} data={datatime2}
+						margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+						   <XAxis dataKey="name"/>
+						   <YAxis/>
+						   <CartesianGrid strokeDasharray="1 1"/>
+						   <Tooltip/>
+						   <Legend />
+						   <Bar dataKey="pv" stackId="a" fill="#EF597B" />
+						   <Bar dataKey="uv" stackId="a" fill="#FFCB18" />
+						   <Brush />
+						</BarChart>
 
-       			</div>
 
-			
-			      
-			 
+					  	<div  className='detail'>
+					  	</div>
 
-			     
-				<div className='consumption_data'>
-					<br />
-					<h3>Realtime Energy Consumption</h3>
-					<br />
-				</div>
+					</div>
 
-				<div className="stat_demo">
-					<LineChart width={800} height={300} data={dreal}
-	            	margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-					    <XAxis dataKey="name"/>
-						<YAxis/>
-					    <CartesianGrid strokeDasharray="3 3"/>
-					    <Tooltip/>
-					    <Legend />
-					    <Line isAnimationActive={false} type="monotone" dataKey="power" stroke="#9c0" activeDot={{r: 6}}/>
-					</LineChart>
+					<div className='energyconsump-piechart'>
+
+						<PieChart width={800} height={400} onMouseEnter={this.onPieEnter}>
+				        <Pie 
+				        	activeIndex={this.state.activeIndex}
+				         	activeShape={renderActiveShape} 
+				          	data={data} 
+				          	cx={300} 
+				          	cy={200} 
+				          	innerRadius={60}
+				          	outerRadius={80} 
+				          	fill="#8884d8"/>
+				       </PieChart>
+
+					</div>
 				</div>
 				
 
@@ -233,3 +269,48 @@ Building = connect(
 )(Building)
 
 export default Building
+
+
+
+
+
+// <h2>Overall Data</h2> 
+// 			    	<h4>Latest Mouth</h4> 
+// 						<p className="title_echarge">Electricity Charge (Baht)</p>
+// 					<PieChart width={400} height={400} >
+// 	        			<Pie data={data02} cx={200} cy={200} innerRadius={90} outerRadius={140} fill="#d9534f" label/>
+// 	        			<Tooltip/>
+// 	       			</PieChart>
+
+// 	       		<div className="total_chart">
+// 	       		<p><b>Total Energy(kWh)</b></p>
+// 	       			<BarChart width={550} height={250} data={data}
+// 				            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+// 				       <XAxis dataKey="name"/>
+// 				       <YAxis/>
+// 				       <CartesianGrid strokeDasharray="3 3"/>
+// 				       <Tooltip/>
+// 				       <Legend />
+// 				       <Bar dataKey="Energy" fill="#5bc0de" />
+// 				     </BarChart>
+
+//        			</div>
+
+			     
+// 				<div className='consumption_data'>
+// 					<br />
+// 					<h3>Realtime Energy Consumption</h3>
+// 					<br />
+// 				</div>
+
+// 				<div className="stat_demo">
+// 					<LineChart width={800} height={300} data={dreal}
+// 	            	margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+// 					    <XAxis dataKey="name"/>
+// 						<YAxis/>
+// 					    <CartesianGrid strokeDasharray="3 3"/>
+// 					    <Tooltip/>
+// 					    <Legend />
+// 					    <Line isAnimationActive={false} type="monotone" dataKey="power" stroke="#9c0" activeDot={{r: 6}}/>
+// 					</LineChart>
+// 				</div>

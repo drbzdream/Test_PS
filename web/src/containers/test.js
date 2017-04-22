@@ -14,7 +14,6 @@ import {
 import Notification  from '../../node_modules/react-web-notification/lib/components/Notification'
 import axios from 'axios'
 import actions from 'actions'
-import { ColTableListUser } from 'components/users'
 
 window.React = React;
 

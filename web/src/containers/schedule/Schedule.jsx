@@ -8,7 +8,6 @@ import {
 	FormControl,
 	Checkbox
 } from 'react-bootstrap'
-import 'components/EachDevice.css'
 import { Field, reduxForm } from 'redux-form'
 
 

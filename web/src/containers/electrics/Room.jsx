@@ -1,81 +1,3 @@
-// import React, {Component} from 'react'
-// import { Link } from 'react-router'
-// import {
-// 	Button,
-// 	Image,
-// 	Glyphicon,
-// 	DropdownButton,
-// 	MenuItem,
-// 	ButtonToolbar,
-// 	FormGroup,
-// 	ControlLabel,
-// 	FormControl,
-// 	option
-// } from 'react-bootstrap'
-// import {
-// 	testpic
-// } from 'assets/images'
-// import 'components/EachBuilding.css'
-// import 'components/Room.css'
-
-// class Room extends Component {
-// 	render(){
-// 		return(
-// 			<div className='show_room'>
-// 			<br />
-				
-// 				<div className='each_room-detail'>
-
-				
-// 				<br />
-// 				<br />
-// 				</div>
-
-// 				<div className='room_status'>
-// 					<div>
-// 						<h3>OVERALL DEVICE</h3>
-// 					</div>
-// 					<div>
-// 						<h3>AMOUNT : <span>1 Device</span></h3>
-// 					</div>
-					
-// 				</div>
-
-// 				<div className='device_status'>
-// 					<div>
-// 						<h3>My Computer</h3>
-// 					</div>
-// 					<div>
-// 						<h3>Status : Normal</h3>
-// 					</div>
-					
-// 				</div>
-// 				<div className='detail_floor'>
-// 					<p>NAME Titivorada's macbook</p>
-// 					<div className='chart_overview'>
-// 						<Image src={testpic} />
-// 					</div>
-// 					<div className='detail_overview'>
-// 						<br />
-// 						<h4>DATE : <span>10 Feb 2017</span></h4>
-// 						<h4>PERFORMANCE : 99% </h4>
-// 						<h4>BUILDING : <span>15</span> , FLOOR : <span>7</span> , ROOM : <span>710</span></h4> 
-// 						<h4>DESCRIPTION : -</h4>
-// 						<Link to=''>
-// 							<Button bsStyle="info">Edit</Button>
-// 						</Link>
-// 					</div>
-				
-					
-// 				</div>
-
-
-				
-// 			</div>
-// 			)
-// 	}
-// }
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router' 
@@ -180,20 +102,6 @@ class Room extends Component {
 			// dispatch(requestSuccess(response))
 		})
 
-		// io.on('time_server', (response) => {
-		// 	this.setState({ time_server: response})
-		// 	timefromserver = moment(response)
-		// 	// console.log('time_server(no moment): ' + response)
-		// 	console.log("time_server: " + timefromserver)
-		// 	// dispatch(requestSuccess(response))
-		// })
-
-		// io.on('count', (response) => {
-		// 	this.setState({ count: response})
-		// 	// console.log('time_server(no moment): ' + response)
-		// 	console.log("count: " + response)
-		// 	// dispatch(requestSuccess(response))
-		// })
 	}
 
 	eiei(){
@@ -208,20 +116,7 @@ class Room extends Component {
 		this.props.dataAction(room.value, x)
 	}
 
-	// shouldComponentUpdate(nextProps, nextState){
-	// 	return nextState.enegy_realtime != this.state.energy_realtime
-	// }
-
 	render(){
-		//time
-		// var web_time = moment()
-		// var web_time_tmp = new Date()
-		// console.log("time_web: " + web_time)
-		// console.log('time_server(no moment): ' + web_time_tmp)
-
-		// let timeDiff_web_server = moment.duration(web_time - timefromserver, 'milliseconds')
-		// console.log('Different: ' + timeDiff_web_server)
-
 
 		let droom = [], dlight = [], dtem = [], dreal = [], drealpower = [] 
 
@@ -365,7 +260,7 @@ class Room extends Component {
 			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 			          <XAxis dataKey="name"/>
 			          <YAxis/>
-			          <CartesianGrid strokeDasharray="3 3"/>
+			          <CartesianGrid strokeDasharray="1 1"/>
 			          <Tooltip/>
 			          <Area isAnimationActive={false} type='monotone' dataKey='Energy' stroke='#eea236' fill='#f0ad4e' activeDot={{r: 6}}/>
 			        </AreaChart>
@@ -375,7 +270,7 @@ class Room extends Component {
 			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 			          <XAxis dataKey="name"/>
 			          <YAxis/>
-			          <CartesianGrid strokeDasharray="3 3"/>
+			          <CartesianGrid strokeDasharray="1 1"/>
 			          <Tooltip/>
 			          <Line isAnimationActive={false} type='monotone' dataKey='Light' stroke='#d9534f' activeDot={{r: 6}}/>
 			        </LineChart>
@@ -385,19 +280,12 @@ class Room extends Component {
 			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 			          <XAxis dataKey="name"/>
 			          <YAxis/>
-			          <CartesianGrid strokeDasharray="3 3"/>
+			          <CartesianGrid strokeDasharray="1 1"/>
 			          <Tooltip/>
 			          <Line isAnimationActive={false} type='monotone' dataKey='Temperature' stroke='#5bc0de' activeDot={{r: 6}}/>
 			        </LineChart>
 			        <p className="name_chart">Temperature(C)</p>
 			      </div>
-
-
-
-				
-
-
-			   
 			</div>
 		)
 	}
@@ -420,10 +308,6 @@ Room = connect(
 )(Room)
 
 export default Room
-
-
-
-// export default Room
 
 
 

@@ -20,6 +20,9 @@ class Header extends Component {
 		this.setState({ a: selectedKey })
 	}
 
+	// <NavItem eventKey={1}><b><Glyphicon glyph="bell" /></b></NavItem>
+	// <NavItem eventKey={3}><b><Glyphicon glyph="cog" /></b></NavItem>
+
 	render(){
 		return (
 		  	<div>
@@ -33,8 +36,7 @@ class Header extends Component {
 					</Navbar.Header>
 				    <Navbar.Collapse>
 				      <Nav pullRight>
-						<NavItem eventKey={1}><b><Glyphicon glyph="bell" /></b></NavItem>
-				        <NavItem eventKey={3}><b><Glyphicon glyph="cog" /></b></NavItem>
+						
 				      </Nav>
 				    </Navbar.Collapse>
 				</Navbar>

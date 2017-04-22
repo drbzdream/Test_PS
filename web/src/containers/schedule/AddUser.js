@@ -77,7 +77,7 @@ class AddUser extends Component {
 					 		<FormControl name='description' ref='refdescription' placeholder="ex. closed"/>
 					 		<br />
 					 		<ControlLabel>Day </ControlLabel> 
-					 		<FormControl name='day' ref='refday' placeholder="ex. monday"/>
+					 		<FormControl name='day' ref='refday' placeholder="ex. Mon"/>
 					 		<br />
 					 		<ControlLabel>Start Time </ControlLabel> 
 					 		<FormControl name='starttime' ref='refstarttime' placeholder="ex. 13.00"/>
