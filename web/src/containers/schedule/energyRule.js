@@ -19,6 +19,8 @@ import {
 } from 'react-bootstrap'
 
 
+const elec_cost = 3.9639
+
 
 class AddEnergy extends Component {
 	state = {
@@ -34,7 +36,7 @@ class AddEnergy extends Component {
 
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);
-		console.log("max energy: "+e.target.maxenergy.value);
+		console.log("max energy: "+e.target.maxenergy.value/elec_cost);
 		
 		// console.log(e.target.input1.value)
 
@@ -42,7 +44,7 @@ class AddEnergy extends Component {
 		axios.post('http://localhost:9090/energyrule', {
 			room: e.target.room.value,
 			description: e.target.description.value,
-			maxenergy: e.target.maxenergy.value
+			maxenergy: e.target.maxenergy.value/elec_cost
 		  })
 		  .then((res) => {
 		    console.log(res);
@@ -73,7 +75,7 @@ class AddEnergy extends Component {
 					 		<ControlLabel>Description </ControlLabel> 
 					 		<FormControl name='description' ref='refdescription' placeholder="ex. closed"/>
 					 		<br />
-					 		<ControlLabel>Maximum Energy</ControlLabel> 
+					 		<ControlLabel>Maximum Electricity Cost</ControlLabel> 
 					 		<FormControl name='maxenergy' ref='refmaxenergy' placeholder="ex. 500"/>
 					 		<br />
 					 		<Button bsStyle="primary" type='submit'>Submit</Button> <Button bsStyle="danger" type='reset'>Reset</Button>

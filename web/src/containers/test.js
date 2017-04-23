@@ -141,7 +141,7 @@ class Test extends Component {
               <th>Room</th>
               <th>Description</th>
               <th>Maximun Energy</th>
-              <th>Electric Cost</th>
+              <th>Electricity Cost</th>
               <th>Option</th>
             </tr>
           </thead>
@@ -154,7 +154,7 @@ class Test extends Component {
                     <td>{room}</td>
                     <td>{description}</td>
                     <td>{maxenergy.toFixed(2)} Wh</td>
-                    <td>{maxenergy.toFixed(2)*elec_cost} Baht</td>
+                    <td>{(maxenergy*elec_cost).toFixed(2)} Baht</td>
                     <td>
                       <Link to={`schedule/editenergy/${id}`}><Button bsStyle="info">Edit</Button></Link>
                       {' '}

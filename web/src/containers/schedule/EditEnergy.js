@@ -18,7 +18,7 @@ import {
 	Form
 } from 'react-bootstrap'
 
-
+const elec_cost = 3.9639
 
 class EditEnergy extends Component {
 	state = {
@@ -27,7 +27,8 @@ class EditEnergy extends Component {
 		room: '',
 		description: '',
 		maxenergy: '',
-		dataenergy: []
+		dataenergy: [],
+		energycost: 0
 	}
 
 	handleForm(e){
@@ -35,7 +36,7 @@ class EditEnergy extends Component {
 
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);
-		console.log("max energy: "+ e.target.maxenergy.value);
+		console.log("max energy: "+ e.target.maxenergy.value/elec_cost);
 		// 3.9639 อัตราค่าไฟเฉลี่ย
 		// console.log(e.target.input1.value)
 
@@ -43,7 +44,7 @@ class EditEnergy extends Component {
 		axios.patch(`http://localhost:9090/energyrule/${this.props.params.id}`, {
 			// room: e.target.room.value,
 			description: e.target.description.value,
-			maxenergy: e.target.maxenergy.value 
+			maxenergy: e.target.maxenergy.value/elec_cost
 		  })
 		  .then((res) => {
 		  	this.props.dispatch(push(`/schedule`))
@@ -68,9 +69,13 @@ class EditEnergy extends Component {
 		// 	}
 		// })
 		axios.get(`http://localhost:9090/energyrule/${this.props.params.id}`).then((response) => {
-		      console.log(response);
+		      // console.log(response);
 		      this.setState({ dataenergy: response.data})
-		      console.log(test);
+		      console.log(this.state.dataenergy.maxenergy)
+		      // this.setState({ energycost: this.state.dataenergy.maxenergy * elec_cost })
+		      // console.log(test);
+
+		      console.log(this.state.dataenergy.maxenergy * elec_cost )
 		    })
 		    .catch(function (error) {
 		      console.log('error');
@@ -95,8 +100,8 @@ class EditEnergy extends Component {
 					 		<ControlLabel>Description </ControlLabel> 
 					 		<FormControl name='description' ref='refdescription' defaultValue={this.state.dataenergy.description}/>
 					 		<br />
-					 		<ControlLabel>Maximum Energy</ControlLabel> 
-					 		<FormControl name='maxenergy' ref='refmaxenergy' defaultValue={this.state.dataenergy.maxenergy}/>
+					 		<ControlLabel>Maximum Electricity Cost</ControlLabel> 
+					 		<FormControl name='maxenergy' ref='refmaxenergy' defaultValue={this.state.dataenergy.maxenergy * elec_cost}/>
 					 		<br />
 					 		<Button bsStyle="primary" type='submit'>Submit</Button> <Button bsStyle="danger" type='reset'>Reset</Button>
 				 		</Form>

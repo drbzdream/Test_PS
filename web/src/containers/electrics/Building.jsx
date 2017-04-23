@@ -52,9 +52,10 @@ const { dataAction } = actions
 
 const elec_cost = 3.9639 
 
-const COLORS = ['#EF597B', '#FFCB18'];
+const COLORS = ['#EF597B', '#FFCB18', '#29A2C6', '#FF6D31', '#73B66B'];
+				// pink       yello 	blue       orange     green
 
-const data = [
+const datatest = [
 		{name: 'Room202', value: 12503.04, avr: 5555}, {name: 'Room203', value: 8503.04, avr: 4444}
     	]
 
@@ -286,7 +287,7 @@ class Building extends Component {
 							   <Bar dataKey="Room203" stackId="a" fill="#FFCB18" />
 							   <Brush dataKey='name' height={30} stroke="#003311"/>
 							</BarChart>
-							<p className="name_chart">Energy Consumption (Wh)</p>
+							<p className="name_chart">Energy Consumption (kWh)</p>
 					</div>
 
 					<div className='energyconsump-piechart'>
@@ -296,14 +297,14 @@ class Building extends Component {
 				        <Pie 
 				        	activeIndex={this.state.activeIndex}
 				         	activeShape={renderActiveShape} 
-				          	data={data}
+				          	data={datatest}
 				          	cx={200} 
 				          	cy={200} 
 				          	innerRadius={60}
 				          	outerRadius={100} 
 				          	fill="#EF597B">
 				          	{
-          						data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+          						datatest.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
           					}</Pie>
 				       </PieChart>
 
@@ -322,14 +323,14 @@ class Building extends Component {
 			          <tbody>
 			            {
 			              this.state.summary.map((user3, index) => {
-			                let { name, value, avr } = user3
-			                // console.log('summary: ' + this.state.summary)
+			                let { name, cost, total, avr } = user3
+			                console.log('summary: ' + this.state.summary)
 			                return (
 			                  <tr key={index}>
 			                    <td>{name}</td>
-			                    <td>{(value*elec_cost).toFixed(2)} Baht</td>
-			                    <td>{avr.toFixed(2)} Wh</td>
-			                    <td>{value.toFixed(2)} Wh</td>
+			                    <td>{cost.toFixed(2)} Baht</td>
+			                    <td>{avr.toFixed(2)} kWh</td>
+			                    <td>{total.toFixed(2)} kWh</td>
 			                  </tr>
 			                )
 			              })
@@ -401,7 +402,7 @@ class Building extends Component {
 			                console.log('notie: ' + this.state.notie)
 			                return (
 			                  <tr key={index}>
-			                    <td>{room}</td>
+			                    <td>Room{room}</td>
 			                    <td>{description}</td>
 			                    <td>{type}</td>
 			                    <td>{moment(updated_at).format('MMMM Do YYYY, h:mm:ss a')}</td>
@@ -415,7 +416,7 @@ class Building extends Component {
 			                console.log('notis: ' + this.state.notis)
 			                return (
 			                  <tr key={index}>
-			                    <td>{room}</td>
+			                    <td>Room{room}</td>
 			                    <td>{description}</td>
 			                    <td>{type}</td>
 			                    <td>{moment(updated_at).format('MMMM Do YYYY, h:mm:ss a')}</td>
