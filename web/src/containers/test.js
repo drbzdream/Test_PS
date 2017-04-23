@@ -28,7 +28,7 @@ class Test extends Component {
   }
 
   componentDidMount(){
-  axios.get('http://localhost:9090/schedule')
+    axios.get('http://localhost:9090/schedule')
     .then((response) => {
       console.log(response);
       this.setState({ test: response.data})
@@ -37,7 +37,7 @@ class Test extends Component {
     .catch(function (error) {
       console.log('error');
       console.log(error);
-    });
+    })
 
 
     axios.get('http://localhost:9090/energyrule')
@@ -49,8 +49,8 @@ class Test extends Component {
     .catch(function (error) {
       console.log('error');
       console.log(error);
-    });
-    
+    })
+
   }
 
 
@@ -91,7 +91,7 @@ class Test extends Component {
 	render(){
 		return (
 			<div>
-        <h1 style={{ "text-align": "center"}}>Notification Rule</h1>
+        <h1 style={{ "textAlign": "center"}}>Notification Rule</h1>
           <div className="schedule">
   				<h2>Schedule Rule <Link to='schedule/addschedule'><Button bsStyle="primary">Add </Button> </Link></h2> 
           <br />
@@ -109,7 +109,7 @@ class Test extends Component {
         <tbody>
           {
             this.state.test.map((user, index) => {
-              let { id, room, description, day, starttime, endtime, deleteUser } = user
+              let { id, room, description, day, starttime, endtime } = user
               return (
                 <tr key={index}>
                   <td>{room}</td>
@@ -148,7 +148,7 @@ class Test extends Component {
           <tbody>
             {
               this.state.test2.map((user2, index) => {
-                let { id, room, description, maxenergy, deleteUser } = user2
+                let { id, room, description, maxenergy } = user2
                 return (
                   <tr key={index}>
                     <td>{room}</td>

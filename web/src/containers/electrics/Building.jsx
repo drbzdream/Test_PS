@@ -50,12 +50,12 @@ import axios from 'axios'
 
 const { dataAction } = actions
 
-let tmp_dreal = []
+const elec_cost = 3.9639 
 
 const COLORS = ['#EF597B', '#FFCB18'];
 
 const data = [
-		{name: 'Room202', value: 12503.04}, {name: 'Room203', value: 8503.04}
+		{name: 'Room202', value: 12503.04, avr: 5555}, {name: 'Room203', value: 8503.04, avr: 4444}
     	]
 
 const datatime = [
@@ -83,37 +83,6 @@ const datatime2 = [
       {name: '18.00', Room202: 1890, Room203: 4800, amt: 2181},
       {name: '19.00', Room202: 2390, Room203: 3800, amt: 2500},
       {name: '20.00', Room202: 3490, Room203: 4300, amt: 2100},
-]
-
-const datatime3 = [
-      {name: '07.00', Room202: 4000},
-      {name: '08.00', Room202: 3000},
-      {name: '09.00', Room202: 2000},
-      {name: '10.00', Room202: 2780},
-      {name: '11.00', Room202: 1890},
-      {name: '12.00', Room202: 2390},
-      {name: '13.00', Room202: 3490},
-      {name: '14.00', Room202: 4000},
-      {name: '15.00', Room202: 3000},
-      {name: '16.00', Room202: 2000},
-      {name: '17.00', Room202: 2780},
-      {name: '18.00', Room202: 1890},
-      {name: '19.00', Room202: 2390},
-      {name: '20.00', Room202: 3490},
-      {name: '07.00', Room203: 2400, amt: 2400},
-      {name: '08.00', Room203: 1398, amt: 2210},
-      {name: '09.00', Room203: 9800, amt: 2290},
-      {name: '10.00', Room203: 3908, amt: 2000},
-      {name: '11.00', Room203: 4800, amt: 2181},
-      {name: '12.00', Room203: 3800, amt: 2500},
-      {name: '13.00', Room203: 4300, amt: 2100},
-      {name: '14.00', Room203: 2400, amt: 2400},
-      {name: '15.00', Room203: 1398, amt: 2210},
-      {name: '16.00', Room203: 9800, amt: 2290},
-      {name: '17.00', Room203: 3908, amt: 2000},
-      {name: '18.00', Room203: 4800, amt: 2181},
-      {name: '19.00', Room203: 3800, amt: 2500},
-      {name: '20.00', Room203: 4300, amt: 2100}
 ]
 
 const data01 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
@@ -176,7 +145,9 @@ class Building extends Component {
 		activeIndex: 0,
 		test2: [],
 		notis: [],
-		notie: []
+		notie: [],
+		showenergy: [],
+		summary: []
 		// time_server: 0,
 		// count: 0
 	}
@@ -199,34 +170,51 @@ class Building extends Component {
 
 
   componentDidMount(){
-  	
-  	axios.get('http://localhost:9090/notischedulelog').then((response) => {
-	      // console.log(response.data);
-	      this.setState({ notis: response.data})
-	      //console.log(test);
-	    }).catch(function (error) {
-	      console.log('error');
-	      console.log(error);
-	    });
+	axios.get('http://localhost:9090/notischedulelog').then((response) => {
+      // console.log(response.data);
+      this.setState({ notis: response.data})
+      //console.log(test);
+    }).catch(function (error) {
+      console.log('error');
+      console.log(error);
+    });
 
 
-	    axios.get('http://localhost:9090/notienergylog').then((response) => {
-	      // console.log(response);
-	      this.setState({ notie: response.data})
-	      //console.log(test);
-	    }).catch(function (error) {
-	      console.log('error');
-	      console.log(error);
-	    });
+    axios.get('http://localhost:9090/notienergylog').then((response) => {
+      // console.log(response);
+      this.setState({ notie: response.data})
+      //console.log(test);
+    }).catch(function (error) {
+      console.log('error');
+      console.log(error);
+    });
 
-	    axios.get('http://localhost:9090/energyrule').then((response) => {
-      		// console.log(response);
-      		this.setState({ test2: response.data})
-      		//console.log(test);
-    	}).catch(function (error) {
-      		console.log('error');
-      		console.log(error);
-    	});
+    axios.get('http://localhost:9090/energyrule').then((response) => {
+  		// console.log(response);
+  		this.setState({ test2: response.data})
+  		//console.log(test);
+	}).catch(function (error) {
+  		console.log('error');
+  		console.log(error);
+	});
+
+	axios.get('http://localhost:9090/energyshow').then((res) => {
+		// console.log('showenergy')
+		// console.log(res.data)
+		this.setState({showenergy: res.data})
+	}).catch(function (error) {
+  		console.log('error');
+  		console.log(error);
+	})
+
+	axios.get('http://localhost:9090/summary').then((res) => {
+		// console.log('showenergy')
+		// console.log(res.data)
+		this.setState({summary: res.data})
+	}).catch(function (error) {
+  		console.log('error');
+  		console.log(error);
+	})
     
   }
 
@@ -287,7 +275,7 @@ class Building extends Component {
 
 					<div className='energyconsump-barchart'>
 
-							<BarChart width={950} height={340} data={datatime2}
+							<BarChart width={950} height={340} data={this.state.showenergy}
 						  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
 							   <XAxis dataKey="name"/>
 							   <YAxis />
@@ -308,7 +296,7 @@ class Building extends Component {
 				        <Pie 
 				        	activeIndex={this.state.activeIndex}
 				         	activeShape={renderActiveShape} 
-				          	data={data} 
+				          	data={data}
 				          	cx={200} 
 				          	cy={200} 
 				          	innerRadius={60}
@@ -326,21 +314,22 @@ class Building extends Component {
 			          <thead>
 			            <tr>
 			              <th>Room</th>
-			              <th>Description</th>
+			              <th>Electricity Cost</th>
 			              <th>Average</th>
 			              <th>Total</th>
 			            </tr>
 			          </thead>
 			          <tbody>
 			            {
-			              this.state.test2.map((user3, index) => {
-			                let { id, room, description, maxenergy } = user3
+			              this.state.summary.map((user3, index) => {
+			                let { name, value, avr } = user3
+			                // console.log('summary: ' + this.state.summary)
 			                return (
 			                  <tr key={index}>
-			                    <td>{room}</td>
-			                    <td>{description}</td>
-			                    <td>{maxenergy.toFixed(2)} Wh</td>
-			                    <td>{maxenergy.toFixed(2)*3.9639} Wh</td>
+			                    <td>{name}</td>
+			                    <td>{(value*elec_cost).toFixed(2)} Baht</td>
+			                    <td>{avr.toFixed(2)} Wh</td>
+			                    <td>{value.toFixed(2)} Wh</td>
 			                  </tr>
 			                )
 			              })
@@ -402,13 +391,14 @@ class Building extends Component {
 			              <th>Room</th>
 			              <th>Description</th>
 			              <th>Type</th>
-			              <th>Notifacation at</th>
+			              <th>Notification at</th>
 			            </tr>
 			          </thead>
 			          <tbody>
 			            {
 			              this.state.notie.map((user1, index) => {
 			                let { id, room, type, description, updated_at } = user1
+			                console.log('notie: ' + this.state.notie)
 			                return (
 			                  <tr key={index}>
 			                    <td>{room}</td>
@@ -422,6 +412,7 @@ class Building extends Component {
 			            {
 			              this.state.notis.map((user2, index) => {
 			                let { id, room, type, description, updated_at } = user2
+			                console.log('notis: ' + this.state.notis)
 			                return (
 			                  <tr key={index}>
 			                    <td>{room}</td>

@@ -116,7 +116,7 @@ class Room extends Component {
 
 	render(){
 
-		let droom = [], dlight = [], dtem = [], dreal = [], drealpower = [] 
+		let droom = [], dlight = [], dtem = []
 
 		let { room, light, temperature } = this.props.power_resources.data
 
@@ -160,28 +160,8 @@ class Room extends Component {
 			}
 		})
 
-
-		dreal = this.state.energy_realtime.map((data) => {
-			return ({
-				name: moment(data.timestemp).format("hh:mm:ss"),
-				power: data.energy_value
-			})
-		})
-
-		drealpower = this.state.power_realtime.map((data) => {
-			return ({
-				name: data.timestemp,
-				current: data.power_value
-			})
-		})
-
 		return (
-			<div className='show_overview'>
-
-				
-
-			
-			      
+			<div className='show_overview'>		      
 			      <h1>Resource Consumption</h1>
 
 			      <form onSubmit={this.eiei2.bind(this)} className="filter" ref='form_filter'>
@@ -240,10 +220,6 @@ class Room extends Component {
 				        <option value="26">26</option>
 				        <option value="27">27</option>
 				        <option value="28">28</option>
-				        <option value="29">29</option>
-				        <option value="30">30</option>
-				        <option value="31">31</option>
-
 				      </FormControl>
 				    </FormGroup>
 				    
@@ -253,44 +229,44 @@ class Room extends Component {
 			    </form>
 
 
-			      	<div className="conp_chart">
-				        <AreaChart width={600} height={270} data={droom} syncId="anyId"
-				              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-				          <XAxis dataKey="name"/>
-				          <YAxis/>
-				          <CartesianGrid strokeDasharray="2 2"/>
-				          <Legend verticalAlign="top" height={36} align='right'/>
-				          <Tooltip/>
-				          <Area isAnimationActive={false} type='monotone' dataKey='Energy' stroke=' #FFCB18' fill=' #FFCB18' activeDot={{r: 6}}/>
-				        </AreaChart>
-				        <p className="name_chart">Energy(kWh)</p>
-				        <br />
-				        <br />
+			    <div className="conp_chart">
+			        <AreaChart width={600} height={270} data={droom} syncId="anyId"
+			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+			          <XAxis dataKey="name"/>
+			          <YAxis/>
+			          <CartesianGrid strokeDasharray="2 2"/>
+			          <Legend verticalAlign="top" height={36} align='right'/>
+			          <Tooltip/>
+			          <Area isAnimationActive={false} type='monotone' dataKey='Energy' stroke=' #FFCB18' fill=' #FFCB18' activeDot={{r: 6}}/>
+			        </AreaChart>
+			        <p className="name_chart">Energy(kWh)</p>
+			        <br />
+			        <br />
 
-				        <LineChart width={600} height={240} data={dlight} syncId="anyId"
-				              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-				          <XAxis dataKey="name"/>
-				          <YAxis/>
-				          <CartesianGrid strokeDasharray="2 2"/>
-				          <Legend verticalAlign="top" height={36} align='right'/>
-				          <Tooltip/>
-				          <Line isAnimationActive={false} type='monotone' dataKey='Light' stroke=' #29A2C6' activeDot={{r: 6}}/>
-				        </LineChart>
-				        <p className="name_chart">Light(Lux)</p>
-				        <br />
-				        <br />
+			        <LineChart width={600} height={240} data={dlight} syncId="anyId"
+			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+			          <XAxis dataKey="name"/>
+			          <YAxis/>
+			          <CartesianGrid strokeDasharray="2 2"/>
+			          <Legend verticalAlign="top" height={36} align='right'/>
+			          <Tooltip/>
+			          <Line isAnimationActive={false} type='monotone' dataKey='Light' stroke=' #29A2C6' activeDot={{r: 6}}/>
+			        </LineChart>
+			        <p className="name_chart">Light(Lux)</p>
+			        <br />
+			        <br />
 
-				        <LineChart width={600} height={240} data={dtem} syncId="anyId"
-				              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-				          <XAxis dataKey="name"/>
-				          <YAxis/>
-				          <CartesianGrid strokeDasharray="2 2"/>
-				          <Legend verticalAlign="top" height={36} align='right'/>
-				          <Tooltip/>
-				          <Line isAnimationActive={false} type='monotone' dataKey='Temperature' stroke='#EF597B' activeDot={{r: 6}}/>
-				        </LineChart>
-				        <p className="name_chart">Temperature(C)</p>
-			      </div>
+			        <LineChart width={600} height={240} data={dtem} syncId="anyId"
+			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+			          <XAxis dataKey="name"/>
+			          <YAxis/>
+			          <CartesianGrid strokeDasharray="2 2"/>
+			          <Legend verticalAlign="top" height={36} align='right'/>
+			          <Tooltip/>
+			          <Line isAnimationActive={false} type='monotone' dataKey='Temperature' stroke='#EF597B' activeDot={{r: 6}}/>
+			        </LineChart>
+			        <p className="name_chart">Temperature(C)</p>
+			    </div>
 			</div>
 		)
 	}
