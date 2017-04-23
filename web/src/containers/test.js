@@ -16,6 +16,7 @@ import axios from 'axios'
 import actions from 'actions'
 
 window.React = React;
+const elec_cost = 3.9639
 
 class Test extends Component {
 
@@ -49,6 +50,7 @@ class Test extends Component {
       console.log('error');
       console.log(error);
     });
+    
   }
 
 
@@ -152,7 +154,7 @@ class Test extends Component {
                     <td>{room}</td>
                     <td>{description}</td>
                     <td>{maxenergy.toFixed(2)} Wh</td>
-                    <td>{maxenergy.toFixed(2)*3.9639} Baht</td>
+                    <td>{maxenergy.toFixed(2)*elec_cost} Baht</td>
                     <td>
                       <Link to={`schedule/editenergy/${id}`}><Button bsStyle="info">Edit</Button></Link>
                       {' '}

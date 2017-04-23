@@ -49,7 +49,7 @@ class Header extends Component {
 		          <NavItem eventKey={2}>Resource Consumption</NavItem>
 		        </LinkContainer>
 				<LinkContainer to='/schedule'>
-		          <NavItem eventKey={3}>Notification</NavItem>
+		          <NavItem eventKey={3}>Notification Rule</NavItem>
 		        </LinkContainer>
 		        </Nav>
 			</div>

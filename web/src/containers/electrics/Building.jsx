@@ -85,6 +85,37 @@ const datatime2 = [
       {name: '20.00', Room202: 3490, Room203: 4300, amt: 2100},
 ]
 
+const datatime3 = [
+      {name: '07.00', Room202: 4000},
+      {name: '08.00', Room202: 3000},
+      {name: '09.00', Room202: 2000},
+      {name: '10.00', Room202: 2780},
+      {name: '11.00', Room202: 1890},
+      {name: '12.00', Room202: 2390},
+      {name: '13.00', Room202: 3490},
+      {name: '14.00', Room202: 4000},
+      {name: '15.00', Room202: 3000},
+      {name: '16.00', Room202: 2000},
+      {name: '17.00', Room202: 2780},
+      {name: '18.00', Room202: 1890},
+      {name: '19.00', Room202: 2390},
+      {name: '20.00', Room202: 3490},
+      {name: '07.00', Room203: 2400, amt: 2400},
+      {name: '08.00', Room203: 1398, amt: 2210},
+      {name: '09.00', Room203: 9800, amt: 2290},
+      {name: '10.00', Room203: 3908, amt: 2000},
+      {name: '11.00', Room203: 4800, amt: 2181},
+      {name: '12.00', Room203: 3800, amt: 2500},
+      {name: '13.00', Room203: 4300, amt: 2100},
+      {name: '14.00', Room203: 2400, amt: 2400},
+      {name: '15.00', Room203: 1398, amt: 2210},
+      {name: '16.00', Room203: 9800, amt: 2290},
+      {name: '17.00', Room203: 3908, amt: 2000},
+      {name: '18.00', Room203: 4800, amt: 2181},
+      {name: '19.00', Room203: 3800, amt: 2500},
+      {name: '20.00', Room203: 4300, amt: 2100}
+]
+
 const data01 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
 
 const data02 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
@@ -140,10 +171,12 @@ const renderActiveShape = (props) => {
 class Building extends Component {
 
 	state = {
-		energy_realtime: [],
-		power_realtime: [],
+		energy1: [],
+		energy2: [],
 		activeIndex: 0,
-		test2: []
+		test2: [],
+		notis: [],
+		notie: []
 		// time_server: 0,
 		// count: 0
 	}
@@ -151,29 +184,50 @@ class Building extends Component {
 	componentWillMount(){
 		this.props.dataAction()
         const io = socket('http://localhost:9090')
-		io.on('energy_realtime', (response) => {
-			this.setState({ energy_realtime: response})
+		io.on('energy_room1', (response) => {
+			this.setState({ energy1: response})
 			// dispatch(requestSuccess(response))
 		})
 
-		io.on('power_realtime', (response) => {
-			this.setState({ power_realtime: response})
+		io.on('energy_room2', (response) => {
+			this.setState({ energy2: response})
 			// dispatch(requestSuccess(response))
 		})
+
 
 	}
 
-	componentDidMount(){
-	    axios.get('http://localhost:9090/energyrule')
-	    .then((response) => {
-	      console.log(response);
-	      this.setState({ test2: response.data})
+
+  componentDidMount(){
+  	
+  	axios.get('http://localhost:9090/notischedulelog').then((response) => {
+	      // console.log(response.data);
+	      this.setState({ notis: response.data})
 	      //console.log(test);
-	    })
-	    .catch(function (error) {
+	    }).catch(function (error) {
 	      console.log('error');
 	      console.log(error);
 	    });
+
+
+	    axios.get('http://localhost:9090/notienergylog').then((response) => {
+	      // console.log(response);
+	      this.setState({ notie: response.data})
+	      //console.log(test);
+	    }).catch(function (error) {
+	      console.log('error');
+	      console.log(error);
+	    });
+
+	    axios.get('http://localhost:9090/energyrule').then((response) => {
+      		// console.log(response);
+      		this.setState({ test2: response.data})
+      		//console.log(test);
+    	}).catch(function (error) {
+      		console.log('error');
+      		console.log(error);
+    	});
+    
   }
 
 	eiei(){
@@ -206,22 +260,22 @@ class Building extends Component {
 	render(){
 
 
-		let dreal = [], drealpower = [] 
+		let dreal = [], drealpower = [], derealroom = [] 
 
 
-		dreal = this.state.energy_realtime.map((data) => {
+		dreal = this.state.energy1.map((data) => {
 			return ({
 				name: moment(data.timestemp).format("hh:mm:ss"),
-				power: data.energy_value
+				energy1: data.energy_value
 			})
 		})
 
-		drealpower = this.state.power_realtime.map((data) => {
+		drealpower = this.state.energy2.map((data) => {
 			return ({
-				name: data.timestemp,
-				current: data.power_value
+				energy2: data.energy_value
 			})
 		})
+
 
 		return (
 			<div className='show_overview'>
@@ -233,17 +287,18 @@ class Building extends Component {
 
 					<div className='energyconsump-barchart'>
 
-							<BarChart width={950} height={300} data={datatime2}
+							<BarChart width={950} height={340} data={datatime2}
 						  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
 							   <XAxis dataKey="name"/>
 							   <YAxis />
 							   <CartesianGrid strokeDasharray="2 2"/>
 							   <Tooltip />
-							   <Legend />
+							   <Legend verticalAlign="top" height={36} align='right'/>
 							   <Bar dataKey="Room202" stackId="a" fill="#EF597B" />
 							   <Bar dataKey="Room203" stackId="a" fill="#FFCB18" />
 							   <Brush dataKey='name' height={30} stroke="#003311"/>
 							</BarChart>
+							<p className="name_chart">Energy Consumption (Wh)</p>
 					</div>
 
 					<div className='energyconsump-piechart'>
@@ -255,7 +310,7 @@ class Building extends Component {
 				         	activeShape={renderActiveShape} 
 				          	data={data} 
 				          	cx={200} 
-				          	cy={210} 
+				          	cy={200} 
 				          	innerRadius={60}
 				          	outerRadius={100} 
 				          	fill="#EF597B">
@@ -278,8 +333,8 @@ class Building extends Component {
 			          </thead>
 			          <tbody>
 			            {
-			              this.state.test2.map((user2, index) => {
-			                let { id, room, description, maxenergy, deleteUser } = user2
+			              this.state.test2.map((user3, index) => {
+			                let { id, room, description, maxenergy } = user3
 			                return (
 			                  <tr key={index}>
 			                    <td>{room}</td>
@@ -300,9 +355,9 @@ class Building extends Component {
 				</div>
 
 				<div className='realtimeconsumpt'>
-					<h2>Realtime Energy Consumption</h2>
 					<br />
-						<AreaChart width={730} height={250} data={datatime2}
+					<h2>Realtime Energy Consumption</h2>
+						<AreaChart width={730} height={290} data={datatime2}
 						  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
 						  <defs>
 						    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -317,20 +372,24 @@ class Building extends Component {
 						  <XAxis dataKey="name" />
 						  <YAxis />
 						  <CartesianGrid strokeDasharray="2 2" />
+						  <Legend verticalAlign="top" height={36} align='right'/>
 						  <Tooltip />
 						  <Area type="monotone" dataKey="Room202" stroke="#EF597B" fillOpacity={1} fill="url(#colorUv)" />
 						  <Area type="monotone" dataKey="Room203" stroke="#FFCB18" fillOpacity={1} fill="url(#colorPv)" />
 						</AreaChart>
+						<p className="name_chart">Energy Consumption (Wh)</p>
 
-						<LineChart width={730} height={250} data={datatime2}
+						<LineChart width={730} height={290} data={datatime2}
 						  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
 						  <XAxis dataKey="name" />
 						  <YAxis />
 						  <CartesianGrid strokeDasharray="2 2" />
+						  <Legend verticalAlign="top" height={36} align='right'/>
 						  <Tooltip />
 						  <Line type="monotone" dataKey="Room202" stroke="#EF597B" />
 						  <Line type="monotone" dataKey="Room203" stroke="#FFCB18" />
 						</LineChart>
+						<p className="name_chart">Energy Consumption (Wh)</p>
 
 				</div>
 
@@ -348,27 +407,27 @@ class Building extends Component {
 			          </thead>
 			          <tbody>
 			            {
-			              this.state.test2.map((user2, index) => {
-			                let { id, room, description, maxenergy, deleteUser } = user2
+			              this.state.notie.map((user1, index) => {
+			                let { id, room, type, description, updated_at } = user1
 			                return (
 			                  <tr key={index}>
 			                    <td>{room}</td>
 			                    <td>{description}</td>
-			                    <td>{maxenergy.toFixed(2)} Wh</td>
-			                    <td>{maxenergy.toFixed(2)*3.9639} Baht</td>
+			                    <td>{type}</td>
+			                    <td>{moment(updated_at).format('MMMM Do YYYY, h:mm:ss a')}</td>
 			                  </tr>
 			                )
 			              })
 			            }
 			            {
-			              this.state.test2.map((user2, index) => {
-			                let { id, room, description, maxenergy, deleteUser } = user2
+			              this.state.notis.map((user2, index) => {
+			                let { id, room, type, description, updated_at } = user2
 			                return (
 			                  <tr key={index}>
 			                    <td>{room}</td>
 			                    <td>{description}</td>
-			                    <td>{maxenergy.toFixed(2)} Wh</td>
-			                    <td>{maxenergy.toFixed(2)*3.9639} Baht</td>
+			                    <td>{type}</td>
+			                    <td>{moment(updated_at).format('MMMM Do YYYY, h:mm:ss a')}</td>
 			                  </tr>
 			                )
 			              })
@@ -404,3 +463,45 @@ Building = connect(
 )(Building)
 
 export default Building
+
+
+// <h2>Overall Data</h2> 
+// 			    	<h4>Latest Mouth</h4> 
+// 						<p className="title_echarge">Electricity Charge (Baht)</p>
+// 					<PieChart width={400} height={400} >
+// 	        			<Pie data={data02} cx={200} cy={200} innerRadius={90} outerRadius={140} fill="#d9534f" label/>
+// 	        			<Tooltip/>
+// 	       			</PieChart>
+
+// 	       		<div className="total_chart">
+// 	       		<p><b>Total Energy(kWh)</b></p>
+// 	       			<BarChart width={550} height={250} data={data}
+// 				            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+// 				       <XAxis dataKey="name"/>
+// 				       <YAxis/>
+// 				       <CartesianGrid strokeDasharray="3 3"/>
+// 				       <Tooltip/>
+// 				       <Legend />
+// 				       <Bar dataKey="Energy" fill="#5bc0de" />
+// 				     </BarChart>
+
+//        			</div>
+
+			     
+// 				<div className='consumption_data'>
+// 					<br />
+// 					<h3>Realtime Energy Consumption</h3>
+// 					<br />
+// 				</div>
+
+// 				<div className="stat_demo">
+// 					<LineChart width={800} height={300} data={dreal}
+// 	            	margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+// 					    <XAxis dataKey="name"/>
+// 						<YAxis/>
+// 					    <CartesianGrid strokeDasharray="3 3"/>
+// 					    <Tooltip/>
+// 					    <Legend />
+// 					    <Line isAnimationActive={false} type="monotone" dataKey="power" stroke="#9c0" activeDot={{r: 6}}/>
+// 					</LineChart>
+// 

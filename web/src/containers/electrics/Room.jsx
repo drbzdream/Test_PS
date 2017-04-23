@@ -15,7 +15,8 @@ import {
 	AreaChart, 
 	Area,
 	BarChart, 
-	Bar
+	Bar,
+	Brush
 } from 'recharts'
 import socket from 'socket.io-client'
 import actions from 'actions'
@@ -80,9 +81,7 @@ class Room extends Component {
 
 	state = {
 		energy_realtime: [],
-		power_realtime: [],
-		time_server: 0,
-		count: 0
+		power_realtime: []
 	}
 
 	componentWillMount(){
@@ -255,11 +254,12 @@ class Room extends Component {
 
 
 			      	<div className="conp_chart">
-				        <AreaChart width={600} height={200} data={droom} syncId="anyId"
+				        <AreaChart width={600} height={270} data={droom} syncId="anyId"
 				              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 				          <XAxis dataKey="name"/>
 				          <YAxis/>
-				          <CartesianGrid strokeDasharray="1 1"/>
+				          <CartesianGrid strokeDasharray="2 2"/>
+				          <Legend verticalAlign="top" height={36} align='right'/>
 				          <Tooltip/>
 				          <Area isAnimationActive={false} type='monotone' dataKey='Energy' stroke=' #FFCB18' fill=' #FFCB18' activeDot={{r: 6}}/>
 				        </AreaChart>
@@ -267,11 +267,12 @@ class Room extends Component {
 				        <br />
 				        <br />
 
-				        <LineChart width={600} height={200} data={dlight} syncId="anyId"
+				        <LineChart width={600} height={240} data={dlight} syncId="anyId"
 				              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 				          <XAxis dataKey="name"/>
 				          <YAxis/>
-				          <CartesianGrid strokeDasharray="1 1"/>
+				          <CartesianGrid strokeDasharray="2 2"/>
+				          <Legend verticalAlign="top" height={36} align='right'/>
 				          <Tooltip/>
 				          <Line isAnimationActive={false} type='monotone' dataKey='Light' stroke=' #29A2C6' activeDot={{r: 6}}/>
 				        </LineChart>
@@ -279,11 +280,12 @@ class Room extends Component {
 				        <br />
 				        <br />
 
-				        <LineChart width={600} height={200} data={dtem} syncId="anyId"
+				        <LineChart width={600} height={240} data={dtem} syncId="anyId"
 				              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 				          <XAxis dataKey="name"/>
 				          <YAxis/>
-				          <CartesianGrid strokeDasharray="1 1"/>
+				          <CartesianGrid strokeDasharray="2 2"/>
+				          <Legend verticalAlign="top" height={36} align='right'/>
 				          <Tooltip/>
 				          <Line isAnimationActive={false} type='monotone' dataKey='Temperature' stroke='#EF597B' activeDot={{r: 6}}/>
 				        </LineChart>
