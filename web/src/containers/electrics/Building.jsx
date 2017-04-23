@@ -86,6 +86,37 @@ const datatime2 = [
       {name: '20.00', Room202: 3490, Room203: 4300, amt: 2100},
 ]
 
+const datatime3 = [
+      {name: 1, Room202: 4000, amt: 2400},
+      {name: 2, Room202: 3000, amt: 2210},
+      {name: 3, Room202: 2000, amt: 2290},
+      {name: 4, Room202: 2780, amt: 2000},
+      {name: 5, Room202: 1890, amt: 2181},
+      {name: 6, Room202: 2390, amt: 2500},
+      {name: 7, Room202: 3490, amt: 2100},
+      {name: 8, Room202: 4000, amt: 2400},
+      {name: 9, Room202: 3000, amt: 2210},
+      {name: 10, Room202: 2000, amt: 2290},
+      {name: 11, Room202: 2780, amt: 2000},
+      {name: 12, Room202: 1890, amt: 2181},
+      {name: 13, Room202: 2390, amt: 2500},
+      {name: 14, Room202: 3490, amt: 2100},
+      {name: 1, Room203: 2400, amt: 2400},
+      {name: 2, Room203: 1398, amt: 2210},
+      {name: 3, Room203: 9800, amt: 2290},
+      {name: 4, Room203: 3908, amt: 2000},
+      {name: 5, Room203: 4800, amt: 2181},
+      {name: 6, Room203: 3800, amt: 2500},
+      {name: 7, Room203: 4300, amt: 2100},
+      {name: 8, Room203: 2400, amt: 2400},
+      {name: 9, Room203: 1398, amt: 2210},
+      {name: 10, Room203: 9800, amt: 2290},
+      {name: 11, Room203: 3908, amt: 2000},
+      {name: 12, Room203: 4800, amt: 2181},
+      {name: 13, Room203: 3800, amt: 2500},
+      {name: 15, Room203: 4300, amt: 2100}
+]
+
 const data01 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
 
 const data02 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
