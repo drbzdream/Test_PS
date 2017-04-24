@@ -36,20 +36,23 @@ class Header extends Component {
 					</Navbar.Header>
 				    <Navbar.Collapse>
 				      <Nav pullRight>
-						<NavItem eventKey={3}><b><Glyphicon glyph="cog" /></b></NavItem>
+						<NavItem eventKey={5}><b><Glyphicon glyph="cog" /></b></NavItem>
 				      </Nav>
 				    </Navbar.Collapse>
 				</Navbar>
 
 				<Nav className='navbar_navi' bsStyle="pills" justified activeKey={this.state.a} onSelect={this.eiei.bind(this)}>
 				<LinkContainer to='/'>
-		          <NavItem eventKey={1}>Dashboard</NavItem>
+		          <NavItem eventKey={1}>Energy Consumption</NavItem>
+		        </LinkContainer>
+		        <LinkContainer to='/realtime-energy'>
+		          <NavItem eventKey={2}>Realtime Energy Consumption</NavItem>
 		        </LinkContainer>
 				<LinkContainer to='/infodevice'>
-		          <NavItem eventKey={2}>Resource Consumption</NavItem>
+		          <NavItem eventKey={3}>Resource Consumption</NavItem>
 		        </LinkContainer>
 				<LinkContainer to='/schedule'>
-		          <NavItem eventKey={3}>Notification Rule</NavItem>
+		          <NavItem eventKey={4}>Notification</NavItem>
 		        </LinkContainer>
 		        </Nav>
 			</div>

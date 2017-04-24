@@ -18,6 +18,9 @@ import {
 	EditSchedule,
 	EditEnergy
 }from 'containers/schedule'
+import {
+	realtimeEnergy
+} from 'containers/realtime'
 import Test from 'containers/test'
 import Eiei from 'containers/Eiei'
 
@@ -30,6 +33,9 @@ export default (store, history) => (
 		<Route path='user/:id/edit' component={Eiei} />
 		<Route path='/' component={App}>
 			<IndexRoute component={Building} />
+		</Route>
+		<Route path='/realtime-energy' component={App}>
+			<IndexRoute component={realtimeEnergy} />
 		</Route>
 		<Route path='/infodevice' component={App}>
 			<IndexRoute component={Room} />

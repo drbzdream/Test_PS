@@ -11,9 +11,12 @@ import {
   Image,
   Table, 
 } from 'react-bootstrap'
+import socket from 'socket.io-client'
 import Notification  from '../../node_modules/react-web-notification/lib/components/Notification'
 import axios from 'axios'
 import actions from 'actions'
+import 'components/Building.css'
+
 
 window.React = React;
 const elec_cost = 3.9639
@@ -24,10 +27,36 @@ class Test extends Component {
     test: [],
     test2: [],
     scheduleID: '',
-    energyID: ''
+    energyID: '',
+    notis: [],
+    notie: []
   }
 
   componentDidMount(){
+
+    const io = socket('http://localhost:9090')
+    io.on('noti', (response) => {
+      axios.get('http://localhost:9090/notischedulelog').then((response) => {
+        // console.log(response.data);
+        this.setState({ notis: response.data})
+        console.log('aaaaaaaaaaaaaaaa')
+      }).catch(function (error) {
+        console.log('error');
+        console.log(error);
+      });
+    })
+
+    io.on('noti2', (response) => {
+      axios.get('http://localhost:9090/notienergylog').then((response) => {
+        // console.log(response);
+        this.setState({ notie: response.data})
+        //console.log(test);
+      }).catch(function (error) {
+        console.log('error');
+        console.log(error);
+      });
+    })
+
     axios.get('http://localhost:9090/schedule')
     .then((response) => {
       console.log(response);
@@ -50,6 +79,25 @@ class Test extends Component {
       console.log('error');
       console.log(error);
     })
+
+    axios.get('http://localhost:9090/notischedulelog').then((response) => {
+      // console.log(response.data);
+      this.setState({ notis: response.data})
+      //console.log(test);
+    }).catch(function (error) {
+      console.log('error');
+      console.log(error);
+    });
+
+
+    axios.get('http://localhost:9090/notienergylog').then((response) => {
+      // console.log(response);
+      this.setState({ notie: response.data})
+      //console.log(test);
+    }).catch(function (error) {
+      console.log('error');
+      console.log(error);
+    });
 
   }
 
@@ -91,7 +139,57 @@ class Test extends Component {
 	render(){
 		return (
 			<div>
-        <h1 style={{ "textAlign": "center"}}>Notification Rule</h1>
+        <div className='noti-histories'>
+        <br />
+          <h1>Notification</h1>
+          <h2>Notification History</h2>
+          <br />
+          <Table striped condensed hover>
+                <thead>
+                  <tr>
+                    <th>Room</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Notification at</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    this.state.notie.map((user1, index) => {
+                      let { id, room, type, description, updated_at } = user1
+                      console.log('notie: ' + this.state.notie)
+                      return (
+                        <tr key={index}>
+                          <td>Room{room}</td>
+                          <td>{description}</td>
+                          <td>{type}</td>
+                          <td>{moment(updated_at).format('MMMM Do YYYY, h:mm:ss a')}</td>
+                        </tr>
+                      )
+                    })
+                  }
+                  {
+                    this.state.notis.map((user2, index) => {
+                      let { id, room, type, description, updated_at } = user2
+                      console.log('notis: ' + this.state.notis)
+                      return (
+                        <tr key={index}>
+                          <td>Room{room}</td>
+                          <td>{description}</td>
+                          <td>{type}</td>
+                          <td>{moment(updated_at).format('MMMM Do YYYY, h:mm:ss a')}</td>
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+              </Table>
+
+
+        </div>
+        <br />
+        <br />
+        <h2 style={{ "textAlign": "center"}}>Notification Rule</h2>
           <div className="schedule">
   				<h2>Schedule Rule <Link to='schedule/addschedule'><Button bsStyle="primary">Add </Button> </Link></h2> 
           <br />
@@ -167,6 +265,9 @@ class Test extends Component {
           </tbody>
         </Table>
       </div>
+
+
+
 				
 			  
 			</div>

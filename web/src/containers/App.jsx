@@ -14,6 +14,7 @@ import 'components/Building.css'
 
 
 export default class App extends Component {
+	
 	componentWillMount(){
         const io = socket('http://localhost:9090')
 		io.on('noti', (response) => {
