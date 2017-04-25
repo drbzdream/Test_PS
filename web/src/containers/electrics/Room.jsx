@@ -31,13 +31,15 @@ import {
 	FormGroup,
 	ControlLabel,
 	FormControl,
-	option
+	option,
+	Table
 } from 'react-bootstrap'
 import 'components/Building.css'
 import {
 	testpic
 } from 'assets/images'
 import moment from 'moment'
+import axios from 'axios'
 
 
 
@@ -46,42 +48,12 @@ const { dataAction } = actions
 let tmp_dreal = []
 
 
-// const data = [
-//       {name: 'Room 202', Energy: 4644.77, pv: 2400, amt: 2400},
-//       {name: 'Room 203', Energy: 4667.89, pv: 1398, amt: 2210},
-// ]
-
-// const datatime = [
-//       {name: '7.00 am', Floor1: 4000, Floor2: 2400, Floor3: 7000, amt: 2400},
-//       {name: '8.00 am', Floor1: 3000, Floor2: 1398, Floor3: 6400, amt: 2210},
-//       {name: '9.00 am', Floor1: 2000, Floor2: 9800, Floor3: 5300, amt: 2290},
-//       {name: '10.00 am', Floor1: 2780, Floor2: 3908, Floor3: 4500, amt: 2000},
-//       {name: '11.00 am', Floor1: 1890, Floor2: 4800, Floor3: 5700, amt: 2181},
-//       {name: '12.00 pm', Floor1: 2390, Floor2: 3800, Floor3: 6100, amt: 2500},
-//       {name: '01.00 pm', Floor1: 3490, Floor2: 4300, Floor3: 7000, amt: 2100},
-// ]
-
-// const datatime2 = [
-//       {name: '7.00 am', Energy: 4000, pv: 2400, amt: 2400},
-//       {name: '8.00 am', Energy: 3000, pv: 1398, amt: 2210},
-//       {name: '9.00 am', Energy: 2000, pv: 9800, amt: 2290},
-//       {name: '10.00 am', Energy: 2780, pv: 3908, amt: 2000},
-//       {name: '11.00 am', Energy: 1890, pv: 4800, amt: 2181},
-//       {name: '12.00 pm', Energy: 2390, pv: 3800, amt: 2500},
-//       {name: '01.00 pm', Energy: 3490, pv: 4300, amt: 2100},
-// ]
-
-// const data01 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
-
-// const data02 = [{name: 'Room 202', value: 18411.403803}, {name: 'Room 203', value: 18503.049171}]
-
-
-
 class Room extends Component {
 
 	state = {
 		energy_realtime: [],
-		power_realtime: []
+		power_realtime: [],
+		summary: []
 	}
 
 	componentWillMount(){
@@ -100,7 +72,23 @@ class Room extends Component {
 			// dispatch(requestSuccess(response))
 		})
 
+		axios.get(`http://localhost:9090/summaryroom?day=2015-02-28&room=202`).then((res) => {
+			// console.log('showenergy')
+			this.setState({summary: res.data})
+			console.log(this.state.summary)
+
+		}).catch(function (error) {
+	  		console.log('error');
+	  		console.log(error);
+		})
+
+
 	}
+
+
+	componentDidMount(){
+	    
+	  }
 
 	eiei(){
 		this.setState({x: this.state.x +1})
@@ -112,6 +100,19 @@ class Room extends Component {
 		console.log(this.refs.form_filter.mouth.value)
 		let x = `2015-${mouth.value}-${day.value}`
 		this.props.dataAction(room.value, x)
+		console.log('date: ' + x)
+		console.log('room: ' + room.value)
+
+		axios.get(`http://localhost:9090/summaryroom?day=${x}&room=${room.value}`).then((res) => {
+			// console.log('showenergy')
+			// console.log(res.data)
+				this.setState({summary: res.data})
+				console.log(this.state.summary)
+			}).catch(function (error) {
+		  		console.log('error');
+		  		console.log(error);
+			})
+
 	}
 
 	render(){
@@ -230,19 +231,45 @@ class Room extends Component {
 
 
 			    <div className="conp_chart">
-			        <AreaChart width={600} height={270} data={droom} syncId="anyId"
+
+			    	<div  className='detailsummary'>
+			       		<h3>Summary</h3>
+			       		<Table striped condensed hover>
+				          <thead>
+				            <tr>
+				              <th>Room</th>
+				              <th>Electricity Cost</th>
+				              <th>Average</th>
+				              <th>Total</th>
+				            </tr>
+				          </thead>
+				          <tbody>
+				            {
+			                  <tr>
+			                    <td>{this.state.summary.name}</td>
+			                    <td>{this.state.summary.value} Baht</td>
+			                    <td>{this.state.summary.avr} kWh</td>
+			                    <td>{this.state.summary.total} kWh</td>
+			                  </tr>
+				            }
+				          </tbody>
+				        </Table>
+				 	</div>
+				 	<h3>Energy (kWh)</h3>
+			        <BarChart width={600} height={270} data={droom} syncId="anyId"
 			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 			          <XAxis dataKey="name"/>
 			          <YAxis/>
 			          <CartesianGrid strokeDasharray="2 2"/>
 			          <Legend verticalAlign="top" height={36} align='right'/>
 			          <Tooltip/>
-			          <Area isAnimationActive={false} type='monotone' dataKey='Energy' stroke=' #FFCB18' fill=' #FFCB18' activeDot={{r: 6}}/>
-			        </AreaChart>
-			        <p className="name_chart">Energy(kWh)</p>
+			          <Bar isAnimationActive={false} type='monotone' dataKey='Energy' stroke=' #FFCB18' fill=' #FFCB18' activeDot={{r: 6}}/>
+			        </BarChart>
+			        <p className="name_chart">Time (hours)</p>
 			        <br />
 			        <br />
 
+			        <h3>Light (Lux)</h3>
 			        <LineChart width={600} height={240} data={dlight} syncId="anyId"
 			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 			          <XAxis dataKey="name"/>
@@ -252,10 +279,11 @@ class Room extends Component {
 			          <Tooltip/>
 			          <Line isAnimationActive={false} type='monotone' dataKey='Light' stroke=' #29A2C6' activeDot={{r: 6}}/>
 			        </LineChart>
-			        <p className="name_chart">Light(Lux)</p>
+			        <p className="name_chart">Time (hours)</p>
 			        <br />
 			        <br />
 
+			        <h3>Temperature (C)</h3>
 			        <LineChart width={600} height={240} data={dtem} syncId="anyId"
 			              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 			          <XAxis dataKey="name"/>
@@ -265,8 +293,12 @@ class Room extends Component {
 			          <Tooltip/>
 			          <Line isAnimationActive={false} type='monotone' dataKey='Temperature' stroke='#EF597B' activeDot={{r: 6}}/>
 			        </LineChart>
-			        <p className="name_chart">Temperature(C)</p>
+			        <p className="name_chart">Time (hours)</p>
+
 			    </div>
+
+
+			    
 			</div>
 		)
 	}

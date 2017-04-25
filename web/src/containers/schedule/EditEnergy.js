@@ -103,7 +103,7 @@ class EditEnergy extends Component {
 					 		<ControlLabel>Maximum Electricity Cost</ControlLabel> 
 					 		<FormControl name='maxenergy' ref='refmaxenergy' defaultValue={this.state.dataenergy.maxenergy * elec_cost}/>
 					 		<br />
-					 		<Button bsStyle="primary" type='submit'>Submit</Button> <Button bsStyle="danger" type='reset'>Reset</Button>
+					 		<Button bsStyle="primary" type='submit'>Submit</Button>
 				 		</Form>
 		 		}
 		 		</div>

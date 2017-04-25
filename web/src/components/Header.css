@@ -19,6 +19,7 @@
 
 .navbar_title.navbar-default .navbar-brand:hover, .navbar_title.navbar-default .navbar-nav>li>a:hover {
 	color: #4eb14e;
+	text-decoration: none;
 }
  
 .navbar_title.navbar {
@@ -32,7 +33,7 @@
 	margin: 0px;
 	color: #031;
 	font-weight: bold;
-	/*pointer-events : none;*/
+	text-decoration: none;
 }
 
 .navbar_navi.nav-pills > li > a {
@@ -41,11 +42,13 @@
 	border-bottom: solid #5cb85c;
 	margin: 0px;
 	color: #fff;
+	text-decoration: none;
 	/*pointer-events : none;*/
 }
 
 .navbar_navi.nav-pills>li+li {
     margin-left: 0px;
+    text-decoration: none;
 }
 
 .navbar_navi.nav-pills > li.active > a:hover, .navbar_navi.nav-pills > li > a:hover {
@@ -53,6 +56,7 @@
 	border-bottom: solid #031;
 	color: #031;
 	font-weight: bold;
+	text-decoration: none;
 }
 
 

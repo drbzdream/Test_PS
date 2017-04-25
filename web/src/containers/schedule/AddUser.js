@@ -85,7 +85,7 @@ class AddUser extends Component {
 					 		<ControlLabel>End Time (24-hours)</ControlLabel> 
 					 		<FormControl name='endtime' ref='refendtime' placeholder="ex. 16.00"/>
 					 		<br />
-					 		<Button bsStyle="primary" type='submit'>Submit</Button> <Button bsStyle="danger" type='reset'>Reset</Button>
+					 		<Button bsStyle="primary" type='submit'>Submit</Button>
 				 		</Form>
 		 		}
 		 		</div>

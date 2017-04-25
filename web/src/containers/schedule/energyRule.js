@@ -78,7 +78,7 @@ class AddEnergy extends Component {
 					 		<ControlLabel>Maximum Electricity Cost</ControlLabel> 
 					 		<FormControl name='maxenergy' ref='refmaxenergy' placeholder="ex. 500"/>
 					 		<br />
-					 		<Button bsStyle="primary" type='submit'>Submit</Button> <Button bsStyle="danger" type='reset'>Reset</Button>
+					 		<Button bsStyle="primary" type='submit'>Submit</Button>
 				 		</Form>
 		 		}
 		 		</div>

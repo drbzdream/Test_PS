@@ -97,7 +97,7 @@ class EditSchedule extends Component {
 					 		<ControlLabel>End Time (24-hours)</ControlLabel> 
 					 		<FormControl name='endtime' ref='refendtime' defaultValue={this.state.dataschedule.endtime}/>
 					 		<br />
-					 		<Button bsStyle="primary" type='submit'>Submit</Button> <Button bsStyle="danger" type='reset'>Reset</Button>
+					 		<Button bsStyle="primary" type='submit'>Submit</Button>
 				 		</Form>
 		 		}
 		 		</div>

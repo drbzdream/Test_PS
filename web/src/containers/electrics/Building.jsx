@@ -175,27 +175,10 @@ class Building extends Component {
 	render(){
 
 
-		// let dreal = [], drealpower = [], derealroom = [] 
-
-
-		// dreal = this.state.energy1.map((data) => {
-		// 	return ({
-		// 		name: moment(data.timestemp).format("hh:mm:ss"),
-		// 		energy1: data.energy_value
-		// 	})
-		// })
-
-		// drealpower = this.state.energy2.map((data) => {
-		// 	return ({
-		// 		energy2: data.energy_value
-		// 	})
-		// })
-
-
 		return (
 			<div className='show_overview'>
 				<h1>Overall Data</h1>
-				<h2>Energy Consumption</h2>
+				<h2>Energy Consumption (kWh)</h2>
 				<br /> 
 
 				<div className='energyconsumpt'>
@@ -213,7 +196,7 @@ class Building extends Component {
 							   <Bar dataKey="Room203" stackId="a" fill="#FFCB18" />
 							   <Brush dataKey='name' height={30} stroke="#003311"/>
 							</BarChart>
-							<p className="name_chart">Energy Consumption (kWh)</p>
+							<p className="name_chart">Time (hours)</p>
 					</div>
 
 					<div className='energyconsump-piechart'>

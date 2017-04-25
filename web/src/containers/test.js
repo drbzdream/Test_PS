@@ -39,7 +39,7 @@ class Test extends Component {
       axios.get('http://localhost:9090/notischedulelog').then((response) => {
         // console.log(response.data);
         this.setState({ notis: response.data})
-        console.log('aaaaaaaaaaaaaaaa')
+        // console.log('aaaaaaaaaaaaaaaa')
       }).catch(function (error) {
         console.log('error');
         console.log(error);
