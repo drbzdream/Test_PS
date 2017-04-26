@@ -129,7 +129,7 @@ class realtimeEnergy extends Component {
 		d2real = this.state.data2d.map((data) => {
 			return ({
 				name: moment(data.name).format("hh:mm:ss"),
-				Room202: data.Room202,
+				power: data.Room202,
 				Room203: data.Room203
 			})
 		})
@@ -142,33 +142,17 @@ class realtimeEnergy extends Component {
 
 				<div className='realtimeconsumpt'>
 					<br />
-					<h2>Compare Realtime Data (Wh)</h2>
-
-						<LineChart width={730} height={290} data={d2real}
-						  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-						  <XAxis dataKey="name" />
-						  <YAxis />
-						  <CartesianGrid strokeDasharray="2 2" />
-						  <Legend verticalAlign="top" height={36} align='right'/>
-						  <Tooltip />
-						  <Line isAnimationActive={false} type="monotone" dataKey="Room202" stroke="#29A2C6" />
-						  <Line isAnimationActive={false} type="monotone" dataKey="Room203" stroke="#FF6D31" />
-						</LineChart>
-						<p className="name_chart">Time (hh:mm:ss)</p>
-						<br />
-						<br />
-
 					<h2>Power Realtime Data (W)</h2>
 
-						<LineChart width={730} height={290} data={dreal1}
+						<BarChart width={730} height={290} data={d2real}
 						  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
 						  <XAxis dataKey="name" />
 						  <YAxis />
 						  <CartesianGrid strokeDasharray="2 2" />
 						  <Legend verticalAlign="top" height={36} align='right'/>
 						  <Tooltip />
-						  <Line isAnimationActive={false} type="monotone" dataKey="power" stroke="#EF597B" />
-						</LineChart>
+						  <Bar isAnimationActive={false} type="monotone" dataKey="power" fill="#EF597B" stroke="#EF597B" />
+						</BarChart>
 						<p className="name_chart">Time (hh:mm:ss)</p>
 						<br />
 						<br />
@@ -181,7 +165,7 @@ class realtimeEnergy extends Component {
 						  <CartesianGrid strokeDasharray="2 2" />
 						  <Legend verticalAlign="top" height={36} align='right'/>
 						  <Tooltip />
-						  <Line isAnimationActive={false} type="monotone" dataKey="energy" stroke="#FFCB18" />
+						  <Line isAnimationActive={false} type="monotone" dataKey="energy" fill="#FFCB18" stroke="#FFCB18" />
 						</LineChart>
 						<p className="name_chart">Time (hh:mm:ss)</p>
 
@@ -216,58 +200,18 @@ export default realtimeEnergy
 
 
 
-// <AreaChart width={730} height={290} data={datatime2}
-						  // margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-						//   <defs>
-						//     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-						//       <stop offset="5%" stopColor="#EF597B" stopOpacity={0.8}/>
-						//       <stop offset="95%" stopColor="#EF597B" stopOpacity={0}/>
-						//     </linearGradient>
-						//     <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-						//       <stop offset="5%" stopColor="#FFCB18" stopOpacity={0.8}/>
-						//       <stop offset="95%" stopColor="#FFCB18" stopOpacity={0}/>
-						//     </linearGradient>
-						//   </defs>
-						//   <XAxis dataKey="name" />
-						//   <YAxis />
-						//   <CartesianGrid strokeDasharray="2 2" />
-						//   <Legend verticalAlign="top" height={36} align='right'/>
-						//   <Tooltip />
-						//   <Area type="monotone" dataKey="Room202" stroke="#EF597B" fillOpacity={1} fill="url(#colorUv)" />
-						//   <Area type="monotone" dataKey="Room203" stroke="#FFCB18" fillOpacity={1} fill="url(#colorPv)" />
-						// </AreaChart>
-						// <p className="name_chart">Energy Consumption (Wh)</p>
+// <h2>Compare Realtime Data ()</h2>
+// <LineChart width={730} height={290} data={d2real}
+  // margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+  // <XAxis dataKey="name" />
+  // <YAxis />
+  // <CartesianGrid strokeDasharray="2 2" />
+  // <Legend verticalAlign="top" height={36} align='right'/>
+  // <Tooltip />
+  // <Line isAnimationActive={false} type="monotone" dataKey="Room202" stroke="#29A2C6" />
+  // <Line isAnimationActive={false} type="monotone" dataKey="Room203" stroke="#FF6D31" />
+// </LineChart>
+// <p className="name_chart">Time (hh:mm:ss)</p>
+// <br />
+// <br />s
 
-						// <LineChart width={730} height={290} data={datatime2}
-						//   margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-						//   <XAxis dataKey="name" />
-						//   <YAxis />
-						//   <CartesianGrid strokeDasharray="2 2" />
-						//   <Legend verticalAlign="top" height={36} align='right'/>
-						//   <Tooltip />
-						//   <Line type="monotone" dataKey="Room202" stroke="#EF597B" />
-						//   <Line type="monotone" dataKey="Room203" stroke="#FFCB18" />
-						// </LineChart>
-						// <p className="name_chart">Energy Consumption (Wh)</p>
-
-						// <LineChart width={730} height={290} data={dreal1}
-						//   margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-						//   <XAxis dataKey="name" />
-						//   <YAxis />
-						//   <CartesianGrid strokeDasharray="2 2" />
-						//   <Legend verticalAlign="top" height={36} align='right'/>
-						//   <Tooltip />
-						//   <Line type="monotone" dataKey="energy" stroke="#EF597B" />
-						// </LineChart>
-
-						// <LineChart width={730} height={290} data={dreal2}
-						//   margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-						//   <XAxis dataKey="name" />
-						//   <YAxis />
-						//   <CartesianGrid strokeDasharray="2 2" />
-						//   <Legend verticalAlign="top" height={36} align='right'/>
-						//   <Tooltip />
-						//   <Line type="monotone" dataKey="Room202" stroke="#EF597B" />
-						//   <Line type="monotone" dataKey="Room203" stroke="#FFCB18" />
-						// </LineChart>
-						// <p className="name_chart">TEST</p>
