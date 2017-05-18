@@ -12,16 +12,15 @@ import {
   Table, 
 } from 'react-bootstrap'
 import socket from 'socket.io-client'
-import Notification  from '../../node_modules/react-web-notification/lib/components/Notification'
 import axios from 'axios'
 import actions from 'actions'
 import 'components/Building.css'
 
 
 window.React = React;
-const elec_cost = 3.9639
+const elec_cost = 4.4217
 
-class Test extends Component {
+class Notification extends Component {
 
   state = {
     test: [],
@@ -93,7 +92,7 @@ class Test extends Component {
     axios.get('http://localhost:9090/notienergylog').then((response) => {
       // console.log(response);
       this.setState({ notie: response.data})
-      //console.log(test);
+      // console.log('notie '+ this.state.notie);
     }).catch(function (error) {
       console.log('error');
       console.log(error);
@@ -157,7 +156,7 @@ class Test extends Component {
                   {
                     this.state.notie.map((user1, index) => {
                       let { id, room, type, description, updated_at } = user1
-                      console.log('notie: ' + this.state.notie)
+                      // console.log('notie: ' + this.state.notie)
                       return (
                         <tr key={index}>
                           <td>Room{room}</td>
@@ -171,7 +170,7 @@ class Test extends Component {
                   {
                     this.state.notis.map((user2, index) => {
                       let { id, room, type, description, updated_at } = user2
-                      console.log('notis: ' + this.state.notis)
+                      // console.log('notis: ' + this.state.notis)
                       return (
                         <tr key={index}>
                           <td>Room{room}</td>
@@ -240,19 +239,23 @@ class Test extends Component {
               <th>Description</th>
               <th>Maximun Energy</th>
               <th>Electricity Cost</th>
+              <th>Energy Usage</th>
+              <th>Updated At</th>
               <th>Option</th>
             </tr>
           </thead>
           <tbody>
             {
               this.state.test2.map((user2, index) => {
-                let { id, room, description, maxenergy } = user2
+                let { id, room, description, maxenergy, updated_at, percent_use } = user2
                 return (
                   <tr key={index}>
                     <td>{room}</td>
                     <td>{description}</td>
-                    <td>{maxenergy.toFixed(2)} Wh</td>
+                    <td>{maxenergy.toFixed(2)} kWh(Unit)</td>
                     <td>{(maxenergy*elec_cost).toFixed(2)} Baht</td>
+                    <td>{percent_use} %</td>
+                    <td>{moment(updated_at).format('MMMM Do YYYY, h:mm a')}</td>
                     <td>
                       <Link to={`schedule/editenergy/${id}`}><Button bsStyle="info">Edit</Button></Link>
                       {' '}
@@ -283,11 +286,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	onSubmit(values){
-		console.log(values)
+		// console.log(values)
 	}
 })
 
 export default connect(
 	mapStateToProps, 
 	mapDispatchToProps
-)(Test)
+)(Notification)

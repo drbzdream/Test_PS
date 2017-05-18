@@ -20,7 +20,7 @@ import {
 
 
 
-class AddUser extends Component {
+class AddSchedule extends Component {
 	state = {
 		result: { },
 		room: '',
@@ -61,8 +61,6 @@ class AddUser extends Component {
 	componentDidMount(){
 	}
 
-	// (Object.keys(this.state.result).length != 0 ) && 
-
 	render(){
 		return(
 			<div style={{ "margin": "20px 100px"}}>
@@ -94,4 +92,4 @@ class AddUser extends Component {
 	}
 }
 
-export default connect(null, null)(AddUser)
+export default connect(null, null)(AddSchedule)

@@ -18,7 +18,7 @@ import {
 	Form
 } from 'react-bootstrap'
 
-const elec_cost = 3.9639
+const elec_cost = 4.4217
 
 class EditEnergy extends Component {
 	state = {
@@ -37,7 +37,6 @@ class EditEnergy extends Component {
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);
 		console.log("max energy: "+ e.target.maxenergy.value/elec_cost);
-		// 3.9639 อัตราค่าไฟเฉลี่ย
 		// console.log(e.target.input1.value)
 
 		console.log("patchID: " + this.props.params.id)
@@ -56,35 +55,17 @@ class EditEnergy extends Component {
 	}
 
 	componentDidMount(){
-		// console.log(this.props.params.id)
-		// axios.get(`http://localhost:9090/schedule/${this.props.params.id}`).then((res) => {
-		// 	console.log(res.data)
-		// 	this.setState({ result: res.data })
-		// 	console.log('test' + this.state.result)
-		// 	this.state.result.map((data, index) => {
-		// 		return ({
-		// 		roomtest: data.timestemp,
-		// 		destest: data.power_value
-		// 	})
-		// 	}
-		// })
 		axios.get(`http://localhost:9090/energyrule/${this.props.params.id}`).then((response) => {
 		      // console.log(response);
 		      this.setState({ dataenergy: response.data})
-		      console.log(this.state.dataenergy.maxenergy)
-		      // this.setState({ energycost: this.state.dataenergy.maxenergy * elec_cost })
-		      // console.log(test);
-
-		      console.log(this.state.dataenergy.maxenergy * elec_cost )
+		      // console.log(this.state.dataenergy.maxenergy)
+		      // console.log(this.state.dataenergy.maxenergy * elec_cost )
 		    })
 		    .catch(function (error) {
 		      console.log('error');
 		      console.log(error);
-		    });	
-		
+		    });		
 	}
-
-	// (Object.keys(this.state.result).length != 0 ) && 
 
 	render(){
 		return(

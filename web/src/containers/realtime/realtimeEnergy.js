@@ -50,7 +50,6 @@ import axios from 'axios'
 
 const { dataAction } = actions
 
-const elec_cost = 3.9639 
 
 const COLORS = ['#EF597B', '#FFCB18', '#29A2C6', '#FF6D31', '#73B66B'];
 				// pink       yello 	blue       orange     green
@@ -60,12 +59,14 @@ class realtimeEnergy extends Component {
 	state = {
 		energy1: [],
 		energy2: [],
-		data2d: []
+		data2d: [],
+		infopf: []
 	}
 
 	componentWillMount(){
 
 		const io = socket('http://localhost:9090')
+
 		io.on('datap', (response) => {
 			// console.log('test' + response)
 			this.setState({ energy1: response})
@@ -80,30 +81,43 @@ class realtimeEnergy extends Component {
 
 		io.on('realtime2d', (response) => {
 			this.setState({ data2d: response})
-			console.log('2D' + this.state.data2d)
+			// console.log('2D' + this.state.data2d)
 		})
 
 	}
 
 
   componentDidMount(){
-  	axios.get('http://localhost:9090/realtimedata1').then((res) => {
-		// console.log('showenergy')
-		// console.log(res.data)
-		this.setState({energy1: res.data})
+
+  	axios.get('http://localhost:9090/powerfactor').then((res) => {
+		// this.setState({ infopf: res})
+		console.log(res.data)
+		this.setState({infopf: res.data})
+		console.log('info '+ this.state.infopf)
+
 	}).catch(function (error) {
   		console.log('error');
   		console.log(error);
 	})
-    
-    axios.get('http://localhost:9090/realtimedata2').then((res) => {
-		// console.log('showenergy')
-		// console.log(res.data)
-		this.setState({energy2: res.data})
-	}).catch(function (error) {
-  		console.log('error');
-  		console.log(error);
-	})
+
+
+	 //  	axios.get('http://localhost:9090/realtimepower1').then((res) => {
+		// 	// console.log('showenergy')
+		// 	// console.log(res.data)
+		// 	this.setState({energy1: res.data})
+		// }).catch(function (error) {
+	 //  		console.log('error');
+	 //  		console.log(error);
+		// })
+	    
+	 //    axios.get('http://localhost:9090/realtimedata2').then((res) => {
+		// 	// console.log('showenergy')
+		// 	// console.log(res.data)
+		// 	this.setState({energy2: res.data})
+		// }).catch(function (error) {
+	 //  		console.log('error');
+	 //  		console.log(error);
+		// })
   }
 
 	render(){
@@ -114,8 +128,8 @@ class realtimeEnergy extends Component {
 
 		dreal1 = this.state.energy1.map((data) => {
 			return ({
-				name: moment(data.timestemp).format("hh:mm:ss"),
-				power: data.power_value
+				name: moment(data.created_at).format("hh:mm:ss"),
+				power: data.data_value
 			})
 		})
 
@@ -140,11 +154,41 @@ class realtimeEnergy extends Component {
 				<h1>Realtime Energy Consumption</h1>
 				<br /> 
 
+				<div style={{ "textAlign": "center"}}>
+			        <br />
+			        <Table striped condensed hover>
+			        <thead>
+			          <tr>
+			            <th>Room</th>
+			            <th>Description</th>
+			            <th>Power Factor</th>
+			            <th>Updated at</th>
+			          </tr>
+			        </thead>
+			        <tbody style={{ "textAlign": "left"}}>
+			          {
+			            this.state.infopf.map((user, index) => {
+			              let { id, room, description, powerfactor_value, updated_at } = user
+			              return (
+			                <tr key={index}>
+			                  <td>{room}</td>
+			                  <td>{description}</td>
+			                  <td>{powerfactor_value}</td>
+			                  <td>{moment(updated_at).format('MMMM Do YYYY, h:mm:ss a')}</td>
+			                </tr>
+			              )
+			            })
+			          }
+
+			        </tbody>
+			      </Table>
+			      </div>
+
 				<div className='realtimeconsumpt'>
 					<br />
 					<h2>Power Realtime Data (W)</h2>
 
-						<BarChart width={730} height={290} data={d2real}
+						<BarChart width={730} height={290} data={dreal1}
 						  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
 						  <XAxis dataKey="name" />
 						  <YAxis />
@@ -179,17 +223,6 @@ class realtimeEnergy extends Component {
 	}
 }
 
-// const mapStateToProps = (state) => ({ //เอา state จาก store มาใส่ product
-// 	power_resources: state.power_resources
-// })
-
-// const mapDispatchToProps = (dispatch) => ({ // เพื่อให้ส่งค่าให้ reducer แล้วจะได้เก็บค่าลงใน store 
-// 	dataAction(room, day){
-// 		console.log(room, day)
-// 		dispatch(dataAction(room, day))
-// 	}
-// })
-
 realtimeEnergy = connect(
 	null,
 	null
@@ -198,20 +231,4 @@ realtimeEnergy = connect(
 export default realtimeEnergy
 
 
-
-
-// <h2>Compare Realtime Data ()</h2>
-// <LineChart width={730} height={290} data={d2real}
-  // margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-  // <XAxis dataKey="name" />
-  // <YAxis />
-  // <CartesianGrid strokeDasharray="2 2" />
-  // <Legend verticalAlign="top" height={36} align='right'/>
-  // <Tooltip />
-  // <Line isAnimationActive={false} type="monotone" dataKey="Room202" stroke="#29A2C6" />
-  // <Line isAnimationActive={false} type="monotone" dataKey="Room203" stroke="#FF6D31" />
-// </LineChart>
-// <p className="name_chart">Time (hh:mm:ss)</p>
-// <br />
-// <br />s
 

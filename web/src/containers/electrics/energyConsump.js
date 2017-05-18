@@ -59,7 +59,7 @@ const COLORS = ['#EF597B', '#FFCB18', '#29A2C6', '#FF6D31', '#73B66B'];
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
-    fill, payload, percent, value } = props;
+    fill, payload, percent, total } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
   const sx = cx + (outerRadius + 10) * cos;
@@ -92,7 +92,7 @@ const renderActiveShape = (props) => {
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none"/>
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${value.toFixed(2)} Baht`}</text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${total.toFixed(2)} Unit`}</text>
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
         {`(Rate ${(percent * 100).toFixed(2)}%)`}
       </text>
@@ -101,7 +101,7 @@ const renderActiveShape = (props) => {
 }
 
 
-class Building extends Component {
+class energyConsump extends Component {
 
 	state = {
 		energy1: [],
@@ -113,19 +113,6 @@ class Building extends Component {
 	}
 
 	componentWillMount(){
-		// this.props.dataAction()
-  //       const io = socket('http://localhost:9090')
-		// io.on('energy_room202', (response) => {
-		// 	this.setState({ energy1: response})
-		// 	dispatch(requestSuccess(response))
-		// })
-
-		// io.on('energy_room2', (response) => {
-		// 	this.setState({ energy2: response})
-		// 	// dispatch(requestSuccess(response))
-		// })
-
-
 	}
 
 
@@ -201,7 +188,7 @@ class Building extends Component {
 
 					<div className='energyconsump-piechart'>
 
-						<PieChart width={400} height={400} onMouseEnter={this.onPieEnter.bind(this)}
+						<PieChart width={500} height={500} onMouseEnter={this.onPieEnter.bind(this)}
 						margin={{top: 0, right: 30, left: 0, bottom: 0}}>
 				        <Pie 
 				        	activeIndex={this.state.activeIndex}
@@ -239,7 +226,7 @@ class Building extends Component {
 			                    <td>{name}</td>
 			                    <td>{value.toFixed(2)} Baht</td>
 			                    <td>{avr.toFixed(2)} kWh</td>
-			                    <td>{total.toFixed(2)} kWh</td>
+			                    <td>{total.toFixed(2)} kWh(Unit)</td>
 			                  </tr>
 			                )
 			              })
@@ -247,16 +234,8 @@ class Building extends Component {
 			          </tbody>
 			        </Table>
 					  	</div>
-
 					</div>
-
-
 				</div>
-
-				
-
-
-			   
 			</div>
 		)
 	}
@@ -273,9 +252,9 @@ const mapDispatchToProps = (dispatch) => ({ // เพื่อให้ส่ง
 	// }
 })
 
-Building = connect(
+energyConsump = connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Building)
+)(energyConsump)
 
-export default Building
+export default energyConsump

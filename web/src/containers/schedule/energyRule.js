@@ -19,7 +19,7 @@ import {
 } from 'react-bootstrap'
 
 
-const elec_cost = 3.9639
+const elec_cost = 4.4217
 
 
 class AddEnergy extends Component {
@@ -34,9 +34,9 @@ class AddEnergy extends Component {
 		e.preventDefault()
 		// console.log(this.refs.eiei1.value)
 
-		console.log("room: "+e.target.room.value);
-		console.log("description: "+e.target.description.value);
-		console.log("max energy: "+e.target.maxenergy.value/elec_cost);
+		// console.log("room: "+e.target.room.value);
+		// console.log("description: "+e.target.description.value);
+		// console.log("max energy: "+e.target.maxenergy.value/elec_cost);
 		
 		// console.log(e.target.input1.value)
 
@@ -44,7 +44,9 @@ class AddEnergy extends Component {
 		axios.post('http://localhost:9090/energyrule', {
 			room: e.target.room.value,
 			description: e.target.description.value,
-			maxenergy: e.target.maxenergy.value/elec_cost
+			init_energy: 0,
+			maxenergy: e.target.maxenergy.value/elec_cost,
+			percent_use: 0
 		  })
 		  .then((res) => {
 		    console.log(res);
@@ -59,8 +61,6 @@ class AddEnergy extends Component {
 
 	componentDidMount(){
 	}
-
-	// (Object.keys(this.state.result).length != 0 ) && 
 
 	render(){
 		return(

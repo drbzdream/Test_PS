@@ -34,11 +34,11 @@ class EditSchedule extends Component {
 	handleForm(e){
 		e.preventDefault()
 
-		console.log("room: "+e.target.room.value);
-		console.log("description: "+e.target.description.value);
-		console.log("start time: "+e.target.starttime.value);
-		console.log("end time: "+e.target.endtime.value);
-		console.log("day: "+ e.target.day.value);
+		// console.log("room: "+e.target.room.value);
+		// console.log("description: "+e.target.description.value);
+		// console.log("start time: "+e.target.starttime.value);
+		// console.log("end time: "+e.target.endtime.value);
+		// console.log("day: "+ e.target.day.value);
 		// console.log(e.target.input1.value)
 
 		console.log("patchID: " + this.props.params.id)
@@ -50,7 +50,7 @@ class EditSchedule extends Component {
 			endtime: e.target.endtime.value
 		  })
 		  .then((res) => {
-		    console.log(res);
+		    // console.log(res);
 		    this.props.dispatch(push(`/schedule`))
 		  })
 		  .catch((error) => {
@@ -61,18 +61,15 @@ class EditSchedule extends Component {
 	componentDidMount(){
 
 		axios.get(`http://localhost:9090/schedule/${this.props.params.id}`).then((response) => {
-		      console.log(response);
+		      // console.log(response);
 		      this.setState({ dataschedule: response.data})
 		      //console.log(test);
 		    })
 		    .catch(function (error) {
 		      console.log('error');
 		      console.log(error);
-		    });	
-		
+		    });		
 	}
-
-	// (Object.keys(this.state.result).length != 0 ) && 
 
 	render(){
 		return(

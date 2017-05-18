@@ -48,7 +48,7 @@ const { dataAction } = actions
 let tmp_dreal = []
 
 
-class Room extends Component {
+class Resource extends Component {
 
 	state = {
 		energy_realtime: [],
@@ -249,7 +249,7 @@ class Room extends Component {
 			                    <td>{this.state.summary.name}</td>
 			                    <td>{this.state.summary.value} Baht</td>
 			                    <td>{this.state.summary.avr} kWh</td>
-			                    <td>{this.state.summary.total} kWh</td>
+			                    <td>{this.state.summary.total} kWh(Unit)</td>
 			                  </tr>
 				            }
 				          </tbody>
@@ -315,12 +315,12 @@ const mapDispatchToProps = (dispatch) => ({ // เพื่อให้ส่ง
 	}
 })
 
-Room = connect(
+Resource = connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Room)
+)(Resource)
 
-export default Room
+export default Resource
 
 
 

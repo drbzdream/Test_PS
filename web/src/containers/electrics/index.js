@@ -1,8 +1,8 @@
-import Building from 'containers/electrics/Building'
-import Room from 'containers/electrics/Room'
+import energyConsump from 'containers/electrics/energyConsump'
+import Resource from 'containers/electrics/resourceConsump'
 
 
 export {
-	Building,
-	Room
+	energyConsump,
+	Resource
 }
