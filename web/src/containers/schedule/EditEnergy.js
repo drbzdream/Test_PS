@@ -36,14 +36,14 @@ class EditEnergy extends Component {
 
 		console.log("room: "+e.target.room.value);
 		console.log("description: "+e.target.description.value);
-		console.log("max energy: "+ e.target.maxenergy.value/elec_cost);
+		console.log("max energy: "+ e.target.maxenergy.value);
 		// console.log(e.target.input1.value)
 
 		console.log("patchID: " + this.props.params.id)
 		axios.patch(`http://localhost:9090/energyrule/${this.props.params.id}`, {
 			// room: e.target.room.value,
 			description: e.target.description.value,
-			maxenergy: e.target.maxenergy.value/elec_cost
+			maxenergy: e.target.maxenergy.value
 		  })
 		  .then((res) => {
 		  	this.props.dispatch(push(`/schedule`))
@@ -81,8 +81,8 @@ class EditEnergy extends Component {
 					 		<ControlLabel>Description </ControlLabel> 
 					 		<FormControl name='description' ref='refdescription' defaultValue={this.state.dataenergy.description}/>
 					 		<br />
-					 		<ControlLabel>Maximum Electricity Cost</ControlLabel> 
-					 		<FormControl name='maxenergy' ref='refmaxenergy' defaultValue={this.state.dataenergy.maxenergy * elec_cost}/>
+					 		<ControlLabel>Maximum Electric Unit</ControlLabel> 
+					 		<FormControl name='maxenergy' ref='refmaxenergy' defaultValue={this.state.dataenergy.maxenergy}/>
 					 		<br />
 					 		<Button bsStyle="primary" type='submit'>Submit</Button>
 				 		</Form>

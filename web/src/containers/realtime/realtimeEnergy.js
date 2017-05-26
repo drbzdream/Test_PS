@@ -93,7 +93,7 @@ class realtimeEnergy extends Component {
 		// this.setState({ infopf: res})
 		console.log(res.data)
 		this.setState({infopf: res.data})
-		console.log('info '+ this.state.infopf)
+		// console.log('info '+ this.state.infopf)
 
 	}).catch(function (error) {
   		console.log('error');
@@ -201,7 +201,7 @@ class realtimeEnergy extends Component {
 						<br />
 						<br />
 
-					<h2>Energy Realtime Data (Wh)</h2>
+					<h2>Energy Realtime Data (kWh)</h2>
 						<LineChart width={730} height={290} data={dreal2}
 						  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
 						  <XAxis dataKey="name" />

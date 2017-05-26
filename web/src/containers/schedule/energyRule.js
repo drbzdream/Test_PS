@@ -45,7 +45,7 @@ class AddEnergy extends Component {
 			room: e.target.room.value,
 			description: e.target.description.value,
 			init_energy: 0,
-			maxenergy: e.target.maxenergy.value/elec_cost,
+			maxenergy: e.target.maxenergy.value,
 			percent_use: 0
 		  })
 		  .then((res) => {
@@ -75,7 +75,7 @@ class AddEnergy extends Component {
 					 		<ControlLabel>Description </ControlLabel> 
 					 		<FormControl name='description' ref='refdescription' placeholder="ex. closed"/>
 					 		<br />
-					 		<ControlLabel>Maximum Electricity Cost</ControlLabel> 
+					 		<ControlLabel>Maximum Electric Unit</ControlLabel> 
 					 		<FormControl name='maxenergy' ref='refmaxenergy' placeholder="ex. 500"/>
 					 		<br />
 					 		<Button bsStyle="primary" type='submit'>Submit</Button>

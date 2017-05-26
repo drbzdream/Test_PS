@@ -15,10 +15,45 @@ import socket from 'socket.io-client'
 import axios from 'axios'
 import actions from 'actions'
 import 'components/Building.css'
+import {
+  LineChart, 
+  Line, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  Legend,
+  PieChart,
+  Pie,
+  AreaChart, 
+  Area,
+  BarChart, 
+  Bar,
+  Brush,
+  Sector,
+  ResponsiveContainer,
+  Cell,
+  linearGradient,
+  defs,
+  ComposedChart
+} from 'recharts'
 
 
 window.React = React;
 const elec_cost = 4.4217
+
+const data = [{name: 'Page A', uv: 590, max: 1800, pv: 590},
+              {name: 'Page B', uv: 868, max: 1800, pv: 868},
+              {name: 'Page C', uv: 1397, max: 1800, pv: 1397},
+              {name: 'Page D', uv: 1480, max: 1800, pv: 1480},
+              {name: 'Page E', uv: 1520, max: 1800, pv: 1520},
+              {name: 'Page F', uv: 1400, max: 1800, pv: 1400},
+              {name: 'Page G', uv: 100, max: 1800, pv: 1420},
+              {name: 'Page H', uv: 0, max: 1800, pv: 1470},
+              {name: 'Page I', uv: 0, max: 1800, pv: 1500},
+              {name: 'Page J', uv: 0, max: 1800, pv: 1570},
+              {name: 'Page K', uv: 0, max: 1800, pv: 1650},
+              {name: 'Page L', uv: 0, max: 1800, pv: 1700}];
 
 class Notification extends Component {
 
@@ -28,7 +63,8 @@ class Notification extends Component {
     scheduleID: '',
     energyID: '',
     notis: [],
-    notie: []
+    notie: [],
+    infoproj: []
   }
 
   componentDidMount(){
@@ -98,6 +134,14 @@ class Notification extends Component {
       console.log(error);
     });
 
+    // axios.get('http://localhost:9090/infoenergyuse').then((response) => {
+    //   // console.log(response);
+    //   this.setState({ infoproj: response.data})
+    //   console.log(response.data);
+    // }).catch(function (error) {
+    //   console.log('error');
+    //   console.log(error);
+    // });
   }
 
 
@@ -133,9 +177,32 @@ class Notification extends Component {
     });
   }
 
-  
+  getinfoProjection(id, index) {
+    console.log(`http://localhost:9090/energyrule/${id}`)
+    axios.get(`http://localhost:9090/infoenergyuse/${id}`) 
+    .then((response) => {
+      //console.log(test);
+      this.setState({ infoproj: response.data})
+    })
+    .catch(function (error) {
+      console.log('error');
+      console.log(error);
+    });
+  }
 
 	render(){
+
+    let dataproj = []
+
+   dataproj = this.state.infoproj.map((data) => {
+      return ({
+        name: moment(data.name).format("D/MM/YY"),
+        max: data.max,
+        energy: data.energy,
+        projection: data.projection
+      })
+    })
+
 		return (
 			<div>
         <div className='noti-histories'>
@@ -232,14 +299,29 @@ class Notification extends Component {
       <br />
         <h2>Energy Rule <Link to='schedule/addenergy-rule'><Button bsStyle="primary">Add </Button> </Link></h2> 
         <br />
+        <div className='info_graph' style={{ "textAlign": "center"}}>
+          <ComposedChart width={950} height={400} data={dataproj}
+                margin={{top: 20, right: 20, bottom: 20, left: -20}}>
+              <XAxis dataKey="name"/>
+              <YAxis />
+              <Tooltip/>
+              <Legend/>
+              <CartesianGrid stroke='#f5f5f5'/>
+              <Line type='monotone' dataKey='max' stroke='#ff7300'/>
+              <Bar dataKey='energy' barSize={20} fill='#5cb85c'/>
+              <Line type='monotone' dataKey='projection' stroke='#413ea0'/>
+              
+           </ComposedChart>
+        </div>
+        <br />
+
         <Table striped condensed hover>
           <thead>
             <tr>
               <th>Room</th>
               <th>Description</th>
-              <th>Maximun Energy</th>
-              <th>Electricity Cost</th>
-              <th>Energy Usage</th>
+              <th>Maximun Energy (Unit)</th>
+              <th>Maximun Electricity Cost</th>
               <th>Updated At</th>
               <th>Option</th>
             </tr>
@@ -252,14 +334,14 @@ class Notification extends Component {
                   <tr key={index}>
                     <td>{room}</td>
                     <td>{description}</td>
-                    <td>{maxenergy.toFixed(2)} kWh(Unit)</td>
+                    <td>{maxenergy.toFixed(2)} kWh</td>
                     <td>{(maxenergy*elec_cost).toFixed(2)} Baht</td>
-                    <td>{percent_use} %</td>
                     <td>{moment(updated_at).format('MMMM Do YYYY, h:mm a')}</td>
                     <td>
                       <Link to={`schedule/editenergy/${id}`}><Button bsStyle="info">Edit</Button></Link>
                       {' '}
                       <Button bsStyle="danger" onClick={() => this.deleteUserEnergy(id, index)}>Delete</Button>
+                      <Button bsStyle="success" style={{ "marginLeft": "5px"}} onClick={() => this.getinfoProjection(id, index)}>Show Info</Button>
                     </td>
                   </tr>
                 )
@@ -294,3 +376,5 @@ export default connect(
 	mapStateToProps, 
 	mapDispatchToProps
 )(Notification)
+
+// <Brush dataKey='name' height={30} stroke="#003311"/>
