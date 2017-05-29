@@ -156,13 +156,14 @@ class realtimeEnergy extends Component {
 
 				<div style={{ "textAlign": "center"}}>
 			        <br />
-			        <Table striped condensed hover>
+			        <Table condensed hover>
 			        <thead>
 			          <tr>
 			            <th>Room</th>
 			            <th>Description</th>
 			            <th>Power Factor</th>
 			            <th>Updated at</th>
+			            <th></th>
 			          </tr>
 			        </thead>
 			        <tbody style={{ "textAlign": "left"}}>
@@ -175,6 +176,21 @@ class realtimeEnergy extends Component {
 			                  <td>{description}</td>
 			                  <td>{powerfactor_value}</td>
 			                  <td>{moment(updated_at).format('MMMM Do YYYY, h:mm:ss a')}</td>
+			                  <td style={{ "width": "250px"}}>
+			                  <div style={{ "display": "inline-block"}}>
+			                  	<BarChart width={200} height={250} data={this.state.infopf}
+						  			margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+						  			<XAxis dataKey="room" />
+						  			<YAxis />
+						  			<CartesianGrid strokeDasharray="2 2" />
+						  			<Legend verticalAlign="top" height={55} align='right'/>
+						  			<Tooltip />
+						  			<Bar isAnimationActive={false} dataKey='real_power' barSize={20} fill='#5cb85c'/>
+						  			<Bar isAnimationActive={false} dataKey="apparent_power" barSize={20}  fill="#EF597B" />
+								</BarChart>
+								<p style={{ "textAlign": "center"}}>Real power (kW) & Apparent power (kVA)</p>
+							  </div>
+			                  </td>
 			                </tr>
 			              )
 			            })
