@@ -185,7 +185,7 @@ class realtimeEnergy extends Component {
 						  			<CartesianGrid strokeDasharray="2 2" />
 						  			<Legend verticalAlign="top" height={55} align='right'/>
 						  			<Tooltip />
-						  			<Bar isAnimationActive={false} dataKey='real_power' barSize={20} fill='#5cb85c'/>
+						  			<Bar isAnimationActive={false} dataKey='real_power' barSize={20} fill='#FFCB18'/>
 						  			<Bar isAnimationActive={false} dataKey="apparent_power" barSize={20}  fill="#EF597B" />
 								</BarChart>
 								<p style={{ "textAlign": "center"}}>Real power (kW) & Apparent power (kVA)</p>
